@@ -1,9 +1,9 @@
 import sys
 import argparse
-from utils import elements, positions  # Assuming utils.py is in the same folder.
+from .utils import elements, positions  # Use relative import for packages
 
 def show_element(symbol):
-    """Function to show details of an element by its symbol."""
+    """Display element details by symbol."""
     element = elements.get(symbol.capitalize())
     if element:
         print(f"Element: {element['nom']}")
@@ -15,34 +15,33 @@ def show_element(symbol):
         print(f"Element {symbol} not found!")
 
 def list_elements():
-    """Function to list all elements by their symbol."""
-    print("Elements available:")
+    """List all element symbols."""
+    print("Available elements:")
     for symbol in elements:
         print(f"- {symbol}")
 
 def search_element_by_family(family):
-    """Search and list elements by their family."""
+    """Search elements by family."""
     found = False
     for symbol, element in elements.items():
         if element['famille'].lower() == family.lower():
             print(f"{symbol}: {element['nom']} - {element['famille']}")
             found = True
     if not found:
-        print(f"No elements found in the family: {family}")
+        print(f"No elements found in family: {family}")
 
-def main():
-    # Set up argument parsing
-    parser = argparse.ArgumentParser(description="Periodic Table CLI")
+def run():
+    """Entry point function for CLI execution."""
+    parser = argparse.ArgumentParser(description="Periodic Table CLI Tool")
     
-    # Commands and options
-    parser.add_argument('-l', '--list', action='store_true', help="List all elements")
-    parser.add_argument('-s', '--show', type=str, help="Show details of a specific element by symbol")
-    parser.add_argument('-f', '--family', type=str, help="Search for elements by their family")
+    # Command-line arguments
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-l', '--list', action='store_true', help="List all elements")
+    group.add_argument('-s', '--show', type=str, help="Show details of an element")
+    group.add_argument('-f', '--family', type=str, help="Search elements by family")
     
-    # Parse the arguments
     args = parser.parse_args()
 
-    # Handle different commands
     if args.list:
         list_elements()
     elif args.show:
@@ -50,7 +49,7 @@ def main():
     elif args.family:
         search_element_by_family(args.family)
     else:
-        print("No valid option provided. Use -h for help.")
+        parser.print_help()  # Show help when no args provided
 
 if __name__ == '__main__':
-    main()
+    run()  # Direct script execution
