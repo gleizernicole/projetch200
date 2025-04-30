@@ -1,6 +1,6 @@
-
 from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QLabel, QPushButton,
-                             QGridLayout, QMessageBox, QHBoxLayout, QFrame, QInputDialog, QApplication)
+                             QGridLayout, QMessageBox, QHBoxLayout, QFrame, QInputDialog, 
+                             QApplication, QScrollArea)
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont
 import sys, random, unicodedata
@@ -172,55 +172,66 @@ class TableauPeriodique(QMainWindow):
         self.setGeometry(100, 100, 800, 600)
 
         self.score = 0
-        self.question_count = 0  # Nombre de questions posées
+        self.question_count = 0
         self.timer = QTimer()
-        self.timer.setInterval(1000)  # 1 seconde par mise à jour du timer
+        self.timer.setInterval(1000)
         self.timer.timeout.connect(self.update_timer)
-
         self.reponse_attendue = None
-        self.time_remaining = 30  # Temps restant par question
+        self.time_remaining = 30
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-
         layout_principal = QVBoxLayout()
         central_widget.setLayout(layout_principal)
 
+        # Titre
         titre_label = QLabel("🧪 Tableau Périodique des Éléments 🧪")
         titre_label.setFont(QFont("Arial", 24, QFont.Bold))
         titre_label.setAlignment(Qt.AlignCenter)
         layout_principal.addWidget(titre_label)
 
-        # Affichage du score
+        # Score
         self.score_label = QLabel("Score : 0")
         self.score_label.setAlignment(Qt.AlignCenter)
         self.score_label.setFont(QFont("Arial", 16))
         layout_principal.addWidget(self.score_label)
 
-        # Affichage du timer
+        # Timer
         self.timer_label = QLabel(f"Temps restant : {self.time_remaining}s")
         self.timer_label.setAlignment(Qt.AlignCenter)
         self.timer_label.setFont(QFont("Arial", 16))
         layout_principal.addWidget(self.timer_label)
 
+        # Bouton Quizz
         bouton_quizz = QPushButton("🎲 Lancer un Quizz")
         bouton_quizz.setFixedHeight(50)
         bouton_quizz.clicked.connect(self.lancer_quizz)
         layout_principal.addWidget(bouton_quizz)
 
-        grid = QGridLayout()
-        layout_principal.addLayout(grid)
-        self.grid = grid
+        # Zone de défilement pour le tableau
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        container = QWidget()
+        self.grid = QGridLayout(container)
+        scroll.setWidget(container)
+        layout_principal.addWidget(scroll)
 
+        # Création des boutons du tableau
         for symbole, position in positions.items():
             element = elements[symbole]
             bouton = QPushButton(symbole)
-            bouton.setFixedSize(90, 90)
+            bouton.setFixedSize(50, 50)  # Taille réduite
             couleur = colors.get(element["famille"], "#FFFFFF")
-            bouton.setStyleSheet(f"background-color: {couleur}; border: 1px solid #333;")
+            bouton.setStyleSheet(f"""
+                background-color: {couleur}; 
+                border: 1px solid #333;
+                font-weight: bold;
+                font-size: 12px;
+            """)
             bouton.clicked.connect(lambda checked, sym=symbole: self.afficher_infos(sym))
-            grid.addWidget(bouton, *position)
+            self.grid.addWidget(bouton, *position)
 
+        # Légende
         legend_layout = QHBoxLayout()
         for family, color in colors.items():
             color_box = QFrame()
@@ -236,12 +247,11 @@ class TableauPeriodique(QMainWindow):
             legend_layout.addWidget(container)
 
         layout_principal.addLayout(legend_layout)
-        self.setLayout(layout_principal)
 
+    # Les méthodes suivantes restent inchangées
     def update_timer(self):
         self.time_remaining -= 1
         self.timer_label.setText(f"Temps restant : {self.time_remaining}s")
-        
         if self.time_remaining == 0:
             self.timer.stop()
             self.trop_tard()
@@ -266,14 +276,13 @@ class TableauPeriodique(QMainWindow):
         self.score = 0
         self.question_count = 0
         self.score_label.setText(f"Score : {self.score}")
-        self.time_remaining = 30  # Reset du temps pour chaque nouvelle série de questions
+        self.time_remaining = 30
         self.poser_question()
 
     def poser_question(self):
         if self.question_count >= 10:
-            # Fin du quizz après 10 questions
             QMessageBox.information(self, "Quiz terminé ! 🎉", f"Votre score final est : {self.score}/10")
-            return  # Arrêter le quiz
+            return
 
         symbole = random.choice(list(elements.keys()))
         element = elements[symbole]
@@ -285,17 +294,15 @@ class TableauPeriodique(QMainWindow):
             question = f"Quel est le nom de l'élément de numéro atomique <b>{element['num']}</b> ?"
 
         self.reponse_attendue = element["nom"]
-        self.time_remaining = 30  # Reset du timer pour chaque question
+        self.time_remaining = 30
         self.timer.start()
 
         reponse, ok = QInputDialog.getText(self, "Quizz 🎲 (30 sec)", question)
-
         self.timer.stop()
 
         if ok:
             self.verifier_reponse(reponse)
 
-        # Passer à la question suivante
         self.question_count += 1
         self.poser_question()
 
