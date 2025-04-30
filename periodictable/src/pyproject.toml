@@ -6,7 +6,8 @@ build-backend = "hatchling.build"
 name = "periodictable" # name of the installed package
 version = "0.0.1" # version is required
 dependencies = [ # specify the required package dependencies
-    "PyQt5 >= 5.11"
+    "PyQt5 >= 5.11",
+    "pandas"
 ]
 
 [tool.hatch.build.targets.wheel]
