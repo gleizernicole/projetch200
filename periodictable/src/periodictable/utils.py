@@ -375,22 +375,52 @@ class TableauPeriodique(QMainWindow):
         if self.time_remaining == 0:
             self.timer.stop()
             self.trop_tard()
-        
 
+   
+    # In your main TableauPeriodique class
     def afficher_infos(self, symbole):
         element = elements[symbole]
-        info = (
-            f"<b>Nom:</b> {element['nom']}<br>"
-            f"<b>Symbole:</b> {symbole}<br>"
-            f"<b>Numéro atomique:</b> {element['num']}<br>"
-            f"<b>Masse atomique:</b> {element['masse']} u<br>"
-            f"<b>Famille:</b> {element['famille']}<br>"
-            f"<b>État à température ambiante:</b> {element['state']}<br>"
-            f"<b>Configuration électronique:</b> {element['electron_config']}<br>"
-            f"<b>Isotopes courants:</b> {', '.join(element['isotopes'])}"
-        )
-        QMessageBox.information(self, f"Informations sur {symbole}", info)
-
+    
+        dialog = QDialog(self)
+        dialog.setWindowTitle(f"Structure atomique - {element['nom']}")
+        dialog.setFixedSize(600, 700)
+    
+        layout = QVBoxLayout(dialog)
+    
+    # Atomic structure image
+        img_label = QLabel()
+        try:
+            current_dir = os.path.dirname(os.path.abspath(__file__))  # File location
+            img_path = os.path.join(current_dir, "..", "..", "atomic_structures", f"{symbole}.png")
+        
+            if os.path.exists(img_path):
+                pixmap = QPixmap(img_path)
+                img_label.setPixmap(pixmap.scaled(400, 400, 
+                  Qt.KeepAspectRatio, Qt.SmoothTransformation))
+            else:
+                raise FileNotFoundError
+   
+        except Exception as e:
+            img_label.setText(f"<i>Structure de {symbole} non disponible</i>")
+            img_label.setStyleSheet("color: #666; font-size: 14px;")
+    
+        img_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(img_label)
+    
+    # Element information
+        info_text = QLabel(
+            f"<b>{element['nom']} ({symbole})</b><br>"
+            f"Numéro atomique: {element['num']}<br>"
+            f"Masse atomique: {element['masse']} u<br>"
+            f"Famille: {element['famille']}<br>"
+            f"État: {element['state']}<br>"
+            f"Configuration: {element['electron_config']}<br>"
+            f"Isotopes: {', '.join(element['isotopes']}"
+    )
+        info_text.setStyleSheet("font-size: 14px; padding: 15px;")
+        layout.addWidget(info_text)
+    
+        dialog.exec_()
   
     def nettoyer(self, texte):
         texte = ''.join(c for c in unicodedata.normalize('NFD', texte)
