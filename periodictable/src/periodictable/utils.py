@@ -223,13 +223,13 @@ class TableauPeriodique(QMainWindow):
         for symbole, position in positions.items():
             element = elements[symbole]
             bouton = QPushButton(symbole)
-            bouton.setFixedSize(35, 35)  # Make buttons smaller
+            bouton.setFixedSize(50, 50)  # Taille réduite
             couleur = colors.get(element["famille"], "#FFFFFF")
             bouton.setStyleSheet(f"""
                 background-color: {couleur}; 
                 border: 1px solid #333;
                 font-weight: bold;
-                font-size: 10px;  # Smaller font size
+                font-size: 12px;
             """)
             bouton.clicked.connect(lambda checked, sym=symbole: self.afficher_infos(sym))
             self.grid.addWidget(bouton, *position)
