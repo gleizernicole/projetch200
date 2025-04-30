@@ -26,17 +26,26 @@ def create_atomic_structure(symbol, element_data):
     while total_electrons > 0:
         # ... electron drawing code ...
     
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
-    ax.axis('off')
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, 1)
+        ax.axis('off')
     
-    # ====== CORRECT PATH HANDLING ======
-    current_dir = os.path.dirname(os.path.abspath(__file__))  # src/periodictable/
+    # ====== PATH HANDLING WITH DEBUGGING ======
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    print(f"1. Script location: {current_dir}")
+    
     output_dir = os.path.join(current_dir, "..", "..", "atomic_structures")
+    print(f"2. Raw output directory: {output_dir}")
+    
+    output_dir = os.path.normpath(output_dir)  # Normalize path
+    print(f"3. Normalized output directory: {output_dir}")
+    
     os.makedirs(output_dir, exist_ok=True)
+    print(f"4. Directory created/exists: {os.path.exists(output_dir)}")
+    
     output_path = os.path.join(output_dir, f"{symbol}.png")
-    # ===================================
+    print(f"5. Full image path: {output_path}\n")
+    # ==========================================
     
     plt.savefig(output_path, dpi=100, bbox_inches='tight')
     plt.close()
-    print(f"Generated: {output_path}")  # Verification
