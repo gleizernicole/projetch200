@@ -5,129 +5,247 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont
 import sys, random, unicodedata
 
-#  Dictionnaire des éléments 
+# Dictionnaire des éléments complet
 elements = {
-    "H":  {"nom": "Hydrogène", "num": 1, "masse": 1.008, "famille": "non-métal"},
-    "He": {"nom": "Hélium", "num": 2, "masse": 4.0026, "famille": "gaz noble"},
-    "Li": {"nom": "Lithium", "num": 3, "masse": 6.94, "famille": "métal alcalin"},
-    "Be": {"nom": "Béryllium", "num": 4, "masse": 9.0122, "famille": "métal alcalino-terreux"},
-    "B":  {"nom": "Bore", "num": 5, "masse": 10.81, "famille": "métalloïde"},
-    "C":  {"nom": "Carbone", "num": 6, "masse": 12.011, "famille": "non-métal"},
-    "N":  {"nom": "Azote", "num": 7, "masse": 14.007, "famille": "non-métal"},
-    "O":  {"nom": "Oxygène", "num": 8, "masse": 15.999, "famille": "chalcogène"},
-    "F":  {"nom": "Fluor", "num": 9, "masse": 18.998, "famille": "halogène"},
-    "Ne": {"nom": "Néon", "num": 10, "masse": 20.180, "famille": "gaz noble"},
-    "Na": {"nom": "Sodium", "num": 11, "masse": 22.990, "famille": "métal alcalin"},
-    "Mg": {"nom": "Magnésium", "num": 12, "masse": 24.305, "famille": "métal alcalino-terreux"},
-    "Al": {"nom": "Aluminium", "num": 13, "masse": 26.982, "famille": "métal pauvre"},
-    "Si": {"nom": "Silicium", "num": 14, "masse": 28.085, "famille": "métalloïde"},
-    "P":  {"nom": "Phosphore", "num": 15, "masse": 30.974, "famille": "non-métal"},
-    "S":  {"nom": "Soufre", "num": 16, "masse": 32.06, "famille": "chalcogène"},
-    "Cl": {"nom": "Chlore", "num": 17, "masse": 35.45, "famille": "halogène"},
-    "Ar": {"nom": "Argon", "num": 18, "masse": 39.948, "famille": "gaz noble"},
-    "K":  {"nom": "Potassium", "num": 19, "masse": 39.098, "famille": "métal alcalin"},
-    "Ca": {"nom": "Calcium", "num": 20, "masse": 40.078, "famille": "métal alcalino-terreux"},
-    "Sc": {"nom": "Scandium", "num": 21, "masse": 44.956, "famille": "métal de transition"},
-    "Ti": {"nom": "Titane", "num": 22, "masse": 47.867, "famille": "métal de transition"},
-    "V":  {"nom": "Vanadium", "num": 23, "masse": 50.942, "famille": "métal de transition"},
-    "Cr": {"nom": "Chrome", "num": 24, "masse": 51.996, "famille": "métal de transition"},
-    "Mn": {"nom": "Manganèse", "num": 25, "masse": 54.938, "famille": "métal de transition"},
-    "Fe": {"nom": "Fer", "num": 26, "masse": 55.845, "famille": "métal de transition"},
-    "Co": {"nom": "Cobalt", "num": 27, "masse": 58.933, "famille": "métal de transition"},
-    "Ni": {"nom": "Nickel", "num": 28, "masse": 58.693, "famille": "métal de transition"},
-    "Cu": {"nom": "Cuivre", "num": 29, "masse": 63.546, "famille": "métal de transition"},
-    "Zn": {"nom": "Zinc", "num": 30, "masse": 65.38, "famille": "métal de transition"},
-    "Ga": {"nom": "Gallium", "num": 31, "masse": 69.723, "famille": "métal pauvre"},
-    "Ge": {"nom": "Germanium", "num": 32, "masse": 72.630, "famille": "métalloïde"},
-    "As": {"nom": "Arsenic", "num": 33, "masse": 74.922, "famille": "métalloïde"},
-    "Se": {"nom": "Sélénium", "num": 34, "masse": 78.971, "famille": "chalcogène"},
-    "Br": {"nom": "Brome", "num": 35, "masse": 79.904, "famille": "halogène"},
-    "Kr": {"nom": "Krypton", "num": 36, "masse": 83.798, "famille": "gaz noble"},
-    "Rb": {"nom": "Rubidium", "num": 37, "masse": 85.468, "famille": "métal alcalin"},
-    "Sr": {"nom": "Strontium", "num": 38, "masse": 87.62, "famille": "métal alcalino-terreux"},
-    "Y":  {"nom": "Yttrium", "num": 39, "masse": 88.906, "famille": "métal de transition"},
-    "Zr": {"nom": "Zirconium", "num": 40, "masse": 91.224, "famille": "métal de transition"},
-    "Nb": {"nom": "Niobium", "num": 41, "masse": 92.906, "famille": "métal de transition"},
-    "Mo": {"nom": "Molybdène", "num": 42, "masse": 95.95, "famille": "métal de transition"},
-    "Tc": {"nom": "Technétium", "num": 43, "masse": 98, "famille": "métal de transition"},
-    "Ru": {"nom": "Ruthénium", "num": 44, "masse": 101.07, "famille": "métal de transition"},
-    "Rh": {"nom": "Rhodium", "num": 45, "masse": 102.91, "famille": "métal de transition"},
-    "Pd": {"nom": "Palladium", "num": 46, "masse": 106.42, "famille": "métal de transition"},
-    "Ag": {"nom": "Argent", "num": 47, "masse": 107.87, "famille": "métal de transition"},
-    "Cd": {"nom": "Cadmium", "num": 48, "masse": 112.41, "famille": "métal de transition"},
-    "In": {"nom": "Indium", "num": 49, "masse": 114.82, "famille": "métal pauvre"},
-    "Sn": {"nom": "Étain", "num": 50, "masse": 118.71, "famille": "métal pauvre"},
-    "Sb": {"nom": "Antimoine", "num": 51, "masse": 121.76, "famille": "métalloïde"},
-    "Te": {"nom": "Tellure", "num": 52, "masse": 127.60, "famille": "chalcogène"},
-    "I":  {"nom": "Iode", "num": 53, "masse": 126.90, "famille": "halogène"},
-    "Xe": {"nom": "Xénon", "num": 54, "masse": 131.29, "famille": "gaz noble"},
-    "Cs": {"nom": "Césium", "num": 55, "masse": 132.91, "famille": "métal alcalin"},
-    "Ba": {"nom": "Baryum", "num": 56, "masse": 137.33, "famille": "métal alcalino-terreux"},
-    "La": {"nom": "Lanthane", "num": 57, "masse": 138.91, "famille": "lanthanide"},
-    "Ce": {"nom": "Cérium", "num": 58, "masse": 140.12, "famille": "lanthanide"},
-    "Pr": {"nom": "Praséodyme", "num": 59, "masse": 140.91, "famille": "lanthanide"},
-    "Nd": {"nom": "Néodyme", "num": 60, "masse": 144.24, "famille": "lanthanide"},
-    "Pm": {"nom": "Prométhium", "num": 61, "masse": 145, "famille": "lanthanide"},
-    "Sm": {"nom": "Samarium", "num": 62, "masse": 150.36, "famille": "lanthanide"},
-    "Eu": {"nom": "Europium", "num": 63, "masse": 151.98, "famille": "lanthanide"},
-    "Gd": {"nom": "Gadolinium", "num": 64, "masse": 157.25, "famille": "lanthanide"},
-    "Tb": {"nom": "Terbium", "num": 65, "masse": 158.93, "famille": "lanthanide"},
-    "Dy": {"nom": "Dysprosium", "num": 66, "masse": 162.50, "famille": "lanthanide"},
-    "Ho": {"nom": "Holmium", "num": 67, "masse": 164.93, "famille": "lanthanide"},
-    "Er": {"nom": "Erbium", "num": 68, "masse": 167.26, "famille": "lanthanide"},
-    "Tm": {"nom": "Thulium", "num": 69, "masse": 168.93, "famille": "lanthanide"},
-    "Yb": {"nom": "Ytterbium", "num": 70, "masse": 173.04, "famille": "lanthanide"},
-    "Lu": {"nom": "Lutécium", "num": 71, "masse": 175.00, "famille": "lanthanide"},
-    "Hf": {"nom": "Hafnium", "num": 72, "masse": 178.49, "famille": "métal de transition"},
-    "Ta": {"nom": "Tantale", "num": 73, "masse": 180.95, "famille": "métal de transition"},
-    "W":  {"nom": "Wolfram", "num": 74, "masse": 183.84, "famille": "métal de transition"},
-    "Re": {"nom": "Rhénium", "num": 75, "masse": 186.21, "famille": "métal de transition"},
-    "Os": {"nom": "Osmium", "num": 76, "masse": 190.23, "famille": "métal de transition"},
-    "Ir": {"nom": "Iridium", "num": 77, "masse": 192.22, "famille": "métal de transition"},
-    "Pt": {"nom": "Platine", "num": 78, "masse": 195.08, "famille": "métal de transition"},
-    "Au": {"nom": "Or", "num": 79, "masse": 196.97, "famille": "métal de transition"},
-    "Hg": {"nom": "Mercure", "num": 80, "masse": 200.59, "famille": "métal de transition"},
-    "Tl": {"nom": "Thallium", "num": 81, "masse": 204.38, "famille": "métal pauvre"},
-    "Pb": {"nom": "Plomb", "num": 82, "masse": 207.2, "famille": "métal pauvre"},
-    "Bi": {"nom": "Bismuth", "num": 83, "masse": 208.98, "famille": "métal pauvre"},
-    "Po": {"nom": "Polonium", "num": 84, "masse": 209, "famille": "métalloïde"},
-    "At": {"nom": "Astate", "num": 85, "masse": 210, "famille": "halogène"},
-    "Rn": {"nom": "Radon", "num": 86, "masse": 222, "famille": "gaz noble"},
-    "Fr": {"nom": "Francium", "num": 87, "masse": 223, "famille": "métal alcalin"},
-    "Ra": {"nom": "Radium", "num": 88, "masse": 226, "famille": "métal alcalino-terreux"},
-    "Ac": {"nom": "Actinium", "num": 89, "masse": 227, "famille": "actinide"},
-    "Th": {"nom": "Thorium", "num": 90, "masse": 232.04, "famille": "actinide"},
-    "Pa": {"nom": "Protactinium", "num": 91, "masse": 231.04, "famille": "actinide"},
-    "U":  {"nom": "Uranium", "num": 92, "masse": 238.03, "famille": "actinide"},
-    "Np": {"nom": "Neptunium", "num": 93, "masse": 237, "famille": "actinide"},
-    "Pu": {"nom": "Plutonium", "num": 94, "masse": 244, "famille": "actinide"},
-    "Am": {"nom": "Américium", "num": 95, "masse": 243, "famille": "actinide"},
-    "Cm": {"nom": "Curium", "num": 96, "masse": 247, "famille": "actinide"},
-    "Bk": {"nom": "Berkélium", "num": 97, "masse": 247, "famille": "actinide"},
-    "Cf": {"nom": "Californium", "num": 98, "masse": 251, "famille": "actinide"},
-    "Es": {"nom": "Einsteinium", "num": 99, "masse": 252, "famille": "actinide"},
-    "Fm": {"nom": "Fermium", "num": 100, "masse": 257, "famille": "actinide"},
-    "Md": {"nom": "Mendélévium", "num": 101, "masse": 258, "famille": "actinide"},
-    "No": {"nom": "Nobelium", "num": 102, "masse": 259, "famille": "actinide"},
-    "Lr": {"nom": "Lawrencium", "num": 103, "masse": 262, "famille": "actinide"},
-    "Rf": {"nom": "Rutherfordium", "num": 104, "masse": 267, "famille": "métal de transition"},
-    "Db": {"nom": "Dubnium", "num": 105, "masse": 270, "famille": "métal de transition"},
-    "Sg": {"nom": "Seaborgium", "num": 106, "masse": 271, "famille": "métal de transition"},
-    "Bh": {"nom": "Bohrium", "num": 107, "masse": 270, "famille": "métal de transition"},
-    "Hs": {"nom": "Hassium", "num": 108, "masse": 277, "famille": "métal de transition"},
-    "Mt": {"nom": "Meitnérium", "num": 109, "masse": 276, "famille": "métal de transition"},
-    "Ds": {"nom": "Darmstadtium", "num": 110, "masse": 281, "famille": "métal de transition"},
-    "Rg": {"nom": "Roentgénium", "num": 111, "masse": 280, "famille": "métal de transition"},
-    "Cn": {"nom": "Copernicium", "num": 112, "masse": 285, "famille": "métal de transition"},
-    "Nh": {"nom": "Nihonium", "num": 113, "masse": 284, "famille": "métal pauvre"},
-    "Fl": {"nom": "Flérovium", "num": 114, "masse": 289, "famille": "métal pauvre"},
-    "Mc": {"nom": "Moscovium", "num": 115, "masse": 288, "famille": "métal pauvre"},
-    "Lv": {"nom": "Livermorium", "num": 116, "masse": 293, "famille": "métal pauvre"},
-    "Ts": {"nom": "Tennessine", "num": 117, "masse": 294, "famille": "halogène"},
-    "Og": {"nom": "Oganesson", "num": 118, "masse": 294, "famille": "gaz noble"}
+    "H":  {"nom": "Hydrogène", "num": 1, "masse": 1.008, "famille": "non-métal",
+           "state": "Gaz", "electron_config": "1s¹", "isotopes": ["¹H", "²H", "³H"]},
+    "He": {"nom": "Hélium", "num": 2, "masse": 4.0026, "famille": "gaz noble",
+           "state": "Gaz", "electron_config": "1s²", "isotopes": ["³He", "⁴He"]},
+    "Li": {"nom": "Lithium", "num": 3, "masse": 6.94, "famille": "métal alcalin",
+           "state": "Solide", "electron_config": "[He] 2s¹", "isotopes": ["⁶Li", "⁷Li"]},
+    "Be": {"nom": "Béryllium", "num": 4, "masse": 9.0122, "famille": "métal alcalino-terreux",
+           "state": "Solide", "electron_config": "[He] 2s²", "isotopes": ["⁹Be"]},
+    "B":  {"nom": "Bore", "num": 5, "masse": 10.81, "famille": "métalloïde",
+           "state": "Solide", "electron_config": "[He] 2s² 2p¹", "isotopes": ["¹⁰B", "¹¹B"]},
+    "C":  {"nom": "Carbone", "num": 6, "masse": 12.011, "famille": "non-métal",
+           "state": "Solide", "electron_config": "[He] 2s² 2p²", "isotopes": ["¹²C", "¹³C", "¹⁴C"]},
+    "N":  {"nom": "Azote", "num": 7, "masse": 14.007, "famille": "non-métal",
+           "state": "Gaz", "electron_config": "[He] 2s² 2p³", "isotopes": ["¹⁴N", "¹⁵N"]},
+    "O":  {"nom": "Oxygène", "num": 8, "masse": 15.999, "famille": "chalcogène",
+           "state": "Gaz", "electron_config": "[He] 2s² 2p⁴", "isotopes": ["¹⁶O", "¹⁷O", "¹⁸O"]},
+    "F":  {"nom": "Fluor", "num": 9, "masse": 18.998, "famille": "halogène",
+           "state": "Gaz", "electron_config": "[He] 2s² 2p⁵", "isotopes": ["¹⁹F"]},
+    "Ne": {"nom": "Néon", "num": 10, "masse": 20.180, "famille": "gaz noble",
+           "state": "Gaz", "electron_config": "[He] 2s² 2p⁶", "isotopes": ["²⁰Ne", "²¹Ne", "²²Ne"]},
+    "Na": {"nom": "Sodium", "num": 11, "masse": 22.990, "famille": "métal alcalin",
+           "state": "Solide", "electron_config": "[Ne] 3s¹", "isotopes": ["²³Na"]},
+    "Mg": {"nom": "Magnésium", "num": 12, "masse": 24.305, "famille": "métal alcalino-terreux",
+           "state": "Solide", "electron_config": "[Ne] 3s²", "isotopes": ["²⁴Mg", "²⁵Mg", "²⁶Mg"]},
+    "Al": {"nom": "Aluminium", "num": 13, "masse": 26.982, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Ne] 3s² 3p¹", "isotopes": ["²⁷Al"]},
+    "Si": {"nom": "Silicium", "num": 14, "masse": 28.085, "famille": "métalloïde",
+           "state": "Solide", "electron_config": "[Ne] 3s² 3p²", "isotopes": ["²⁸Si", "²⁹Si", "³⁰Si"]},
+    "P":  {"nom": "Phosphore", "num": 15, "masse": 30.974, "famille": "non-métal",
+           "state": "Solide", "electron_config": "[Ne] 3s² 3p³", "isotopes": ["³¹P"]},
+    "S":  {"nom": "Soufre", "num": 16, "masse": 32.06, "famille": "chalcogène",
+           "state": "Solide", "electron_config": "[Ne] 3s² 3p⁴", "isotopes": ["³²S", "³³S", "³⁴S"]},
+    "Cl": {"nom": "Chlore", "num": 17, "masse": 35.45, "famille": "halogène",
+           "state": "Gaz", "electron_config": "[Ne] 3s² 3p⁵", "isotopes": ["³⁵Cl", "³⁷Cl"]},
+    "Ar": {"nom": "Argon", "num": 18, "masse": 39.948, "famille": "gaz noble",
+           "state": "Gaz", "electron_config": "[Ne] 3s² 3p⁶", "isotopes": ["³⁶Ar", "³⁸Ar", "⁴⁰Ar"]},
+    "K":  {"nom": "Potassium", "num": 19, "masse": 39.098, "famille": "métal alcalin",
+           "state": "Solide", "electron_config": "[Ar] 4s¹", "isotopes": ["³⁹K", "⁴⁰K", "⁴¹K"]},
+    "Ca": {"nom": "Calcium", "num": 20, "masse": 40.078, "famille": "métal alcalino-terreux",
+           "state": "Solide", "electron_config": "[Ar] 4s²", "isotopes": ["⁴⁰Ca", "⁴²Ca", "⁴³Ca"]},
+    "Sc": {"nom": "Scandium", "num": 21, "masse": 44.956, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d¹ 4s²", "isotopes": ["⁴⁵Sc"]},
+    "Ti": {"nom": "Titane", "num": 22, "masse": 47.867, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d² 4s²", "isotopes": ["⁴⁶Ti", "⁴⁷Ti", "⁴⁸Ti"]},
+    "V":  {"nom": "Vanadium", "num": 23, "masse": 50.942, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d³ 4s²", "isotopes": ["⁵¹V"]},
+    "Cr": {"nom": "Chrome", "num": 24, "masse": 51.996, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d⁵ 4s¹", "isotopes": ["⁵²Cr", "⁵³Cr"]},
+    "Mn": {"nom": "Manganèse", "num": 25, "masse": 54.938, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d⁵ 4s²", "isotopes": ["⁵⁵Mn"]},
+    "Fe": {"nom": "Fer", "num": 26, "masse": 55.845, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d⁶ 4s²", "isotopes": ["⁵⁴Fe", "⁵⁶Fe", "⁵⁷Fe"]},
+    "Co": {"nom": "Cobalt", "num": 27, "masse": 58.933, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d⁷ 4s²", "isotopes": ["⁵⁹Co"]},
+    "Ni": {"nom": "Nickel", "num": 28, "masse": 58.693, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d⁸ 4s²", "isotopes": ["⁵⁸Ni", "⁶⁰Ni"]},
+    "Cu": {"nom": "Cuivre", "num": 29, "masse": 63.546, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d¹⁰ 4s¹", "isotopes": ["⁶³Cu", "⁶⁵Cu"]},
+    "Zn": {"nom": "Zinc", "num": 30, "masse": 65.38, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Ar] 3d¹⁰ 4s²", "isotopes": ["⁶⁴Zn", "⁶⁶Zn"]},
+    "Ga": {"nom": "Gallium", "num": 31, "masse": 69.723, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Ar] 3d¹⁰ 4s² 4p¹", "isotopes": ["⁶⁹Ga", "⁷¹Ga"]},
+    "Ge": {"nom": "Germanium", "num": 32, "masse": 72.630, "famille": "métalloïde",
+           "state": "Solide", "electron_config": "[Ar] 3d¹⁰ 4s² 4p²", "isotopes": ["⁷⁰Ge", "⁷²Ge"]},
+    "As": {"nom": "Arsenic", "num": 33, "masse": 74.922, "famille": "métalloïde",
+           "state": "Solide", "electron_config": "[Ar] 3d¹⁰ 4s² 4p³", "isotopes": ["⁷⁵As"]},
+    "Se": {"nom": "Sélénium", "num": 34, "masse": 78.971, "famille": "chalcogène",
+           "state": "Solide", "electron_config": "[Ar] 3d¹⁰ 4s² 4p⁴", "isotopes": ["⁷⁴Se", "⁷⁶Se"]},
+    "Br": {"nom": "Brome", "num": 35, "masse": 79.904, "famille": "halogène",
+           "state": "Liquide", "electron_config": "[Ar] 3d¹⁰ 4s² 4p⁵", "isotopes": ["⁷⁹Br", "⁸¹Br"]},
+    "Kr": {"nom": "Krypton", "num": 36, "masse": 83.798, "famille": "gaz noble",
+           "state": "Gaz", "electron_config": "[Ar] 3d¹⁰ 4s² 4p⁶", "isotopes": ["⁷⁸Kr", "⁸⁰Kr"]},
+    "Rb": {"nom": "Rubidium", "num": 37, "masse": 85.468, "famille": "métal alcalin",
+           "state": "Solide", "electron_config": "[Kr] 5s¹", "isotopes": ["⁸⁵Rb", "⁸⁷Rb"]},
+    "Sr": {"nom": "Strontium", "num": 38, "masse": 87.62, "famille": "métal alcalino-terreux",
+           "state": "Solide", "electron_config": "[Kr] 5s²", "isotopes": ["⁸⁴Sr", "⁸⁶Sr"]},
+    "Y":  {"nom": "Yttrium", "num": 39, "masse": 88.906, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d¹ 5s²", "isotopes": ["⁸⁹Y"]},
+    "Zr": {"nom": "Zirconium", "num": 40, "masse": 91.224, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d² 5s²", "isotopes": ["⁹⁰Zr", "⁹¹Zr"]},
+    "Nb": {"nom": "Niobium", "num": 41, "masse": 92.906, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d⁴ 5s¹", "isotopes": ["⁹³Nb"]},
+    "Mo": {"nom": "Molybdène", "num": 42, "masse": 95.95, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d⁵ 5s¹", "isotopes": ["⁹²Mo", "⁹⁴Mo"]},
+    "Tc": {"nom": "Technétium", "num": 43, "masse": 98, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d⁵ 5s²", "isotopes": ["⁹⁷Tc", "⁹⁸Tc"]},
+    "Ru": {"nom": "Ruthénium", "num": 44, "masse": 101.07, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d⁷ 5s¹", "isotopes": ["⁹⁶Ru", "⁹⁸Ru"]},
+    "Rh": {"nom": "Rhodium", "num": 45, "masse": 102.91, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d⁸ 5s¹", "isotopes": ["¹⁰³Rh"]},
+    "Pd": {"nom": "Palladium", "num": 46, "masse": 106.42, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d¹⁰", "isotopes": ["¹⁰²Pd", "¹⁰⁴Pd"]},
+    "Ag": {"nom": "Argent", "num": 47, "masse": 107.87, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s¹", "isotopes": ["¹⁰⁷Ag", "¹⁰⁹Ag"]},
+    "Cd": {"nom": "Cadmium", "num": 48, "masse": 112.41, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s²", "isotopes": ["¹⁰⁶Cd", "¹⁰⁸Cd"]},
+    "In": {"nom": "Indium", "num": 49, "masse": 114.82, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s² 5p¹", "isotopes": ["¹¹³In", "¹¹⁵In"]},
+    "Sn": {"nom": "Étain", "num": 50, "masse": 118.71, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s² 5p²", "isotopes": ["¹¹²Sn", "¹¹⁴Sn"]},
+    "Sb": {"nom": "Antimoine", "num": 51, "masse": 121.76, "famille": "métalloïde",
+           "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s² 5p³", "isotopes": ["¹²¹Sb", "¹²³Sb"]},
+    "Te": {"nom": "Tellure", "num": 52, "masse": 127.60, "famille": "chalcogène",
+           "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s² 5p⁴", "isotopes": ["¹²⁰Te", "¹²²Te"]},
+    "I":  {"nom": "Iode", "num": 53, "masse": 126.90, "famille": "halogène",
+           "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s² 5p⁵", "isotopes": ["¹²⁷I"]},
+    "Xe": {"nom": "Xénon", "num": 54, "masse": 131.29, "famille": "gaz noble",
+           "state": "Gaz", "electron_config": "[Kr] 4d¹⁰ 5s² 5p⁶", "isotopes": ["¹²⁴Xe", "¹²⁶Xe"]},
+    "Cs": {"nom": "Césium", "num": 55, "masse": 132.91, "famille": "métal alcalin",
+           "state": "Solide", "electron_config": "[Xe] 6s¹", "isotopes": ["¹³³Cs"]},
+    "Ba": {"nom": "Baryum", "num": 56, "masse": 137.33, "famille": "métal alcalino-terreux",
+           "state": "Solide", "electron_config": "[Xe] 6s²", "isotopes": ["¹³⁰Ba", "¹³²Ba"]},
+    "La": {"nom": "Lanthane", "num": 57, "masse": 138.91, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 5d¹ 6s²", "isotopes": ["¹³⁸La", "¹³⁹La"]},
+    "Ce": {"nom": "Cérium", "num": 58, "masse": 140.12, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f¹ 5d¹ 6s²", "isotopes": ["¹³⁶Ce", "¹³⁸Ce"]},
+    "Pr": {"nom": "Praséodyme", "num": 59, "masse": 140.91, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f³ 6s²", "isotopes": ["¹⁴¹Pr"]},
+    "Nd": {"nom": "Néodyme", "num": 60, "masse": 144.24, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f⁴ 6s²", "isotopes": ["¹⁴²Nd", "¹⁴³Nd"]},
+    "Pm": {"nom": "Prométhium", "num": 61, "masse": 145, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f⁵ 6s²", "isotopes": ["¹⁴⁵Pm", "¹⁴⁷Pm"]},
+    "Sm": {"nom": "Samarium", "num": 62, "masse": 150.36, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f⁶ 6s²", "isotopes": ["¹⁴⁴Sm", "¹⁴⁸Sm"]},
+    "Eu": {"nom": "Europium", "num": 63, "masse": 151.98, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f⁷ 6s²", "isotopes": ["¹⁵¹Eu", "¹⁵³Eu"]},
+    "Gd": {"nom": "Gadolinium", "num": 64, "masse": 157.25, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f⁷ 5d¹ 6s²", "isotopes": ["¹⁵²Gd", "¹⁵⁴Gd"]},
+    "Tb": {"nom": "Terbium", "num": 65, "masse": 158.93, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f⁹ 6s²", "isotopes": ["¹⁵⁹Tb"]},
+    "Dy": {"nom": "Dysprosium", "num": 66, "masse": 162.50, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁰ 6s²", "isotopes": ["¹⁵⁶Dy", "¹⁵⁸Dy"]},
+    "Ho": {"nom": "Holmium", "num": 67, "masse": 164.93, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f¹¹ 6s²", "isotopes": ["¹⁶⁵Ho"]},
+    "Er": {"nom": "Erbium", "num": 68, "masse": 167.26, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f¹² 6s²", "isotopes": ["¹⁶²Er", "¹⁶⁴Er"]},
+    "Tm": {"nom": "Thulium", "num": 69, "masse": 168.93, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f¹³ 6s²", "isotopes": ["¹⁶⁹Tm"]},
+    "Yb": {"nom": "Ytterbium", "num": 70, "masse": 173.04, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 6s²", "isotopes": ["¹⁶⁸Yb", "¹⁷⁰Yb"]},
+    "Lu": {"nom": "Lutécium", "num": 71, "masse": 175.00, "famille": "lanthanide",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d¹ 6s²", "isotopes": ["¹⁷⁵Lu", "¹⁷⁶Lu"]},
+    "Hf": {"nom": "Hafnium", "num": 72, "masse": 178.49, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d² 6s²", "isotopes": ["¹⁷⁴Hf", "¹⁷⁶Hf"]},
+    "Ta": {"nom": "Tantale", "num": 73, "masse": 180.95, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d³ 6s²", "isotopes": ["¹⁸⁰Ta", "¹⁸¹Ta"]},
+    "W":  {"nom": "Wolfram", "num": 74, "masse": 183.84, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d⁴ 6s²", "isotopes": ["¹⁸²W", "¹⁸³W"]},
+    "Re": {"nom": "Rhénium", "num": 75, "masse": 186.21, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d⁵ 6s²", "isotopes": ["¹⁸⁵Re", "¹⁸⁷Re"]},
+    "Os": {"nom": "Osmium", "num": 76, "masse": 190.23, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d⁶ 6s²", "isotopes": ["¹⁸⁴Os", "¹⁸⁶Os"]},
+    "Ir": {"nom": "Iridium", "num": 77, "masse": 192.22, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d⁷ 6s²", "isotopes": ["¹⁹¹Ir", "¹⁹³Ir"]},
+    "Pt": {"nom": "Platine", "num": 78, "masse": 195.08, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d⁹ 6s¹", "isotopes": ["¹⁹⁴Pt", "¹⁹⁵Pt"]},
+    "Au": {"nom": "Or", "num": 79, "masse": 196.97, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d¹⁰ 6s¹", "isotopes": ["¹⁹⁷Au"]},
+    "Hg": {"nom": "Mercure", "num": 80, "masse": 200.59, "famille": "métal de transition",
+           "state": "Liquide", "electron_config": "[Xe] 4f¹⁴ 5d¹⁰ 6s²", "isotopes": ["¹⁹⁶Hg", "¹⁹⁸Hg"]},
+    "Tl": {"nom": "Thallium", "num": 81, "masse": 204.38, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹", "isotopes": ["²⁰³Tl", "²⁰⁵Tl"]},
+    "Pb": {"nom": "Plomb", "num": 82, "masse": 207.2, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²", "isotopes": ["²⁰⁴Pb", "²⁰⁶Pb"]},
+    "Bi": {"nom": "Bismuth", "num": 83, "masse": 208.98, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³", "isotopes": ["²⁰⁹Bi"]},
+    "Po": {"nom": "Polonium", "num": 84, "masse": 209, "famille": "métalloïde",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴", "isotopes": ["²¹⁰Po"]},
+    "At": {"nom": "Astate", "num": 85, "masse": 210, "famille": "halogène",
+           "state": "Solide", "electron_config": "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵", "isotopes": ["²¹⁰At", "²¹¹At"]},
+    "Rn": {"nom": "Radon", "num": 86, "masse": 222, "famille": "gaz noble",
+           "state": "Gaz", "electron_config": "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶", "isotopes": ["²²²Rn"]},
+    "Fr": {"nom": "Francium", "num": 87, "masse": 223, "famille": "métal alcalin",
+           "state": "Solide", "electron_config": "[Rn] 7s¹", "isotopes": ["²²³Fr"]},
+    "Ra": {"nom": "Radium", "num": 88, "masse": 226, "famille": "métal alcalino-terreux",
+           "state": "Solide", "electron_config": "[Rn] 7s²", "isotopes": ["²²⁶Ra"]},
+    "Ac": {"nom": "Actinium", "num": 89, "masse": 227, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 6d¹ 7s²", "isotopes": ["²²⁷Ac"]},
+    "Th": {"nom": "Thorium", "num": 90, "masse": 232.04, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 6d² 7s²", "isotopes": ["²³²Th"]},
+    "Pa": {"nom": "Protactinium", "num": 91, "masse": 231.04, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f² 6d¹ 7s²", "isotopes": ["²³¹Pa"]},
+    "U":  {"nom": "Uranium", "num": 92, "masse": 238.03, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f³ 6d¹ 7s²", "isotopes": ["²³⁸U"]},
+    "Np": {"nom": "Neptunium", "num": 93, "masse": 237, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f⁴ 6d¹ 7s²", "isotopes": ["²³⁷Np"]},
+    "Pu": {"nom": "Plutonium", "num": 94, "masse": 244, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f⁶ 7s²", "isotopes": ["²³⁹Pu", "²⁴⁰Pu"]},
+    "Am": {"nom": "Américium", "num": 95, "masse": 243, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f⁷ 7s²", "isotopes": ["²⁴¹Am"]},
+    "Cm": {"nom": "Curium", "num": 96, "masse": 247, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f⁷ 6d¹ 7s²", "isotopes": ["²⁴⁴Cm"]},
+    "Bk": {"nom": "Berkélium", "num": 97, "masse": 247, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f⁹ 7s²", "isotopes": ["²⁴⁷Bk"]},
+    "Cf": {"nom": "Californium", "num": 98, "masse": 251, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁰ 7s²", "isotopes": ["²⁵²Cf"]},
+    "Es": {"nom": "Einsteinium", "num": 99, "masse": 252, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f¹¹ 7s²", "isotopes": ["²⁵²Es"]},
+    "Fm": {"nom": "Fermium", "num": 100, "masse": 257, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f¹² 7s²", "isotopes": ["²⁵⁷Fm"]},
+    "Md": {"nom": "Mendélévium", "num": 101, "masse": 258, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f¹³ 7s²", "isotopes": ["²⁵⁸Md"]},
+    "No": {"nom": "Nobelium", "num": 102, "masse": 259, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 7s²", "isotopes": ["²⁵⁹No"]},
+    "Lr": {"nom": "Lawrencium", "num": 103, "masse": 262, "famille": "actinide",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 7s² 7p¹", "isotopes": ["²⁶²Lr"]},
+    "Rf": {"nom": "Rutherfordium", "num": 104, "masse": 267, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d² 7s²", "isotopes": ["²⁶³Rf"]},
+    "Db": {"nom": "Dubnium", "num": 105, "masse": 270, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d³ 7s²", "isotopes": ["²⁶⁸Db"]},
+    "Sg": {"nom": "Seaborgium", "num": 106, "masse": 271, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d⁴ 7s²", "isotopes": ["²⁶⁹Sg"]},
+    "Bh": {"nom": "Bohrium", "num": 107, "masse": 270, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d⁵ 7s²", "isotopes": ["²⁷⁰Bh"]},
+    "Hs": {"nom": "Hassium", "num": 108, "masse": 277, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d⁶ 7s²", "isotopes": ["²⁷⁰Hs"]},
+    "Mt": {"nom": "Meitnérium", "num": 109, "masse": 276, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d⁷ 7s²", "isotopes": ["²⁷⁶Mt"]},
+    "Ds": {"nom": "Darmstadtium", "num": 110, "masse": 281, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d⁸ 7s²", "isotopes": ["²⁸¹Ds"]},
+    "Rg": {"nom": "Roentgénium", "num": 111, "masse": 280, "famille": "métal de transition",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d⁹ 7s²", "isotopes": ["²⁸²Rg"]},
+    "Cn": {"nom": "Copernicium", "num": 112, "masse": 285, "famille": "métal de transition",
+           "state": "Liquide", "electron_config": "[Rn] 5f¹⁴ 6d¹⁰ 7s²", "isotopes": ["²⁸⁵Cn"]},
+    "Nh": {"nom": "Nihonium", "num": 113, "masse": 284, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹", "isotopes": ["²⁸⁴Nh"]},
+    "Fl": {"nom": "Flérovium", "num": 114, "masse": 289, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²", "isotopes": ["²⁸⁹Fl"]},
+    "Mc": {"nom": "Moscovium", "num": 115, "masse": 288, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³", "isotopes": ["²⁸⁸Mc"]},
+    "Lv": {"nom": "Livermorium", "num": 116, "masse": 293, "famille": "métal pauvre",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴", "isotopes": ["²⁹³Lv"]},
+    "Ts": {"nom": "Tennessine", "num": 117, "masse": 294, "famille": "halogène",
+           "state": "Solide", "electron_config": "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵", "isotopes": ["²⁹⁴Ts"]},
+    "Og": {"nom": "Oganesson", "num": 118, "masse": 294, "famille": "gaz noble",
+           "state": "Gaz", "electron_config": "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶", "isotopes": ["²⁹⁴Og"]}
 }
 
-#  Positions dans le tableau périodique 
+# Positions dans le tableau périodique (unchanged)
 positions = {
     "H": (0, 0), "He": (0, 17),
     "Li": (1, 0), "Be": (1, 1), "B": (1, 12), "C": (1, 13), "N": (1, 14), "O": (1, 15), "F": (1, 16), "Ne": (1, 17),
@@ -150,7 +268,7 @@ positions = {
     "Cn": (6, 11), "Nh": (6, 12), "Fl": (6, 13), "Mc": (6, 14), "Lv": (6, 15), "Ts": (6, 16), "Og": (6, 17)
 }
 
-#  Couleurs par famille
+# Couleurs par famille (unchanged)
 colors = {
             "non-métal": "#93C572",
             "métal alcalin": "#FFAAAA",
@@ -211,11 +329,11 @@ class TableauPeriodique(QMainWindow):
         # Zone de défilement pour le tableau
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)  # Add horizontal scrollbar
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         container = QWidget()
         self.grid = QGridLayout(container)
-        self.grid.setSpacing(1)  # Reduce spacing between cells
-        self.grid.setContentsMargins(1, 1, 1, 1)  # Reduce margins
+        self.grid.setSpacing(1)
+        self.grid.setContentsMargins(1, 1, 1, 1)
         scroll.setWidget(container)
         layout_principal.addWidget(scroll)
       
@@ -223,7 +341,7 @@ class TableauPeriodique(QMainWindow):
         for symbole, position in positions.items():
             element = elements[symbole]
             bouton = QPushButton(symbole)
-            bouton.setFixedSize(50, 50)  # Taille réduite
+            bouton.setFixedSize(50, 50)
             couleur = colors.get(element["famille"], "#FFFFFF")
             bouton.setStyleSheet(f"""
                 background-color: {couleur}; 
@@ -251,7 +369,6 @@ class TableauPeriodique(QMainWindow):
 
         layout_principal.addLayout(legend_layout)
 
-    # Les méthodes suivantes restent inchangées
     def update_timer(self):
         self.time_remaining -= 1
         self.timer_label.setText(f"Temps restant : {self.time_remaining}s")
@@ -266,7 +383,10 @@ class TableauPeriodique(QMainWindow):
             f"<b>Symbole:</b> {symbole}<br>"
             f"<b>Numéro atomique:</b> {element['num']}<br>"
             f"<b>Masse atomique:</b> {element['masse']} u<br>"
-            f"<b>Famille:</b> {element['famille']}"
+            f"<b>Famille:</b> {element['famille']}<br>"
+            f"<b>État à température ambiante:</b> {element['state']}<br>"
+            f"<b>Configuration électronique:</b> {element['electron_config']}<br>"
+            f"<b>Isotopes courants:</b> {', '.join(element['isotopes'])}"
         )
         QMessageBox.information(self, f"Informations sur {symbole}", info)
 
@@ -275,11 +395,6 @@ class TableauPeriodique(QMainWindow):
                         if unicodedata.category(c) != 'Mn')
         return texte.lower().replace(" ", "")
 
-    class TableauPeriodique(QMainWindow):
-    def __init__(self):
-        # ... [Keep all previous initialization code unchanged] ...
-
-    # Modified quiz methods
     def lancer_quizz(self):
         self.score = 0
         self.question_count = 0
@@ -308,7 +423,6 @@ class TableauPeriodique(QMainWindow):
         self.time_remaining = 30
         self.timer.start()
 
-        # Create custom dialog
         dialog = QDialog(self)
         dialog.setWindowTitle("Quizz 🎲 (30 sec)")
         layout = QVBoxLayout(dialog)
@@ -325,7 +439,6 @@ class TableauPeriodique(QMainWindow):
         exit_btn = button_box.addButton("Exit Quiz", QDialogButtonBox.HelpRole)
         layout.addWidget(button_box)
 
-        # Connect buttons
         button_box.accepted.connect(dialog.accept)
         button_box.rejected.connect(dialog.reject)
         exit_btn.clicked.connect(lambda: dialog.done(2))
@@ -339,10 +452,10 @@ class TableauPeriodique(QMainWindow):
             self.verifier_reponse(reponse)
             self.question_count += 1
             self.poser_question()
-        elif result == 2:  # Exit Quiz
+        elif result == 2:
             self.quiz_active = False
             QMessageBox.information(self, "Quiz abandonné", f"Score actuel : {self.score}/10")
-        else:  # Another Question
+        else:
             self.question_count += 1
             self.poser_question()
 
@@ -353,10 +466,6 @@ class TableauPeriodique(QMainWindow):
             QMessageBox.information(self, "Bravo ! 🎉", f"Bonne réponse ! ✔️ C'était : {self.reponse_attendue}")
         else:
             QMessageBox.warning(self, "Oups ! 😢", f"Mauvaise réponse ! ❌\nLa bonne réponse était : {self.reponse_attendue}")
-
-    # Keep all other existing methods unchanged
-    # ... [Rest of the methods remain the same] ...
-
 
     def trop_tard(self):
         self.timer.stop()
