@@ -8,10 +8,15 @@ def create_atomic_structure(symbol, element_data):
     fig, ax = plt.subplots(figsize=(3, 3))
     ax.set_aspect('equal')
     
+    # Calculate values from existing data
+    protons = element_data["num"]
+    neutrons = int(round(element_data["masse"])) - protons  # Approximate neutrons
+    electrons = protons  # Neutral atom assumption
+    
     # Nucleus
     ax.add_patch(Circle((0.5, 0.5), 0.1, color='#FF6666', alpha=0.7))
-    ax.text(0.5, 0.53, f'P: {element_data["protons"]}', ha='center', va='center', fontsize=8)
-    ax.text(0.5, 0.47, f'N: {element_data["neutrons"]}', ha='center', va='center', fontsize=8)
+    ax.text(0.5, 0.53, f'P: {protons}', ha='center', va='center', fontsize=8)
+    ax.text(0.5, 0.47, f'N: {neutrons}', ha='center', va='center', fontsize=8)
     
     # Electron configuration
     electron_config = element_data["electron_config"]
@@ -25,7 +30,7 @@ def create_atomic_structure(symbol, element_data):
         7: 32
     }
     
-    total_electrons = element_data["electrons"]
+    total_electrons = electrons
     current_shell = 1
     
     while total_electrons > 0:
