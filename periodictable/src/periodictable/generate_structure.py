@@ -59,9 +59,6 @@ def create_atomic_structure(symbol, element_data):
 
 # Example usage:
 if __name__ == "__main__":
-    test_element = {
-        "num": 1,
-        "masse": 1.008,
-        "electron_config": "1s¹"
-    }
-    create_atomic_structure("H", test_element)
+    for symbol, data in elements.items():
+        create_atomic_structure(symbol, data)
+    print("All atomic structure images generated!")
