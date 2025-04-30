@@ -2,6 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
+from elements_data import elements
 
 def create_atomic_structure(symbol, element_data):
     # Create figure and axis
