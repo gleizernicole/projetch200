@@ -410,7 +410,7 @@ class TableauPeriodique(QMainWindow):
         layout.addWidget(img_label)
     
     # Element information
-        info_text = QLabel(
+        info_text = QLabel((
             f"<b>{element['nom']} ({symbole})</b><br>"
             f"Numéro atomique: {element['num']}<br>"
             f"Masse atomique: {element['masse']} u<br>"
@@ -418,7 +418,7 @@ class TableauPeriodique(QMainWindow):
             f"État: {element['state']}<br>"
             f"Configuration: {element['electron_config']}<br>"
             f"Isotopes: {', '.join(element['isotopes']}"
-    )
+          ))
         info_text.setStyleSheet("font-size: 14px; padding: 15px;")
         layout.addWidget(info_text)
     
