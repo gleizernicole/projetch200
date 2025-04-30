@@ -152,7 +152,7 @@ positions = {
 
 #  Couleurs par famille
 colors = {
-            "non-métal": "#FFFF00",
+            "non-métal": "#93C572",
             "métal alcalin": "#FFAAAA",
             "métal alcalino-terreux": "#FF5555",
             "métal de transition": "#ADD8E6",
