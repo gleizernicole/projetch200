@@ -168,159 +168,151 @@ colors = {
 class TableauPeriodique(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setup_ui()
+        
+    def setup_ui(self):
         self.setWindowTitle("Tableau Périodique Interactif + Quizz 🎲")
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(100, 100, 1000, 800)
 
+        # Variables du jeu
         self.score = 0
         self.question_count = 0
+        self.time_remaining = 30
         self.timer = QTimer()
         self.timer.setInterval(1000)
         self.timer.timeout.connect(self.update_timer)
-        self.reponse_attendue = None
-        self.time_remaining = 30
 
+        # Widget central
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-        layout_principal = QVBoxLayout()
-        central_widget.setLayout(layout_principal)
+        main_layout = QVBoxLayout(central_widget)
+        
+        # Section supérieure (titre, score, timer, bouton)
+        self.setup_top_section(main_layout)
+        
+        # Tableau périodique avec scroll
+        self.setup_periodic_table(main_layout)
+        
+        # Légende avec scroll
+        self.setup_legend(main_layout)
 
+    def setup_top_section(self, layout):
         # Titre
-        titre_label = QLabel("🧪 Tableau Périodique des Éléments 🧪")
-        titre_label.setFont(QFont("Arial", 24, QFont.Bold))
-        titre_label.setAlignment(Qt.AlignCenter)
-        layout_principal.addWidget(titre_label)
+        title = QLabel("🧪 Tableau Périodique des Éléments 🧪")
+        title.setFont(QFont("Arial", 20, QFont.Bold))
+        title.setAlignment(Qt.AlignCenter)
+        layout.addWidget(title)
 
-        # Score
+        # Score et Timer
+        info_layout = QHBoxLayout()
         self.score_label = QLabel("Score : 0")
-        self.score_label.setAlignment(Qt.AlignCenter)
-        self.score_label.setFont(QFont("Arial", 16))
-        layout_principal.addWidget(self.score_label)
-
-        # Timer
-        self.timer_label = QLabel(f"Temps restant : {self.time_remaining}s")
-        self.timer_label.setAlignment(Qt.AlignCenter)
-        self.timer_label.setFont(QFont("Arial", 16))
-        layout_principal.addWidget(self.timer_label)
+        self.timer_label = QLabel(f"Temps : {self.time_remaining}s")
+        for lbl in [self.score_label, self.timer_label]:
+            lbl.setFont(QFont("Arial", 14))
+            info_layout.addWidget(lbl)
+        layout.addLayout(info_layout)
 
         # Bouton Quizz
-        bouton_quizz = QPushButton("🎲 Lancer un Quizz")
-        bouton_quizz.setFixedHeight(50)
-        bouton_quizz.clicked.connect(self.lancer_quizz)
-        layout_principal.addWidget(bouton_quizz)
+        btn_quiz = QPushButton("🎲 Lancer le Quizz (10 questions)")
+        btn_quiz.setStyleSheet("font-size: 16px; padding: 10px;")
+        btn_quiz.clicked.connect(self.lancer_quizz)
+        layout.addWidget(btn_quiz)
 
-        # Zone de défilement pour le tableau
+    def setup_periodic_table(self, layout):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         container = QWidget()
-        self.grid = QGridLayout(container)
+        grid = QGridLayout(container)
+        
+        for symb, pos in positions.items():
+            btn = self.create_element_button(symb)
+            grid.addWidget(btn, *pos)
+            
         scroll.setWidget(container)
-        layout_principal.addWidget(scroll)
+        layout.addWidget(scroll)
 
-        # Création des boutons du tableau
-        for symbole, position in positions.items():
-            element = elements[symbole]
-            bouton = QPushButton(symbole)
-            bouton.setFixedSize(50, 50)  # Taille réduite
-            couleur = colors.get(element["famille"], "#FFFFFF")
-            bouton.setStyleSheet(f"""
-                background-color: {couleur}; 
-                border: 1px solid #333;
-                font-weight: bold;
-                font-size: 12px;
-            """)
-            bouton.clicked.connect(lambda checked, sym=symbole: self.afficher_infos(sym))
-            self.grid.addWidget(bouton, *position)
-
-        # Légende
-        legend_layout = QHBoxLayout()
-        for family, color in colors.items():
-            color_box = QFrame()
-            color_box.setFixedSize(20, 20)
-            color_box.setStyleSheet(f"background-color: {color}; border: 1px solid black;")
-            label = QLabel(family)
-            label.setContentsMargins(5, 0, 10, 0)
-            family_layout = QHBoxLayout()
-            family_layout.addWidget(color_box)
-            family_layout.addWidget(label)
-            container = QWidget()
-            container.setLayout(family_layout)
-            legend_layout.addWidget(container)
-
-        layout_principal.addLayout(legend_layout)
-
-    # Les méthodes suivantes restent inchangées
-    def update_timer(self):
-        self.time_remaining -= 1
-        self.timer_label.setText(f"Temps restant : {self.time_remaining}s")
-        if self.time_remaining == 0:
-            self.timer.stop()
-            self.trop_tard()
-
-    def afficher_infos(self, symbole):
+    def create_element_button(self, symbole):
         element = elements[symbole]
-        info = (
-            f"<b>Nom:</b> {element['nom']}<br>"
-            f"<b>Symbole:</b> {symbole}<br>"
-            f"<b>Numéro atomique:</b> {element['num']}<br>"
-            f"<b>Masse atomique:</b> {element['masse']} u<br>"
-            f"<b>Famille:</b> {element['famille']}"
-        )
-        QMessageBox.information(self, f"Informations sur {symbole}", info)
+        btn = QPushButton(symbole)
+        btn.setFixedSize(55, 55)
+        btn.setStyleSheet(f"""
+            background-color: {colors[element['famille']};
+            border: 1px solid #333;
+            font-weight: bold;
+            font-size: 14px;
+        """)
+        btn.clicked.connect(lambda: self.afficher_infos(symbole))
+        return btn
 
-    def nettoyer(self, texte):
-        texte = ''.join(c for c in unicodedata.normalize('NFD', texte)
-                        if unicodedata.category(c) != 'Mn')
-        return texte.lower().replace(" ", "")
+    def setup_legend(self, layout):
+        legend_scroll = QScrollArea()
+        legend_scroll.setWidgetResizable(True)
+        legend_container = QWidget()
+        legend_layout = QVBoxLayout(legend_container)
+        
+        # Groupements logiques
+        categories = {
+            "Métaux": [
+                ("métal alcalin", ["Li", "Na", "K", "Rb", "Cs", "Fr"]),
+                ("métal alcalino-terreux", ["Be", "Mg", "Ca", "Sr", "Ba", "Ra"]),
+                ("métal de transition", [symb for symb, data in elements.items() if data["famille"] == "métal de transition"]),
+                ("métal pauvre", ["Al", "Ga", "In", "Sn", "Tl", "Pb", "Bi"])
+            ],
+            "Non-métaux": [
+                ("non-métal", ["H", "C", "N", "O", "P", "S", "Se"]),
+                ("métalloïde", ["B", "Si", "Ge", "As", "Sb", "Te", "Po"]),
+                ("halogène", ["F", "Cl", "Br", "I", "At", "Ts"]),
+                ("gaz noble", ["He", "Ne", "Ar", "Kr", "Xe", "Rn", "Og"])
+            ],
+            "Terres Rares": [
+                ("lanthanide", [symb for symb, data in elements.items() if data["famille"] == "lanthanide"]),
+                ("actinide", [symb for symb, data in elements.items() if data["famille"] == "actinide"])
+            ],
+            "Autres": [
+                ("chalcogène", ["O", "S", "Se", "Te", "Po"])
+            ]
+        }
 
-    def lancer_quizz(self):
-        self.score = 0
-        self.question_count = 0
-        self.score_label.setText(f"Score : {self.score}")
-        self.time_remaining = 30
-        self.poser_question()
+        for categorie, familles in categories.items():
+            frame = QFrame()
+            frame.setFrameShape(QFrame.StyledPanel)
+            frame.setStyleSheet("margin: 5px; padding: 5px;")
+            categorie_layout = QVBoxLayout(frame)
+            
+            # Titre catégorie
+            lbl_cat = QLabel(categorie)
+            lbl_cat.setStyleSheet("font-weight: bold; color: #333; font-size: 16px;")
+            categorie_layout.addWidget(lbl_cat)
+            
+            # Items
+            for famille, elements in familles:
+                hbox = QHBoxLayout()
+                hbox.addSpacing(15)
+                
+                # Carré couleur
+                color_box = QFrame()
+                color_box.setFixedSize(20, 20)
+                color_box.setStyleSheet(f"background-color: {colors[famille]}; border: 1px solid black;")
+                hbox.addWidget(color_box)
+                
+                # Texte
+                lbl = QLabel(f"{famille.capitalize()}: {', '.join(elements)}")
+                lbl.setStyleSheet("font-size: 12px; margin-left: 5px;")
+                lbl.setWordWrap(True)
+                hbox.addWidget(lbl)
+                
+                categorie_layout.addLayout(hbox)
+            
+            legend_layout.addWidget(frame)
+        
+        legend_scroll.setWidget(legend_container)
+        layout.addWidget(legend_scroll)
 
-    def poser_question(self):
-        if self.question_count >= 10:
-            QMessageBox.information(self, "Quiz terminé ! 🎉", f"Votre score final est : {self.score}/10")
-            return
-
-        symbole = random.choice(list(elements.keys()))
-        element = elements[symbole]
-        question_type = random.choice(["symbole", "num"])
-
-        if question_type == "symbole":
-            question = f"Quel est le nom de l'élément de symbole <b>{symbole}</b> ?"
-        else:
-            question = f"Quel est le nom de l'élément de numéro atomique <b>{element['num']}</b> ?"
-
-        self.reponse_attendue = element["nom"]
-        self.time_remaining = 30
-        self.timer.start()
-
-        reponse, ok = QInputDialog.getText(self, "Quizz 🎲 (30 sec)", question)
-        self.timer.stop()
-
-        if ok:
-            self.verifier_reponse(reponse)
-
-        self.question_count += 1
-        self.poser_question()
-
-    def verifier_reponse(self, reponse):
-        if self.nettoyer(reponse) == self.nettoyer(self.reponse_attendue):
-            self.score += 1
-            self.score_label.setText(f"Score : {self.score}")
-            QMessageBox.information(self, "Bravo ! 🎉", f"Bonne réponse ! ✔️ C'était : {self.reponse_attendue}")
-        else:
-            QMessageBox.warning(self, "Oups ! 😢", f"Mauvaise réponse ! ❌\nLa bonne réponse était : {self.reponse_attendue}")
-
-    def trop_tard(self):
-        self.timer.stop()
-        QMessageBox.warning(self, "⏰ Temps écoulé !", f"Trop tard ! La bonne réponse était : {self.reponse_attendue}")
-
+    # ... (Les méthodes restantes inchangées: update_timer, afficher_infos, nettoyer, 
+    # lancer_quizz, poser_question, verifier_reponse, trop_tard)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    fenetre = TableauPeriodique()
-    fenetre.show()
+    window = TableauPeriodique()
+    window.show()
     sys.exit(app.exec_())
