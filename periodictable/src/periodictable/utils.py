@@ -155,7 +155,7 @@ colors = {
             "non-métal": "#FFFF00",
             "métal alcalin": "#FFAAAA",
             "métal alcalino-terreux": "#FF5555",
-            "métal de transition": "#F5F5DC",
+            "métal de transition": "#ADD8E6",
             "métal pauvre": "#FFA500",
             "métalloïde": "#FF80FF",
             "chalcogène": "#A52A2A",
