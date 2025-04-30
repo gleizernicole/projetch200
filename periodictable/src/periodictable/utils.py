@@ -275,16 +275,24 @@ class TableauPeriodique(QMainWindow):
                         if unicodedata.category(c) != 'Mn')
         return texte.lower().replace(" ", "")
 
+    class TableauPeriodique(QMainWindow):
+    def __init__(self):
+        # ... [Keep all previous initialization code unchanged] ...
+
+    # Modified quiz methods
     def lancer_quizz(self):
         self.score = 0
         self.question_count = 0
         self.score_label.setText(f"Score : {self.score}")
         self.time_remaining = 30
+        self.quiz_active = True
         self.poser_question()
 
     def poser_question(self):
-        if self.question_count >= 10:
-            QMessageBox.information(self, "Quiz terminé ! 🎉", f"Votre score final est : {self.score}/10")
+        if not self.quiz_active or self.question_count >= 10:
+            if self.quiz_active:
+                QMessageBox.information(self, "Quiz terminé ! 🎉", f"Score final : {self.score}/10")
+            self.quiz_active = False
             return
 
         symbole = random.choice(list(elements.keys()))
@@ -300,14 +308,43 @@ class TableauPeriodique(QMainWindow):
         self.time_remaining = 30
         self.timer.start()
 
-        reponse, ok = QInputDialog.getText(self, "Quizz 🎲 (30 sec)", question)
+        # Create custom dialog
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Quizz 🎲 (30 sec)")
+        layout = QVBoxLayout(dialog)
+        
+        question_label = QLabel(question)
+        layout.addWidget(question_label)
+        
+        self.answer_input = QLineEdit()
+        layout.addWidget(self.answer_input)
+        
+        button_box = QDialogButtonBox()
+        submit_btn = button_box.addButton("Submit", QDialogButtonBox.AcceptRole)
+        another_btn = button_box.addButton("Another Question", QDialogButtonBox.RejectRole)
+        exit_btn = button_box.addButton("Exit Quiz", QDialogButtonBox.HelpRole)
+        layout.addWidget(button_box)
+
+        # Connect buttons
+        button_box.accepted.connect(dialog.accept)
+        button_box.rejected.connect(dialog.reject)
+        exit_btn.clicked.connect(lambda: dialog.done(2))
+
+        result = dialog.exec_()
+        
         self.timer.stop()
-
-        if ok:
+        
+        if result == QDialog.Accepted:
+            reponse = self.answer_input.text()
             self.verifier_reponse(reponse)
-
-        self.question_count += 1
-        self.poser_question()
+            self.question_count += 1
+            self.poser_question()
+        elif result == 2:  # Exit Quiz
+            self.quiz_active = False
+            QMessageBox.information(self, "Quiz abandonné", f"Score actuel : {self.score}/10")
+        else:  # Another Question
+            self.question_count += 1
+            self.poser_question()
 
     def verifier_reponse(self, reponse):
         if self.nettoyer(reponse) == self.nettoyer(self.reponse_attendue):
@@ -316,6 +353,10 @@ class TableauPeriodique(QMainWindow):
             QMessageBox.information(self, "Bravo ! 🎉", f"Bonne réponse ! ✔️ C'était : {self.reponse_attendue}")
         else:
             QMessageBox.warning(self, "Oups ! 😢", f"Mauvaise réponse ! ❌\nLa bonne réponse était : {self.reponse_attendue}")
+
+    # Keep all other existing methods unchanged
+    # ... [Rest of the methods remain the same] ...
+
 
     def trop_tard(self):
         self.timer.stop()
