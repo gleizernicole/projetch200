@@ -211,26 +211,29 @@ class TableauPeriodique(QMainWindow):
         # Zone de défilement pour le tableau
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)  # Add horizontal scrollbar
         container = QWidget()
         self.grid = QGridLayout(container)
+        self.grid.setSpacing(1)  # Reduce spacing between cells
+        self.grid.setContentsMargins(1, 1, 1, 1)  # Reduce margins
         scroll.setWidget(container)
         layout_principal.addWidget(scroll)
-
+      
         # Création des boutons du tableau
         for symbole, position in positions.items():
             element = elements[symbole]
             bouton = QPushButton(symbole)
-            bouton.setFixedSize(50, 50)  # Taille réduite
+            bouton.setFixedSize(35, 35)  # Make buttons smaller
             couleur = colors.get(element["famille"], "#FFFFFF")
             bouton.setStyleSheet(f"""
                 background-color: {couleur}; 
                 border: 1px solid #333;
                 font-weight: bold;
-                font-size: 12px;
+                font-size: 10px;  # Smaller font size
             """)
             bouton.clicked.connect(lambda checked, sym=symbole: self.afficher_infos(sym))
             self.grid.addWidget(bouton, *position)
-
+          
         # Légende
         legend_layout = QHBoxLayout()
         for family, color in colors.items():
