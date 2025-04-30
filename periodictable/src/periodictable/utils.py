@@ -159,8 +159,8 @@ colors = {
             "métal pauvre": "#FFA500",
             "métalloïde": "#FF80FF",
             "chalcogène": "#A52A2A",
-            "halogène": "#80FFFF",
-            "gaz noble": "#00FF00",
+            "halogène": "#7B68EE",
+            "gaz noble": "#00A36C",
             "lanthanide": "#00CCFF",
             "actinide": "#CCCCCC"
         }
