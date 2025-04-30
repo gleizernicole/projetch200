@@ -8,28 +8,18 @@ def create_atomic_structure(symbol, element_data):
     fig, ax = plt.subplots(figsize=(3, 3))
     ax.set_aspect('equal')
     
-    # Calculate values from existing data
+    # Calculate values
     protons = element_data["num"]
-    neutrons = int(round(element_data["masse"])) - protons  # Approximate neutrons
-    electrons = protons  # Neutral atom assumption
+    neutrons = int(round(element_data["masse"])) - protons
+    electrons = protons
     
     # Nucleus
     ax.add_patch(Circle((0.5, 0.5), 0.1, color='#FF6666', alpha=0.7))
     ax.text(0.5, 0.53, f'P: {protons}', ha='center', va='center', fontsize=8)
     ax.text(0.5, 0.47, f'N: {neutrons}', ha='center', va='center', fontsize=8)
     
-    # Electron configuration
-    electron_config = element_data["electron_config"]
-    shells = {
-        1: 2,
-        2: 8,
-        3: 8,
-        4: 18,
-        5: 18,
-        6: 32,
-        7: 32
-    }
-    
+    # Electron shells
+    shells = {1: 2, 2: 8, 3: 8, 4: 18, 5: 18, 6: 32, 7: 32}
     total_electrons = electrons
     current_shell = 1
     
@@ -51,9 +41,15 @@ def create_atomic_structure(symbol, element_data):
     ax.set_ylim(0, 1)
     ax.axis('off')
     
-    os.makedirs("atomic_structures", exist_ok=True)
-    plt.savefig(f"atomic_structures/{symbol}.png", dpi=100, bbox_inches='tight')
+    # Create full path to target directory
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    target_dir = os.path.join(project_root, "periodictable", "atomic_structures")
+    os.makedirs(target_dir, exist_ok=True)
+    
+    output_path = os.path.join(target_dir, f"{symbol}.png")
+    plt.savefig(output_path, dpi=100, bbox_inches='tight')
     plt.close()
+    print(f"Saved: {output_path}")  # Verification output
 
 if __name__ == "__main__":
     for symbol, data in elements.items():
