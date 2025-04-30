@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QLabel, QPushBut
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont
 import sys, random, unicodedata
+import os 
+import QPixmap
 
 # Dictionnaire des éléments complet
 elements = {
