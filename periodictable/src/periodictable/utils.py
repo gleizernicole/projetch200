@@ -324,12 +324,3 @@ if __name__ == "__main__":
     fenetre = TableauPeriodique()
     fenetre.show()
     sys.exit(app.exec_())
-
-    # ... (Les méthodes restantes inchangées: update_timer, afficher_infos, nettoyer, 
-    # lancer_quizz, poser_question, verifier_reponse, trop_tard)
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = TableauPeriodique()
-    window.show()
-    sys.exit(app.exec_())
