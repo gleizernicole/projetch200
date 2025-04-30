@@ -211,29 +211,29 @@ class TableauPeriodique(QMainWindow):
         # Zone de défilement pour le tableau
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)  # Add horizontal scrollbar
         container = QWidget()
         self.grid = QGridLayout(container)
-        self.grid.setSpacing(1)
-        self.grid.setContentsMargins(1, 1, 1, 1)
+        self.grid.setSpacing(1)  # Reduce spacing between cells
+        self.grid.setContentsMargins(1, 1, 1, 1)  # Reduce margins
         scroll.setWidget(container)
         layout_principal.addWidget(scroll)
-
+      
         # Création des boutons du tableau
         for symbole, position in positions.items():
             element = elements[symbole]
             bouton = QPushButton(symbole)
-            bouton.setFixedSize(35, 35)
+            bouton.setFixedSize(50, 50)  # Taille réduite
             couleur = colors.get(element["famille"], "#FFFFFF")
             bouton.setStyleSheet(f"""
                 background-color: {couleur}; 
                 border: 1px solid #333;
                 font-weight: bold;
-                font-size: 10px;
+                font-size: 12px;
             """)
             bouton.clicked.connect(lambda checked, sym=symbole: self.afficher_infos(sym))
             self.grid.addWidget(bouton, *position)
-
+          
         # Légende
         legend_layout = QHBoxLayout()
         for family, color in colors.items():
@@ -251,7 +251,7 @@ class TableauPeriodique(QMainWindow):
 
         layout_principal.addLayout(legend_layout)
 
-    # Keep all existing methods below unchanged
+    # Les méthodes suivantes restent inchangées
     def update_timer(self):
         self.time_remaining -= 1
         self.timer_label.setText(f"Temps restant : {self.time_remaining}s")
@@ -320,3 +320,10 @@ class TableauPeriodique(QMainWindow):
     def trop_tard(self):
         self.timer.stop()
         QMessageBox.warning(self, "⏰ Temps écoulé !", f"Trop tard ! La bonne réponse était : {self.reponse_attendue}")
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    fenetre = TableauPeriodique()
+    fenetre.show()
+    sys.exit(app.exec_())
