@@ -30,13 +30,13 @@ def create_atomic_structure(symbol, element_data):
     ax.set_ylim(0, 1)
     ax.axis('off')
     
-    # ======== PATH HANDLING GOES HERE ========
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    output_dir = os.path.join(current_dir, "..", "..", "..", "atomic_structures")
+    # ====== CORRECT PATH HANDLING ======
+    current_dir = os.path.dirname(os.path.abspath(__file__))  # src/periodictable/
+    output_dir = os.path.join(current_dir, "..", "..", "atomic_structures")
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, f"{symbol}.png")
-    # =========================================
+    # ===================================
     
-    # Save and close
     plt.savefig(output_path, dpi=100, bbox_inches='tight')
     plt.close()
+    print(f"Generated: {output_path}")  # Verification
