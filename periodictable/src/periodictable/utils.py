@@ -379,64 +379,18 @@ class TableauPeriodique(QMainWindow):
 
     def afficher_infos(self, symbole):
         element = elements[symbole]
-    
-    # Create custom dialog
-      dialog = QDialog(self)
-      dialog.setWindowTitle(f"Structure atomique - {element['nom']}")
-      dialog.setFixedSize(600, 700)  # Increased size for better visibility
-    
-      main_layout = QVBoxLayout(dialog)
-    
-    # Atomic structure image
-      img_label = QLabel()
-      try:
-        # Get correct path for atomic structure image
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        img_path = os.path.join(current_dir, "..", "..", "atomic_structures", f"{symbole}.png")
-        
-        pixmap = QPixmap(img_path)
-        if pixmap.isNull():
-            raise FileNotFoundError
-        img_label.setPixmap(pixmap.scaled(400, 400, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-      except Exception as e:
-        img_label.setText("Image non disponible")
-        print(f"Error loading image: {str(e)}")
-    
-      img_label.setAlignment(Qt.AlignCenter)
-      main_layout.addWidget(img_label)
-    
-    # Element information
-      info_text = QLabel(
-        f"<b style='font-size:14pt'>{element['nom']} ({symbole})</b><br><br>"
-        f"<b>Numéro atomique:</b> {element['num']}<br>"
-        f"<b>Masse atomique:</b> {element['masse']} u<br>"
-        f"<b>Famille:</b> {element['famille']}<br>"
-        f"<b>État:</b> {element['state']}<br>"
-        f"<b>Configuration électronique:</b> {element['electron_config']}<br>"
-        f"<b>Isotopes courants:</b> {', '.join(element['isotopes'])}"
-    )
-      info_text.setStyleSheet("font-size: 12pt;")
-      info_text.setAlignment(Qt.AlignLeft)
-      main_layout.addWidget(info_text)
-    
-    # Close button
-      btn_close = QPushButton("Fermer")
-      btn_close.clicked.connect(dialog.accept)
-      btn_close.setStyleSheet("""
-        QPushButton {
-            font-size: 14pt;
-            padding: 10px;
-            background-color: #0078D4;
-            color: white;
-            border-radius: 5px;
-        }
-        QPushButton:hover {
-            background-color: #006CBB;
-        }
-    """)
-      main_layout.addWidget(btn_close)
-    
-      dialog.exec_()
+        info = (
+            f"<b>Nom:</b> {element['nom']}<br>"
+            f"<b>Symbole:</b> {symbole}<br>"
+            f"<b>Numéro atomique:</b> {element['num']}<br>"
+            f"<b>Masse atomique:</b> {element['masse']} u<br>"
+            f"<b>Famille:</b> {element['famille']}<br>"
+            f"<b>État à température ambiante:</b> {element['state']}<br>"
+            f"<b>Configuration électronique:</b> {element['electron_config']}<br>"
+            f"<b>Isotopes courants:</b> {', '.join(element['isotopes'])}"
+        )
+        QMessageBox.information(self, f"Informations sur {symbole}", info)
+
   
     def nettoyer(self, texte):
         texte = ''.join(c for c in unicodedata.normalize('NFD', texte)
