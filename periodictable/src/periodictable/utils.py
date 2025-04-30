@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QLabel, QPushButton,
                              QGridLayout, QMessageBox, QHBoxLayout, QFrame, QInputDialog, 
-                             QApplication, QScrollArea)
+                             QApplication, QScrollArea, QDialog, QLineEdit, QDialogButtonBox)
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont
 import sys, random, unicodedata
