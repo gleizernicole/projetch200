@@ -7,6 +7,28 @@ from scipy.special import sph_harm
 from matplotlib import cm
 from elements_data import elements
 
+# Orbital configuration parser
+def parse_electron_config(config):
+    orbitals = []
+    config = re.sub(r'\[.*?\]\s*', '', config)  # Remove noble gas notation
+    matches = re.findall(r'(\d)([spdf])(\^?\d+)?', config)
+    
+    for n, l_type, electrons in matches:
+        n = int(n)
+        l = {'s':0, 'p':1, 'd':2, 'f':3}[l_type]
+        electrons = int(electrons.replace('^','')) if electrons else 2*(2*l+1)
+        
+        # Handle different m values
+        for m in range(-l, l+1):
+            orbitals.append({
+                'n': n,
+                'l': l,
+                'm': m,
+                'electrons': electrons/(2*l+1)  # Distribute electrons across m values
+            })
+    
+    return orbitals
+
 def create_scientific_orbital_image(symbol, element_data):
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
