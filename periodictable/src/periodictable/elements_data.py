@@ -274,3 +274,62 @@ colors = {
             "lanthanide": "#00CCFF",
             "actinide": "#CCCCCC"
         }
+
+production_methods = {
+    # Group 1 (Alkali Metals)
+    "Li": [
+        "2 LiCl(l) → 2 Li(l) + Cl₂(g) (Electrolysis of molten LiCl)"
+    ],
+    "Na": [
+        "2 NaCl(l) → 2 Na(l) + Cl₂(g) (Downs process electrolysis)"
+    ],
+    "K": [
+        "2 KCl(l) → 2 K(l) + Cl₂(g) (Electrolysis)",
+        "Na(l) + KCl(l) → K(g) + NaCl(l) (Thermal process)"
+    ],
+    
+    # Group 2 (Alkaline Earth)
+    "Be": [
+        "BeF₂ + Mg → Be + MgF₂ (Reduction)"
+    ],
+    "Mg": [
+        "MgCl₂(l) → Mg(l) + Cl₂(g) (Electrolysis)"
+    ],
+    "Ca": [
+        "CaO + Al → Ca + Al₂O₃ (Reduction)"
+    ],
+    
+    # Group 13-18 (p-block)
+    "B": [
+        "2 B₂O₃ + 7 C → 4 B + 3 CO₂ (Reduction with carbon)"
+    ],
+    "C": [
+        "Coke production: Coal → Coke (Pyrolysis)",
+        "CO₂ + 2 H₂ → CH₃OH (Methanol synthesis)"
+    ],
+    "N": [
+        "N₂ + 3 H₂ ⇌ 2 NH₃ (Haber process)"
+    ],
+    "O": [
+        "2 H₂O → 2 H₂ + O₂ (Electrolysis)",
+        "2 KClO₃ → 2 KCl + 3 O₂ (Thermal decomposition)"
+    ],
+    "F": [
+        "2 KHF₂ → 2 KF + H₂ + F₂ (Electrolysis)"
+    ],
+    "Al": [
+        "2 Al₂O₃ + 3 C → 4 Al + 3 CO₂ (Hall-Héroult process)"
+    ],
+    "Si": [
+        "SiO₂ + 2 C → Si + 2 CO (Electric arc furnace)"
+    ],
+    "P": [
+        "2 Ca₃(PO₄)₂ + 6 SiO₂ + 10 C → 6 CaSiO₃ + 10 CO + P₄ (Blast furnace)"
+    ],
+    "S": [
+        "2 H₂S + 3 O₂ → 2 H₂O + 2 SO₂ (Claus process)"
+    ],
+    "Cl": [
+        "2 NaCl + 2 H₂O → Cl₂ + H₂ + 2 NaOH (Chlor-alkali process)"
+    ]
+}
