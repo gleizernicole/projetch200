@@ -158,8 +158,6 @@ class PeriodicTableApp(QMainWindow):
 
     def start_quiz(self):
         """Initialize and start a new quiz session"""
-        def start_quiz(self):
-        """Initialize and start a new quiz session"""
         # Get quiz format from user
         quiz_type, ok = QInputDialog.getItem(
             self, "Quiz Format", "Choose quiz format:",
