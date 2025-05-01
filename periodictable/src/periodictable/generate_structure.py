@@ -7,31 +7,24 @@ from scipy.special import sph_harm
 from matplotlib import cm
 from elements_data import elements
 
-# Enhanced orbital configuration parser
+# Orbital configuration parser
 def parse_electron_config(config):
     orbitals = []
     config = re.sub(r'\[.*?\]\s*', '', config)  # Remove noble gas notation
-    pattern = r'(\d{1,2})([spdf])(\^{0,1})(\d{1,2})|(\[[A-Z][a-z]+\])'
-    matches = re.findall(pattern, config)
+    matches = re.findall(r'(\d)([spdf])(\^?\d+)?', config)
     
-    for match in matches:
-        if match[4]:  # Skip noble gas notation
-            continue
-        n = int(match[0])
-        l = {'s':0, 'p':1, 'd':2, 'f':3}[match[1]]
-        electrons = int(match[3]) if match[3] else 2*(2*l+1)
+    for n, l_type, electrons in matches:
+        n = int(n)
+        l = {'s':0, 'p':1, 'd':2, 'f':3}[l_type]
+        electrons = int(electrons.replace('^','')) if electrons else 2*(2*l+1)
         
-        # Relativistic correction for heavy elements
-        if n >= 6 and l == 2:  # 6d orbitals
-            n -= 0.4  # Adjust for relativistic contraction
-        
-        # Distribute electrons across m values
+        # Handle different m values
         for m in range(-l, l+1):
             orbitals.append({
                 'n': n,
                 'l': l,
                 'm': m,
-                'electrons': electrons/(2*l+1)
+                'electrons': electrons/(2*l+1)  # Distribute electrons across m values
             })
     
     return orbitals
@@ -60,89 +53,57 @@ def create_scientific_orbital_image(symbol, element_data):
         # Calculate spherical harmonic
         Y = sph_harm(m, l, theta, phi)
         r = np.abs(Y.real)
+        r = r / r.max() * n * 0.7
         
-        # Relativistic scaling factor
-        if element_data["num"] > 88:
-            scale_factor = 0.7 * (1 - (element_data["num"] - 88)/50)
-        else:
-            scale_factor = 0.7
+        # Generate wireframe
+        x = r * np.sin(phi) * np.cos(theta)
+        y = r * np.sin(phi) * np.sin(theta)
+        z = r * np.cos(phi)
         
-        r = r / r.max() * n * scale_factor
+        ax.plot_wireframe(x, y, z, 
+                        color=colors[['s','p','d','f'][l]],
+                        linewidth=0.8,
+                        alpha=0.7)
         
-        # Generate wireframe with m-value colors
-        m_colors = {
-            -2: '#004d00', -1: '#008000',
-            0: '#00b300', 1: '#00e600',
-            2: '#1aff1a'
-        } if l == 2 else colors[['s','p','d','f'][l]]
-        
-        ax.plot_wireframe(
-            r * np.sin(phi) * np.cos(theta),
-            r * np.sin(phi) * np.sin(theta),
-            r * np.cos(phi),
-            color=m_colors if isinstance(m_colors, str) else m_colors[m],
-            linewidth=0.8,
-            alpha=0.7
-        )
-        
-        # Add electrons with position variation
+        # Add electrons
         if electron_count > 0:
+            # Initialize electron positions
             ex, ey, ez = np.array([]), np.array([]), np.array([])
             
-            if l == 0:  # s-orbital
+            # s-orbital (spherical)
+            if l == 0:  
                 angles = np.linspace(0, 2*np.pi, max(2, electron_count))
-                ex = n * scale_factor * np.cos(angles)
-                ey = n * scale_factor * np.sin(angles)
+                ex = n * 0.7 * np.cos(angles)
+                ey = n * 0.7 * np.sin(angles)
                 ez = np.zeros_like(ex)
             
-            elif l == 1:  # p-orbital
+            # p-orbital (axis-aligned)
+            elif l == 1:  
                 axis = [[1,0,0], [0,1,0], [0,0,1]][m+1]
-                ex = n * scale_factor * np.array([axis[0]] * electron_count)
-                ey = n * scale_factor * np.array([axis[1]] * electron_count)
-                ez = n * scale_factor * np.array([axis[2]] * electron_count)
+                ex = n * 0.7 * np.array([axis[0]] * electron_count)
+                ey = n * 0.7 * np.array([axis[1]] * electron_count)
+                ez = n * 0.7 * np.array([axis[2]] * electron_count)
             
-            elif l == 2:  # d-orbital
-                # Electron count-specific positioning
-                if electron_count == 1:
-                    angles = [np.pi/2]
-                elif electron_count == 2:
-                    angles = [0, np.pi]
-                elif electron_count == 3:
-                    angles = [0, 2*np.pi/3, 4*np.pi/3]
-                elif electron_count == 4:
-                    angles = [0, np.pi/2, np.pi, 3*np.pi/2]
-                elif electron_count == 5:
-                    angles = np.linspace(0, 2*np.pi, 5)
-                else:
-                    angles = np.linspace(0, 2*np.pi, electron_count)
-                
-                ex = n * scale_factor * np.cos(angles)
-                ey = n * scale_factor * np.sin(angles)
+            # d-orbital (cloverleaf)
+            elif l == 2:  
+                angles = np.linspace(0, 2*np.pi, electron_count)
+                ex = n * 0.7 * np.cos(angles)
+                ey = n * 0.7 * np.sin(angles)
                 ez = np.zeros_like(ex)
             
-            elif l == 3:  # f-orbital
+            # f-orbital (complex pattern)
+            elif l == 3:  
                 angles = np.linspace(0, 2*np.pi, electron_count)
-                ex = n * scale_factor * np.cos(angles) * 0.5
-                ey = n * scale_factor * np.sin(angles) * 0.5
-                ez = n * scale_factor * np.cos(angles) * 0.5
+                ex = n * 0.7 * np.cos(angles) * 0.5
+                ey = n * 0.7 * np.sin(angles) * 0.5
+                ez = n * 0.7 * np.cos(angles) * 0.5
             
-            # Add electron repulsion effect
-            if len(ex) > 1:
-                for i in range(len(ex)):
-                    for j in range(i+1, len(ex)):
-                        dx = ex[j] - ex[i]
-                        dy = ey[j] - ey[i]
-                        dz = ez[j] - ez[i]
-                        distance = np.sqrt(dx**2 + dy**2 + dz**2)
-                        if distance < 0.5:
-                            adjust = 0.1 * (0.5 - distance)
-                            ex[j] += adjust * dx/distance
-                            ey[j] += adjust * dy/distance
-                            ez[j] += adjust * dz/distance
-            
+            # Only plot if positions were assigned
             if len(ex) > 0:
                 ax.scatter(ex, ey, ez, s=30, c='#FFFF00', 
                           edgecolors='#333333', alpha=0.9)
+            ax.scatter(ex, ey, ez, s=30, c='#FFFF00', 
+                      edgecolors='#333333', alpha=0.9)
 
     # Visualization settings
     max_orb = max([o['n'] for o in orbitals], default=1)
@@ -161,6 +122,13 @@ def create_scientific_orbital_image(symbol, element_data):
     plt.close()
     print(f"Generated: {output_path}")
 
+# Example Titanium (Ti) output:
+# - 4s orbital: 2 electrons on circular wireframe
+# - 3d orbitals: 2 electrons distributed on cloverleaf wireframe
+# - All orbitals shown as thin colored lines
+# - Electrons as yellow spheres on orbital paths
+
+    # Generate for all elements
 if __name__ == "__main__":
     for symbol, data in elements.items():
         try:
