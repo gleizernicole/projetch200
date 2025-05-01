@@ -14,7 +14,7 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont, QPixmap
 import sys, random, unicodedata
 import os 
-from elements_data import elements, positions, colors
+from elements_data import elements, positions, colors, production_methods
 
 
 # ======================================================================================
