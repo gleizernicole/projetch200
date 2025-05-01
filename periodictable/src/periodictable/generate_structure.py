@@ -67,24 +67,41 @@ def create_scientific_orbital_image(symbol, element_data):
         
         # Add electrons
         if electron_count > 0:
-            # Generate electron positions based on orbital type
-            if l == 0:  # s-orbital
+            # Initialize electron positions
+            ex, ey, ez = np.array([]), np.array([]), np.array([])
+            
+            # s-orbital (spherical)
+            if l == 0:  
                 angles = np.linspace(0, 2*np.pi, max(2, electron_count))
                 ex = n * 0.7 * np.cos(angles)
                 ey = n * 0.7 * np.sin(angles)
                 ez = np.zeros_like(ex)
-            elif l == 1:  # p-orbital
+            
+            # p-orbital (axis-aligned)
+            elif l == 1:  
                 axis = [[1,0,0], [0,1,0], [0,0,1]][m+1]
                 ex = n * 0.7 * np.array([axis[0]] * electron_count)
                 ey = n * 0.7 * np.array([axis[1]] * electron_count)
                 ez = n * 0.7 * np.array([axis[2]] * electron_count)
-            elif l == 2:  # d-orbital
-                # Simplified d-orbital positions
+            
+            # d-orbital (cloverleaf)
+            elif l == 2:  
                 angles = np.linspace(0, 2*np.pi, electron_count)
                 ex = n * 0.7 * np.cos(angles)
                 ey = n * 0.7 * np.sin(angles)
                 ez = np.zeros_like(ex)
             
+            # f-orbital (complex pattern)
+            elif l == 3:  
+                angles = np.linspace(0, 2*np.pi, electron_count)
+                ex = n * 0.7 * np.cos(angles) * 0.5
+                ey = n * 0.7 * np.sin(angles) * 0.5
+                ez = n * 0.7 * np.cos(angles) * 0.5
+            
+            # Only plot if positions were assigned
+            if len(ex) > 0:
+                ax.scatter(ex, ey, ez, s=30, c='#FFFF00', 
+                          edgecolors='#333333', alpha=0.9)
             ax.scatter(ex, ey, ez, s=30, c='#FFFF00', 
                       edgecolors='#333333', alpha=0.9)
 
