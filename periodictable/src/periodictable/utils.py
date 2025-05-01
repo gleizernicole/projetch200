@@ -90,14 +90,18 @@ class PeriodicTableApp(QMainWindow):
         """Create the scrollable periodic table grid"""
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # Remove horizontal scroll
         grid_container = QWidget()
         self.element_grid = QGridLayout(grid_container)
-        self.element_grid.setSpacing(1)
-        
-        # Create element buttons
+    
+    # Reduced spacing and margins
+        self.element_grid.setSpacing(0)  # Changed from 1 to 0
+        self.element_grid.setContentsMargins(0, 0, 0, 0)  # Remove all margins
+    
+    # Create element buttons
         for symbol, (row, col) in positions.items():
             self.create_element_button(symbol, row, col)
-        
+    
         scroll_area.setWidget(grid_container)
         parent_layout.addWidget(scroll_area)
 
@@ -105,16 +109,20 @@ class PeriodicTableApp(QMainWindow):
         """Create an individual element button for the periodic table"""
         element = elements[symbol]
         btn = QPushButton(symbol)
-        btn.setFixedSize(50, 50)
+    
+    # Reduced button size and border
+        btn.setFixedSize(48, 48)  # Reduced from 50x50
         btn.setStyleSheet(f"""
             background-color: {colors[element["famille"]]}; 
-            border: 1px solid #333;
+            border: 0.5px solid #333;  # Thinner border
             font-weight: bold;
             font-size: 12px;
+            margin: 0;  # Remove any margin
+            padding: 0;  # Remove any padding
         """)
         btn.clicked.connect(lambda _, sym=symbol: self.show_element_info(sym))
         self.element_grid.addWidget(btn, row, col)
-
+        
     def create_legend(self, parent_layout):
         """Create the element family color legend"""
         legend = QHBoxLayout()
