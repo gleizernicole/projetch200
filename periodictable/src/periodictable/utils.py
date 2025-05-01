@@ -43,6 +43,9 @@ class PeriodicTableApp(QMainWindow):
         self.init_ui()
         self.init_timer()
 
+        self.quiz_type = None  
+        self.user_answer = None
+
     def init_ui(self):
         """Set up all user interface components"""
         central_widget = QWidget()
@@ -163,8 +166,10 @@ class PeriodicTableApp(QMainWindow):
             self, "Quiz Format", "Choose quiz format:",
             ["Multiple Choice", "Free Response"], 0, False
         )
-        if not ok: return
-            
+        if not ok: 
+            return
+
+        self.quiz_type = quiz_type
         self.score = 0
         self.question_count = 0
         self.quiz_active = True
@@ -172,55 +177,60 @@ class PeriodicTableApp(QMainWindow):
         self.time_remaining = 30
         self.ask_question()
 
-        def ask_question(self):
-            """Present a new quiz question to the user"""
-            if not self.quiz_active or self.question_count >= 10:
-                if self.quiz_active:
-                    QMessageBox.information(self, "Quiz Complete! 🎉", 
-                                       f"Final Score: {self.score}/10")
-                self.quiz_active = False
-                return
+    def ask_question(self):
+        """Present a new quiz question to the user"""
+        if not self.quiz_active or self.question_count >= 10:
+            if self.quiz_active:
+                QMessageBox.information(self, "Quiz Complete! 🎉", 
+                                    f"Final Score: {self.score}/10")
+            self.quiz_active = False
+            return
 
+        # Initialize user answer for this question
+        self.user_answer = None
+        
         # Filter out transition metals and rare earth elements
-            allowed_symbols = [
-                sym for sym in elements 
-                if elements[sym]["famille"] not in ['Transition Metal', 'Lanthanide', 'Actinide']
-            ]
-            symbol = random.choice(allowed_symbols)
-            element = elements[symbol]
-            question_type = random.choice(["symbol", "atomic_number"])
+        allowed_symbols = [
+            sym for sym in elements 
+            if elements[sym]["famille"] not in ['métal de transition', 'lanthanide', 'actinide']
+        ]
+        symbol = random.choice(allowed_symbols)
+        element = elements[symbol]
+
+         # Generate question
+        question_type = random.choice(["symbol", "atomic_number"])
+        if question_type == "symbol":
+            question = f"What is the name of the element with symbol <b>{symbol}</b>?"
+        else:
+            question = f"What is the name of the element with atomic number <b>{element['num']}</b>?"
+
+        self.current_answer = element["nom"]
+        self.time_remaining = 30
+        self.quiz_timer.start()
+
+        # Create quiz dialog
+        quiz_dialog = QDialog(self)
+        quiz_dialog.setWindowTitle("Element Quiz 🎲 (30s)")
+        quiz_dialog.setMinimumSize(400, 200)
+        dialog_layout = QVBoxLayout(quiz_dialog)
     
-            if question_type == "symbol":
-                question = f"What is the name of the element with symbol <b>{symbol}</b>?"
-            else:
-                question = f"What is the name of the element with atomic number <b>{element['num']}</b>?"
+        # Question display
+        question_label = QLabel(question)
+        question_label.setStyleSheet("font-size: 16px; color: black; padding: 10px;")
+        question_label.setAlignment(Qt.AlignCenter)
+        dialog_layout.addWidget(question_label)
 
-            self.current_answer = element["nom"]
-            self.time_remaining = 30
-            self.quiz_timer.start()
-
-            # Create quiz dialog
-            quiz_dialog = QDialog(self)
-            quiz_dialog.setWindowTitle("Element Quiz 🎲 (30s)")
-            quiz_dialog.setMinimumSize(400, 200)
-            dialog_layout = QVBoxLayout(quiz_dialog)
-    
-            # Question display
-            question_label = QLabel(question)
-            question_label.setStyleSheet("font-size: 16px; color: black; padding: 10px;")
-            question_label.setAlignment(Qt.AlignCenter)
-            dialog_layout.addWidget(question_label)
-
-            # Answer section
-            if self.quiz_type == "Multiple Choice":
-                # Generate multiple choice options
-                options = [self.current_answer]
-                while len(options) < 4:
-                    random_symbol = random.choice(allowed_symbols)
-                    wrong_answer = elements[random_symbol]["nom"]
-                    if wrong_answer != self.current_answer and wrong_answer not in options:
-                        options.append(wrong_answer)
-                random.shuffle(options)
+        # Answer section
+        if self.quiz_type == "Multiple Choice":
+            # Generate multiple choice options
+            options = [self.current_answer]
+            seen = set(options)
+            while len(options) < 4 and len(seen) < len(allowed_symbols):
+                candidate = elements[random.choice(allowed_symbols)]["nom"]
+                if candidate not in seen:
+                    options.append(candidate)
+                    seen.add(candidate)
+            random.shuffle(options)
 
             # Create answer buttons
                 for option in options:
@@ -245,8 +255,62 @@ class PeriodicTableApp(QMainWindow):
                 dialog_layout.addWidget(self.answer_input)
 
         # Control buttons
-            button_layout = QHBoxLayout()
-    
+            control_layout = QHBoxLayout()
+            exit_btn = QPushButton("Exit Quiz")
+            exit_btn.setStyleSheet(
+                "padding: 8px 16px; margin: 5px;"
+                "background-color: #f44336; color: white;"
+                "&:hover { background-color: #d32f2f; }"
+            )
+            exit_btn.clicked.connect(lambda: quiz_dialog.done(2))
+
+            new_btn = QPushButton("New Question")
+            new_btn.setStyleSheet(
+                "padding: 8px 16px; margin: 5px;"
+                "background-color: #2196F3; color: white;"
+                "&:hover { background-color: #1976D2; }"
+            )
+            new_btn.clicked.connect(quiz_dialog.reject)
+
+            # Add submit button only for free response
+            if self.quiz_type != "Multiple Choice":
+                submit_btn = QPushButton("Submit")
+                submit_btn.setStyleSheet(
+                    "padding: 8px 24px; margin: 5px;"
+                    "background-color: #4CAF50; color: white;"
+                    "&:hover { background-color: #388E3C; }"
+                )
+                submit_btn.clicked.connect(quiz_dialog.accept)
+                control_layout.addWidget(submit_btn)
+
+        control_layout.addWidget(exit_btn)
+        control_layout.addWidget(new_btn)
+        control_layout.addStretch()
+        dialog_layout.addLayout(control_layout)
+
+        # Show dialog
+        event_loop = QEventLoop()
+        quiz_dialog.finished.connect(event_loop.quit)
+        quiz_dialog.show()
+        event_loop.exec_()
+
+        # Process results
+        self.quiz_timer.stop()
+        result = quiz_dialog.result()
+
+        if result == QDialog.Accepted:
+            answer = self.user_answer if self.quiz_type == "Multiple Choice" else self.answer_input.text()
+            if answer:  # Prevent empty submissions
+                self.check_answer(answer)
+                self.question_count += 1
+            self.ask_question()
+        elif result == 2:
+            self.quiz_active = False
+            QMessageBox.information(self, "Quiz Abandoned", f"Current Score: {self.score}/10")
+        else:
+            self.question_count += 1
+            self.ask_question()
+            
         # Exit Quiz button
             exit_btn = QPushButton("Exit Quiz")
             exit_btn.setStyleSheet(
@@ -254,6 +318,7 @@ class PeriodicTableApp(QMainWindow):
                 "QPushButton:hover { background-color: #d32f2f; }"
             )
             exit_btn.clicked.connect(lambda: quiz_dialog.done(2))
+            
             button_layout.addWidget(exit_btn)
     
         # New Question button
@@ -265,19 +330,6 @@ class PeriodicTableApp(QMainWindow):
             new_btn.clicked.connect(quiz_dialog.reject)
             button_layout.addWidget(new_btn)
     
-        # Submit button for free response
-            if self.quiz_type != "Multiple Choice":
-                submit_btn = QPushButton("Submit")
-                submit_btn.setStyleSheet(
-                    "QPushButton { padding: 8px 24px; margin: 5px; background-color: #4CAF50; color: white; }"
-                    "QPushButton:hover { background-color: #388E3C; }"
-                )
-                submit_btn.clicked.connect(quiz_dialog.accept)
-                button_layout.addWidget(submit_btn)
-    
-            button_layout.addStretch()
-            dialog_layout.addLayout(button_layout)
-
             # Show dialog
             event_loop = QEventLoop()
             quiz_dialog.finished.connect(event_loop.quit)
@@ -287,19 +339,7 @@ class PeriodicTableApp(QMainWindow):
             # Process results
             self.quiz_timer.stop()
             result = quiz_dialog.result()
-    
-            if result == QDialog.Accepted:
-                answer = self.user_answer if self.quiz_type == "Multiple Choice" else self.answer_input.text()
-                self.check_answer(answer)
-                self.question_count += 1
-                self.ask_question()
-            elif result == 2:
-                self.quiz_active = False
-                QMessageBox.information(self, "Quiz Abandoned", 
-                              f"Current Score: {self.score}/10")
-            else:
-                self.question_count += 1
-                self.ask_question()
+
 
         def mc_answer_selected(self, answer, dialog):
             """Handle multiple choice selection"""
@@ -308,6 +348,10 @@ class PeriodicTableApp(QMainWindow):
 
         def check_answer(self, answer):
             """Validate user's answer and update score"""
+            if answer is None:  # Handle MC case where user didn't select
+                QMessageBox.warning(self, "No Answer", "Please select an answer!")
+                return
+
             normalized_answer = self.normalize_text(answer)
             normalized_correct = self.normalize_text(self.current_answer)
         
@@ -319,7 +363,7 @@ class PeriodicTableApp(QMainWindow):
             else:
                 QMessageBox.warning(self, "Incorrect 😢", 
                                   f"Wrong answer! ❌\nCorrect answer: {self.current_answer}")
-
+        
         def normalize_text(self, text):
             """Normalize text for answer comparison"""
             return ''.join(c for c in unicodedata.normalize('NFD', text)
