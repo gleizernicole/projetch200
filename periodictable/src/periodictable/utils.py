@@ -189,21 +189,26 @@ class PeriodicTableApp(QMainWindow):
         # Create quiz dialog
         quiz_dialog = QDialog(self)
         quiz_dialog.setWindowTitle("Element Quiz 🎲 (30s)")
-        dialog_layout = QVBoxLayout()
+        quiz_dialog.setMinimumSize(400, 200)
+        dialog_layout = QVBoxLayout(quiz_dialog)
         
         # Question display
         question_label = QLabel(question)
+        question_label.setStyleSheet("font-size: 16px; color: black; padding: 10px;")
+        question_label.setAlignment(Qt.AlignCenter)
         dialog_layout.addWidget(question_label)
         
         # Answer input
-        self.answer_input = QLineEdit()
-        dialog_layout.addWidget(self.answer_input)
+        answer_input = QLineEdit()
+        answer_input.setStyleSheet("font-size: 14px; margin: 10px;")
+        dialog_layout.addWidget(answer_input)
         
         # Dialog buttons
         btn_box = QDialogButtonBox()
         submit_btn = btn_box.addButton("Submit", QDialogButtonBox.AcceptRole)
         new_btn = btn_box.addButton("New Question", QDialogButtonBox.RejectRole)
         exit_btn = btn_box.addButton("Exit Quiz", QDialogButtonBox.HelpRole)
+        btn_box.setStyleSheet("margin: 10px;")
         dialog_layout.addWidget(btn_box)
 
         # Button connections
@@ -211,12 +216,18 @@ class PeriodicTableApp(QMainWindow):
         btn_box.rejected.connect(quiz_dialog.reject)
         exit_btn.clicked.connect(lambda: quiz_dialog.done(2))
 
-        # Handle dialog result
-        result = quiz_dialog.exec_()
+        # Show dialog and process events
+        event_loop = QEventLoop()
+        quiz_dialog.finished.connect(event_loop.quit)
+        quiz_dialog.show()
+        event_loop.exec_()
+
+        # Handle timer and dialog result
         self.quiz_timer.stop()
+        result = quiz_dialog.result()
         
         if result == QDialog.Accepted:
-            self.check_answer(self.answer_input.text())
+            self.check_answer(answer_input.text())
             self.question_count += 1
             self.ask_question()
         elif result == 2:
@@ -250,6 +261,7 @@ class PeriodicTableApp(QMainWindow):
         """Handle quiz timeout scenario"""
         QMessageBox.warning(self, "⏰ Time's Up!", 
                           f"Time expired! Correct answer was: {self.current_answer}")
+        self.quiz_active = False
 
   # ==================================================================================
     # ELEMENT INFORMATION DISPLAY
