@@ -16,7 +16,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout, QFrame, QInputDialog, QApplication, QScrollArea, QDialog, QLineEdit,
     QDialogButtonBox
 )
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer, QEventLoop
 from PyQt5.QtGui import QFont, QPixmap
 from elements_data import elements, positions, colors, production_methods
 
