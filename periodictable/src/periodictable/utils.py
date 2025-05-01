@@ -7,13 +7,17 @@ Features:
 - Score tracking and time management
 """
 
-from PyQt5.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QLabel, QPushButton,
-                             QGridLayout, QMessageBox, QHBoxLayout, QFrame, QInputDialog, 
-                             QApplication, QScrollArea, QDialog, QLineEdit, QDialogButtonBox)
+import sys
+import os
+import random
+import unicodedata
+from PyQt5.QtWidgets import (
+    QMainWindow, QWidget, QVBoxLayout, QLabel, QPushButton, QGridLayout, QMessageBox,
+    QHBoxLayout, QFrame, QInputDialog, QApplication, QScrollArea, QDialog, QLineEdit,
+    QDialogButtonBox
+)
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont, QPixmap
-import sys, random, unicodedata
-import os 
 from elements_data import elements, positions, colors, production_methods
 
 
@@ -242,47 +246,34 @@ class PeriodicTableApp(QMainWindow):
         QMessageBox.warning(self, "⏰ Time's Up!", 
                           f"Time expired! Correct answer was: {self.current_answer}")
 
-    # ==================================================================================
+  # ==================================================================================
     # ELEMENT INFORMATION DISPLAY
     # ==================================================================================
 
     def add_production_info(self, layout, symbol):
-    """Add production equations section to element info dialog"""
+        """Add production equations section to element info dialog"""
+        section_header = QLabel("<b>Production Methods:</b>")
+        section_header.setStyleSheet("font-size: 14px; padding-top: 15px;")
+        layout.addWidget(section_header)
+
+        content = self.get_production_content(symbol)
+        content_label = QLabel(content)
+        content_label.setStyleSheet("font-size: 12px; color: #444; margin-left: 10px;")
+        content_label.setWordWrap(True)
+        layout.addWidget(content_label)
+
+    def get_production_content(self, symbol):
+        """Generate formatted production methods content"""
         if symbol in production_methods:
-            production_header = QLabel("<b>Production Methods:</b>")
-            production_header.setStyleSheet("""
-                font-size: 14px; 
-                padding-top: 15px;
-                color: #2c3e50;
-            """)
-            layout.addWidget(production_header)
-        
-            for equation in production_methods[symbol]:
-                eq_label = QLabel(f"• {equation}")
-                eq_label.setStyleSheet("""
-                    font-size: 12px; 
-                    color: #444;
-                    margin-left: 15px;
-                    padding: 2px 0;
-                """)
-                eq_label.setWordWrap(True)
-                layout.addWidget(eq_label)
-        else:
-            no_info = QLabel("<i>No production methods recorded</i>")
-            no_info.setStyleSheet("""
-                color: #666; 
-                font-size: 12px; 
-                padding-top: 15px;
-                font-style: italic;
-            """)
-            layout.addWidget(no_info)
-    
+            return "• " + "<br>• ".join(production_methods[symbol])  # Changed \n to <br>
+        return "<i>No production methods recorded</i>"
+
     def show_element_info(self, symbol):
-      """Display detailed information about a selected element"""
+        """Display detailed information about a selected element"""
         element = elements[symbol]
         info_dialog = QDialog(self)
         info_dialog.setWindowTitle(f"Atomic Structure - {element['nom']}")
-        info_dialog.setFixedSize(600, 750)  # Increased height for production info
+        info_dialog.setFixedSize(600, 700)
         layout = QVBoxLayout(info_dialog)
         
         # Atomic structure image
@@ -309,25 +300,16 @@ class PeriodicTableApp(QMainWindow):
         # Element properties
         info_text = QLabel(
             f"<b>{element['nom']} ({symbol})</b><br>"
-            f"<table style='margin: 10px 0;'>"
-            f"<tr><td>Atomic Number:</td><td>{element['num']}</td></tr>"
-            f"<tr><td>Atomic Weight:</td><td>{element['masse']} u</td></tr>"
-            f"<tr><td>Family:</td><td>{element['famille']}</td></tr>"
-            f"<tr><td>State:</td><td>{element['state']}</td></tr>"
-            f"<tr><td>Electron Configuration:</td><td>{element['electron_config']}</td></tr>"
-            f"<tr><td>Isotopes:</td><td>{', '.join(element['isotopes']}</td></tr>"
-            f"</table>"
+            f"Atomic Number: {element['num']}<br>"
+            f"Atomic Weight: {element['masse']} u<br>"
+            f"Family: {element['famille']}<br>"
+            f"State: {element['state']}<br>"
+            f"Electron Configuration: {element['electron_config']}<br>"
+            f"Isotopes: {', '.join(element['isotopes'])}<br><br>"  # Fixed missing )
+            f"<b>Production Methods:</b><br>" 
+            f"{self.get_production_content(symbol)}"
         )
-        info_text.setStyleSheet("""
-        QLabel {
-            font-size: 14px; 
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        table td {
-            padding: 2px 5px;
-        }
-    """)
+        info_text.setStyleSheet("font-size: 14px; padding: 15px;")
         layout.addWidget(info_text)
         
         info_dialog.exec_()
