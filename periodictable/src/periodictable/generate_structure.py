@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.special import sph_harm
 from matplotlib import cm
+from elements_data import elements
 
-def create_orbital_diagram(symbol, element_data):
+def create_scientific_orbital_image(symbol, element_data):
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
     
@@ -100,5 +101,5 @@ def create_orbital_diagram(symbol, element_data):
 # Generate for all elements
     if __name__ == "__main__":
         for symbol, data in elements.items():
-            create_3d_atomic_structure(symbol, data)
+            create_scientific_orbital_image(symbol, data)
         print("All 3D atomic structures generated!")
