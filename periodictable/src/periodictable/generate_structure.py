@@ -90,16 +90,16 @@ def create_scientific_orbital_image(symbol, element_data):
 # - Electrons as yellow spheres on orbital paths
 
     # Generate for all elements
-    if __name__ == "__main__":
-        for symbol, data in elements.items():
-            try:
-                create_scientific_orbital_image(symbol, data)
-            except Exception as e:
-                print(f"Error generating {symbol}: {str(e)}")
-        print("All orbital images generated!")
+if __name__ == "__main__":
+    for symbol, data in elements.items():
+        try:
+            create_scientific_orbital_image(symbol, data)
+        except Exception as e:
+            print(f"Error generating {symbol}: {str(e)}")
+    print("All orbital images generated!")
 
 # Generate for all elements
-    if __name__ == "__main__":
-        for symbol, data in elements.items():
-            create_scientific_orbital_image(symbol, data)
-        print("All 3D atomic structures generated!")
+if __name__ == "__main__":
+    for symbol, data in elements.items():
+        create_scientific_orbital_image(symbol, data)
+    print("All 3D atomic structures generated!")
