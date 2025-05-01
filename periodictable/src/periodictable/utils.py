@@ -246,6 +246,23 @@ class PeriodicTableApp(QMainWindow):
     # ELEMENT INFORMATION DISPLAY
     # ==================================================================================
 
+     def add_production_info(self, layout, symbol):
+      """Add production equations section to element info dialog"""
+        section_header = QLabel("<b>Production Methods:</b>")
+        section_header.setStyleSheet("font-size: 14px; padding-top: 15px;")
+        layout.addWidget(section_header)
+
+        content = self.get_production_content(symbol)
+        content_label = QLabel(content)
+        content_label.setStyleSheet("font-size: 12px; color: #444; margin-left: 10px;")
+        content_label.setWordWrap(True)
+        layout.addWidget(content_label)
+
+    def get_production_content(self, symbol):
+        if symbol in production_methods:
+            return "• " + "\n• ".join(production_methods[symbol])
+        return "<i>No production methods recorded</i>"
+    
     def show_element_info(self, symbol):
         """Display detailed information about a selected element"""
         element = elements[symbol]
@@ -283,7 +300,9 @@ class PeriodicTableApp(QMainWindow):
             f"Family: {element['famille']}<br>"
             f"State: {element['state']}<br>"
             f"Electron Configuration: {element['electron_config']}<br>"
-            f"Isotopes: {', '.join(element['isotopes'])}"
+            f"Isotopes: {', '.join(element['isotopes']}<br><br>"
+            f"<b>Production Methods:</b><br>" 
+            f"{self.get_production_methods(symbol)}"
         )
         info_text.setStyleSheet("font-size: 14px; padding: 15px;")
         layout.addWidget(info_text)
