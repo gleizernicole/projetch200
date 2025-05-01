@@ -235,7 +235,7 @@ class PeriodicTableApp(QMainWindow):
     def normalize_text(self, text):
         """Normalize text for answer comparison"""
         return ''.join(c for c in unicodedata.normalize('NFD', text)
-                     if unicodedata.category(c) != 'Mn')).lower().replace(" ", "")
+                     if unicodedata.category(c) != 'Mn').lower().replace(" ", "")
 
     def handle_timeout(self):
         """Handle quiz timeout scenario"""
