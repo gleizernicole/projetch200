@@ -393,7 +393,7 @@ class TableauPeriodique(QMainWindow):
         img_label = QLabel()
         try:
             current_dir = os.path.dirname(os.path.abspath(__file__))  # File location
-            img_path = os.path.join(current_dir, "..", "..", "atomic_structures", f"{symbole}.png")
+            img_path = os.path.join(current_dir, "..", "..", "atomic_structures", f"{symbole}_3d.png")
         
             if os.path.exists(img_path):
                 pixmap = QPixmap(img_path)
