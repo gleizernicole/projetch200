@@ -2,74 +2,71 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.colors import Normalize
-from elements_data import elements
+from scipy.special import sph_harm
+from matplotlib import cm
 
-def create_3d_atomic_structure(symbol, element_data):
+def create_scientific_orbital_image(symbol, element_data):
     # Create 3D figure
-    fig = plt.figure(figsize=(6, 6))
+    fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
     
     # Atomic properties
-    protons = element_data["num"]
-    electrons = protons
-    max_shell = 7
+    atomic_number = element_data["num"]
+    electrons = atomic_number
     
-    # Create nucleus
-    ax.scatter(0, 0, 0, s=1000, c='#FF6666', alpha=0.7, label='Nucleus')
+    # Plot nucleus
+    ax.scatter([0], [0], [0], s=700, c='#FF4444', alpha=0.9, label='Nucleus')
     
-    # Create electron orbitals
-    shell_colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728',
-                    '#9467bd', '#8c564b', '#e377c2']
+    # Create orbital grid
+    theta = np.linspace(0, 2 * np.pi, 100)
+    phi = np.linspace(0, np.pi, 100)
+    theta, phi = np.meshgrid(theta, phi)
     
-    current_shell = 1
-    remaining_electrons = electrons
+    # Calculate spherical harmonics for different orbitals
+    orbitals = {
+        '1s': {'n': 1, 'l': 0, 'm': 0, 'color': '#1f77b4'},
+        '2p': {'n': 2, 'l': 1, 'm': 0, 'color': '#ff7f0e'},
+        '3d': {'n': 3, 'l': 2, 'm': 0, 'color': '#2ca02c'}
+    }
     
-    while remaining_electrons > 0 and current_shell <= max_shell:
-        # Calculate electrons in this shell
-        shell_capacity = 2 * current_shell**2
-        electrons_in_shell = min(shell_capacity, remaining_electrons)
+    # Plot orbitals based on electron configuration
+    for orb in orbitals.values():
+        # Radial wavefunction component
+        r = np.abs(sph_harm(orb['m'], orb['l'], theta, phi).real
         
-        # Generate spherical coordinates
-        theta = np.linspace(0, 2*np.pi, electrons_in_shell)
-        phi = np.linspace(0, np.pi, electrons_in_shell)
-        r = current_shell * 0.5  # Scaling factor
+        # Scale for visualization
+        x = r * np.sin(phi) * np.cos(theta) * (orb['n'] * 0.8)
+        y = r * np.sin(phi) * np.sin(theta) * (orb['n'] * 0.8)
+        z = r * np.cos(phi) * (orb['n'] * 0.8)
         
-        # Convert to cartesian coordinates
-        x = r * np.outer(np.cos(theta), np.sin(phi)).flatten()
-        y = r * np.outer(np.sin(theta), np.sin(phi)).flatten()
-        z = r * np.outer(np.ones(electrons_in_shell), np.cos(phi)).flatten()
-        
-        # Add some randomness for orbital visualization
-        x += np.random.normal(0, 0.1, x.shape)
-        y += np.random.normal(0, 0.1, y.shape)
-        z += np.random.normal(0, 0.1, z.shape)
-        
-        # Plot electrons
-        ax.scatter(x, y, z, s=50, 
-                 color=shell_colors[current_shell-1],
-                 alpha=0.6,
-                 label=f'Shell {current_shell}')
-        
-        remaining_electrons -= electrons_in_shell
-        current_shell += 1
-    
+        # Plot surface
+        ax.plot_surface(x, y, z, 
+                      color=orb['color'],
+                      alpha=0.4,
+                      antialiased=True,
+                      shade=False)
+
     # Visualization settings
-    ax.set_xlim([-max_shell*0.5, max_shell*0.5])
-    ax.set_ylim([-max_shell*0.5, max_shell*0.5])
-    ax.set_zlim([-max_shell*0.5, max_shell*0.5])
-    ax.axis('off')
-    
-    # Adjust view angle
-    ax.view_init(elev=30, azim=45)
+    ax.set_axis_off()
+    ax.set_xlim([-4, 4])
+    ax.set_ylim([-4, 4])
+    ax.set_zlim([-4, 4])
+    ax.view_init(elev=25, azim=45)
     
     # Save image
-    output_dir = os.path.join(os.path.dirname(__file__), "..", "..", "3d_structures")
+    output_dir = os.path.join(os.path.dirname(__file__), "..", "..", "scientific_structures")
     os.makedirs(output_dir, exist_ok=True)
-    output_path = os.path.join(output_dir, f"{symbol}_3d.png")
+    output_path = os.path.join(output_dir, f"{symbol}_scientific.png")
     
-    plt.savefig(output_path, dpi=150, bbox_inches='tight', transparent=True)
+    plt.savefig(output_path, dpi=300, transparent=True, bbox_inches='tight')
     plt.close()
+    print(f"Generated scientific image: {output_path}")
+
+# Generate images for first 18 elements
+if __name__ == "__main__":
+    elements_to_generate = {k: v for k, v in elements.items() if v["num"] <= 18}
+    for symbol, data in elements_to_generate.items():
+        create_scientific_orbital_image(symbol, data)
     print(f"Generated 3D structure: {output_path}")
 
 # Generate for all elements
