@@ -151,12 +151,22 @@ class PeriodicTableApp(QMainWindow):
         """Update the quiz timer and handle timeout"""
         self.time_remaining -= 1
         self.timer_display.setText(f"Time remaining: {self.time_remaining}s")
+        self.quiz_type = None
         if self.time_remaining <= 0:
             self.quiz_timer.stop()
             self.handle_timeout()
 
     def start_quiz(self):
         """Initialize and start a new quiz session"""
+        def start_quiz(self):
+        """Initialize and start a new quiz session"""
+        # Get quiz format from user
+        quiz_type, ok = QInputDialog.getItem(
+            self, "Quiz Format", "Choose quiz format:",
+            ["Multiple Choice", "Free Response"], 0, False
+        )
+        if not ok: return
+            
         self.score = 0
         self.question_count = 0
         self.quiz_active = True
@@ -284,7 +294,6 @@ class PeriodicTableApp(QMainWindow):
         QMessageBox.warning(self, "⏰ Time's Up!", 
                           f"Time expired! Correct answer was: {self.current_answer}")
         self.quiz_active = False
-
   # ==================================================================================
     # ELEMENT INFORMATION DISPLAY
     # ==================================================================================
