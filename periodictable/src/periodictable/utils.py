@@ -173,7 +173,7 @@ class PeriodicTableApp(QMainWindow):
         self.ask_question()
 
         def ask_question(self):
-        """Present a new quiz question to the user"""
+            """Present a new quiz question to the user"""
             if not self.quiz_active or self.question_count >= 10:
                 if self.quiz_active:
                     QMessageBox.information(self, "Quiz Complete! 🎉", 
