@@ -30,7 +30,7 @@ class PeriodicTableApp(QMainWindow):
         """Initialize the main application window and UI components"""
         super().__init__()
         self.setWindowTitle("Interactive Periodic Table + Quiz 🎲")
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(100, 100, 600, 500)
         
         # Quiz game state variables
         self.score = 0
