@@ -230,11 +230,11 @@ class PeriodicTableApp(QMainWindow):
                     QPushButton {
                         padding: 10px;
                         margin: 5px;
-                        background-color: #f0f0f0;
+                        background-color: #CF9FFF;
                         border: 1px solid #ccc;
                     }
                     QPushButton:hover {
-                        background-color: #e0e0e0;
+                        background-color: #7F00FF;
                     }
                 """)
                 btn.clicked.connect(lambda _, opt=option: self.mc_answer_selected(opt, quiz_dialog))
