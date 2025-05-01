@@ -1,65 +1,79 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.colors import Normalize
 from elements_data import elements
 
-def create_atomic_structure(symbol, element_data):
-    # Create figure and axis
-    fig, ax = plt.subplots(figsize=(3, 3))
-    ax.set_aspect('equal')
-    ax.set_facecolor('#F0F0F0')  # Light gray background
+def create_3d_atomic_structure(symbol, element_data):
+    # Create 3D figure
+    fig = plt.figure(figsize=(6, 6))
+    ax = fig.add_subplot(111, projection='3d')
     
-    # Calculate atomic components
+    # Atomic properties
     protons = element_data["num"]
-    neutrons = int(round(element_data["masse"])) - protons
     electrons = protons
+    max_shell = 7
     
-    # Draw nucleus
-    ax.add_patch(Circle((0.5, 0.5), 0.1, color='#FF6666', alpha=0.7))
-    ax.text(0.5, 0.53, f'P: {protons}', ha='center', va='center', fontsize=8)
-    ax.text(0.5, 0.47, f'N: {neutrons}', ha='center', va='center', fontsize=8)
+    # Create nucleus
+    ax.scatter(0, 0, 0, s=1000, c='#FF6666', alpha=0.7, label='Nucleus')
     
-    # Draw electron shells
-    shells = {1: 2, 2: 8, 3: 8, 4: 18, 5: 18, 6: 32, 7: 32}
-    total_electrons = electrons
+    # Create electron orbitals
+    shell_colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728',
+                    '#9467bd', '#8c564b', '#e377c2']
+    
     current_shell = 1
+    remaining_electrons = electrons
     
-    while total_electrons > 0 and current_shell <= 7:
-        capacity = shells[current_shell]
-        electrons_in_shell = min(capacity, total_electrons)
-        radius = 0.2 + current_shell * 0.15
+    while remaining_electrons > 0 and current_shell <= max_shell:
+        # Calculate electrons in this shell
+        shell_capacity = 2 * current_shell**2
+        electrons_in_shell = min(shell_capacity, remaining_electrons)
         
-        for i in range(electrons_in_shell):
-            angle = 2 * np.pi * i / electrons_in_shell
-            x = 0.5 + radius * np.cos(angle)
-            y = 0.5 + radius * np.sin(angle)
-            ax.add_patch(Circle((x, y), 0.03, color='#6666FF', alpha=0.7))
+        # Generate spherical coordinates
+        theta = np.linspace(0, 2*np.pi, electrons_in_shell)
+        phi = np.linspace(0, np.pi, electrons_in_shell)
+        r = current_shell * 0.5  # Scaling factor
         
-        total_electrons -= electrons_in_shell
+        # Convert to cartesian coordinates
+        x = r * np.outer(np.cos(theta), np.sin(phi)).flatten()
+        y = r * np.outer(np.sin(theta), np.sin(phi)).flatten()
+        z = r * np.outer(np.ones(electrons_in_shell), np.cos(phi)).flatten()
+        
+        # Add some randomness for orbital visualization
+        x += np.random.normal(0, 0.1, x.shape)
+        y += np.random.normal(0, 0.1, y.shape)
+        z += np.random.normal(0, 0.1, z.shape)
+        
+        # Plot electrons
+        ax.scatter(x, y, z, s=50, 
+                 color=shell_colors[current_shell-1],
+                 alpha=0.6,
+                 label=f'Shell {current_shell}')
+        
+        remaining_electrons -= electrons_in_shell
         current_shell += 1
     
-    
-    
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
+    # Visualization settings
+    ax.set_xlim([-max_shell*0.5, max_shell*0.5])
+    ax.set_ylim([-max_shell*0.5, max_shell*0.5])
+    ax.set_zlim([-max_shell*0.5, max_shell*0.5])
     ax.axis('off')
     
-    # Path handling for your exact structure
-    current_dir = os.path.dirname(os.path.abspath(__file__))  # src/periodictable/
-    output_dir = os.path.normpath(os.path.join(current_dir, "..", "..", "atomic_structures"))
-    
-    # Create directory if needed
-    os.makedirs(output_dir, exist_ok=True)
+    # Adjust view angle
+    ax.view_init(elev=30, azim=45)
     
     # Save image
-    output_path = os.path.join(output_dir, f"{symbol}.png")
-    plt.savefig(output_path, dpi=120, bbox_inches='tight')
+    output_dir = os.path.join(os.path.dirname(__file__), "..", "..", "3d_structures")
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, f"{symbol}_3d.png")
+    
+    plt.savefig(output_path, dpi=150, bbox_inches='tight', transparent=True)
     plt.close()
-    print(f"Successfully created: {output_path}")
+    print(f"Generated 3D structure: {output_path}")
 
-# Example usage:
+# Generate for all elements
 if __name__ == "__main__":
     for symbol, data in elements.items():
-        create_atomic_structure(symbol, data)
-    print("All atomic structure images generated!")
+        create_3d_atomic_structure(symbol, data)
+    print("All 3D atomic structures generated!")
