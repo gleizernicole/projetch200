@@ -169,14 +169,14 @@ class PeriodicTableApp(QMainWindow):
         if not self.quiz_active or self.question_count >= 10:
             if self.quiz_active:
                 QMessageBox.information(self, "Quiz Complete! 🎉", 
-                                      f"Final Score: {self.score}/10")
+                                   f"Final Score: {self.score}/10")
             self.quiz_active = False
             return
 
         symbol = random.choice(list(elements.keys()))
         element = elements[symbol]
         question_type = random.choice(["symbol", "atomic_number"])
-        
+    
         if question_type == "symbol":
             question = f"What is the name of the element with symbol <b>{symbol}</b>?"
         else:
@@ -191,30 +191,51 @@ class PeriodicTableApp(QMainWindow):
         quiz_dialog.setWindowTitle("Element Quiz 🎲 (30s)")
         quiz_dialog.setMinimumSize(400, 200)
         dialog_layout = QVBoxLayout(quiz_dialog)
-        
+    
         # Question display
         question_label = QLabel(question)
         question_label.setStyleSheet("font-size: 16px; color: black; padding: 10px;")
         question_label.setAlignment(Qt.AlignCenter)
         dialog_layout.addWidget(question_label)
-        
+    
         # Answer input
         answer_input = QLineEdit()
         answer_input.setStyleSheet("font-size: 14px; margin: 10px;")
         dialog_layout.addWidget(answer_input)
-        
-        # Dialog buttons
-        btn_box = QDialogButtonBox()
-        submit_btn = btn_box.addButton("Submit", QDialogButtonBox.AcceptRole)
-        new_btn = btn_box.addButton("New Question", QDialogButtonBox.RejectRole)
-        exit_btn = btn_box.addButton("Exit Quiz", QDialogButtonBox.HelpRole)
-        btn_box.setStyleSheet("margin: 10px;")
-        dialog_layout.addWidget(btn_box)
-
-        # Button connections
-        btn_box.accepted.connect(quiz_dialog.accept)
-        btn_box.rejected.connect(quiz_dialog.reject)
+    
+        # Button layout
+        button_layout = QHBoxLayout()
+    
+        # Exit Quiz button
+        exit_btn = QPushButton("Exit Quiz")
+        exit_btn.setStyleSheet(
+            "QPushButton { padding: 8px 16px; margin: 5px; background-color: #f44336; color: white; }"
+            "QPushButton:hover { background-color: #d32f2f; }"
+        )
         exit_btn.clicked.connect(lambda: quiz_dialog.done(2))
+        button_layout.addWidget(exit_btn)
+    
+        # New Question button
+        new_btn = QPushButton("New Question")
+        new_btn.setStyleSheet(
+            "QPushButton { padding: 8px 16px; margin: 5px; background-color: #2196F3; color: white; }"
+            "QPushButton:hover { background-color: #1976D2; }"
+        )
+        new_btn.clicked.connect(quiz_dialog.reject)
+        button_layout.addWidget(new_btn)
+    
+        # Submit button
+        submit_btn = QPushButton("Submit")
+        submit_btn.setStyleSheet(
+            "QPushButton { padding: 8px 24px; margin: 5px; background-color: #4CAF50; color: white; }"
+            "QPushButton:hover { background-color: #388E3C; }"
+        )
+        submit_btn.clicked.connect(quiz_dialog.accept)
+        button_layout.addWidget(submit_btn)
+    
+        # Add stretch to push buttons to the left
+        button_layout.addStretch()
+        dialog_layout.addLayout(button_layout)
 
         # Show dialog and process events
         event_loop = QEventLoop()
@@ -225,7 +246,7 @@ class PeriodicTableApp(QMainWindow):
         # Handle timer and dialog result
         self.quiz_timer.stop()
         result = quiz_dialog.result()
-        
+    
         if result == QDialog.Accepted:
             self.check_answer(answer_input.text())
             self.question_count += 1
@@ -233,11 +254,12 @@ class PeriodicTableApp(QMainWindow):
         elif result == 2:
             self.quiz_active = False
             QMessageBox.information(self, "Quiz Abandoned", 
-                                  f"Current Score: {self.score}/10")
+                              f"Current Score: {self.score}/10")
         else:
             self.question_count += 1
             self.ask_question()
 
+    
     def check_answer(self, answer):
         """Validate user's answer and update score"""
         normalized_answer = self.normalize_text(answer)
