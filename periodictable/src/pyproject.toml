@@ -7,7 +7,9 @@ name = "periodictable" # name of the installed package
 version = "0.0.1" # version is required
 dependencies = [ # specify the required package dependencies
     "PyQt5 >= 5.11",
-    "pandas"
+    "pandas",
+    "numpy",
+    "scipy"
 ]
 
 [tool.hatch.build.targets.wheel]
