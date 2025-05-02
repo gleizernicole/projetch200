@@ -93,11 +93,15 @@ class PeriodicTableApp(QMainWindow):
         """Create the scrollable periodic table grid"""
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
+        
+        # Enable horizontal scrollbar to allow scrolling when table is wider than the window
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        
         grid_container = QWidget()
         self.element_grid = QGridLayout(grid_container)
     
-        # Reduced spacing and margins
-        self.element_grid.setSpacing(0)  # Changed from 1 to 0
+        # Reduce spacing and margins to minimum
+        self.element_grid.setSpacing(0)
         self.element_grid.setContentsMargins(0, 0, 0, 0)
     
         # Create element buttons
@@ -111,33 +115,38 @@ class PeriodicTableApp(QMainWindow):
         """Create an individual element button for the periodic table"""
         element = elements[symbol]
         btn = QPushButton(symbol)
-        btn.setFixedSize(50, 50)
+        # Reduce button size to make table more compact
+        btn.setFixedSize(40, 40)  # Reduced from 50,50 to 40,40
         btn.setStyleSheet(f"""
             background-color: {colors[element["famille"]]}; 
             border: 1px solid #333;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 10px;  /* Reduced from 12px to 10px */
             margin: 0;
             padding: 0;
-        """)  # Added margin/padding removal
+        """)
         btn.clicked.connect(lambda _, sym=symbol: self.show_element_info(sym))
         self.element_grid.addWidget(btn, row, col)
         
     def create_legend(self, parent_layout):
         """Create the element family color legend"""
         legend = QHBoxLayout()
+        legend.setSpacing(2)  # Reduce spacing between legend items
+        
         for family, color in colors.items():
             legend_item = QWidget()
             item_layout = QHBoxLayout()
+            item_layout.setContentsMargins(1, 1, 1, 1)  # Minimal margins
             
             # Color indicator
             color_box = QFrame()
-            color_box.setFixedSize(20, 20)
+            color_box.setFixedSize(12, 12)  # Smaller color box
             color_box.setStyleSheet(f"background-color: {color}; border: 1px solid black;")
             
-            # Family name label
+            # Family name label with smaller font
             label = QLabel(family)
-            label.setContentsMargins(5, 0, 10, 0)
+            label.setContentsMargins(2, 0, 2, 0)  # Minimal margins
+            label.setFont(QFont("Arial", 8))  # Smaller font
             
             item_layout.addWidget(color_box)
             item_layout.addWidget(label)
