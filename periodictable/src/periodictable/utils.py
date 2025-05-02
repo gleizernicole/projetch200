@@ -329,7 +329,7 @@ class PeriodicTableApp(QMainWindow):
             self.score += 1
             self.update_score_display()
             QMessageBox.information(self, "Correct! 🎉", 
-                                  f"Correct answer! ✔️ Answer was: {self.current_answer}")
+                                  f"Correct answer! ✔️\nAnswer was: {self.current_answer}\nCurrent Score: {self.score}/10")
         else:
             QMessageBox.warning(self, "Incorrect 😢", 
                               f"Wrong answer! ❌\nCorrect answer: {self.current_answer}")
