@@ -274,62 +274,6 @@ colors = {
         }
 
 production_methods = {
-    # Group 1 (Alkali Metals)
-    "Li": [
-        "2 LiCl(l) → 2 Li(l) + Cl₂(g) (Electrolysis of molten LiCl)"
-    ],
-    "Na": [
-        "2 NaCl(l) → 2 Na(l) + Cl₂(g) (Downs process electrolysis)"
-    ],
-    "K": [
-        "2 KCl(l) → 2 K(l) + Cl₂(g) (Electrolysis)",
-        "Na(l) + KCl(l) → K(g) + NaCl(l) (Thermal process)"
-    ],
-
-    # Group 2 (Alkaline Earth)
-    "Be": [
-        "BeF₂ + Mg → Be + MgF₂ (Reduction)"
-    ],
-    "Mg": [
-        "MgCl₂(l) → Mg(l) + Cl₂(g) (Electrolysis)"
-    ],
-    "Ca": [
-        "CaO + Al → Ca + Al₂O₃ (Reduction)"
-    ],
-
-    # Group 13-18 (p-block)
-    "B": [
-        "2 B₂O₃ + 7 C → 4 B + 3 CO₂ (Reduction with carbon)"
-    ],
-    "C": [
-        "Coke production: Coal → Coke (Pyrolysis)",
-        "CO₂ + 2 H₂ → CH₃OH (Methanol synthesis)"
-    ],
-    "N": [
-        "N₂ + 3 H₂ ⇌ 2 NH₃ (Haber process)"
-    ],
-    "O": [
-        "2 H₂O → 2 H₂ + O₂ (Electrolysis)",
-        "2 KClO₃ → 2 KCl + 3 O₂ (Thermal decomposition)"
-    ],
-    "F": [
-        "2 KHF₂ → 2 KF + H₂ + F₂ (Electrolysis)"
-    ],
-    "Al": [
-        "2 Al₂O₃ + 3 C → 4 Al + 3 CO₂ (Hall-Héroult process)"
-    ],
-    "Si": [
-        "SiO₂ + 2 C → Si + 2 CO (Electric arc furnace)"
-    ],
-    "P": [
-        "2 Ca₃(PO₄)₂ + 6 SiO₂ + 10 C → 6 CaSiO₃ + 10 CO + P₄ (Blast furnace)"
-    ],
-    "S": [
-        "2 H₂S + 3 O₂ → 2 H₂O + 2 SO₂ (Claus process)"
-    ],
-    "Cl": [
-        "2 NaCl + 2 H₂O → Cl₂ + H₂ + 2 NaOH (Chlor-alkali process)"
-    ],
     "H": {
         "electropositive_metals": [
             "2 Na + 2 H2O → H2 + 2 Na⁺ + 2 OH⁻",
@@ -352,26 +296,26 @@ production_methods = {
             "CaH2(s) + 2 H2O(l) → Ca(OH)2 + 2 H2(g)"
         ]
     },
-    "He": [],
-    "Li": [
-        "2 LiCl(l) → 2 Li(l) + Cl₂(g) (Electrolysis of molten LiCl)",
+    "He": {},
+    "Li": {
+        "electrolysis_of_LiCl": "2 LiCl(l) → 2 Li(l) + Cl₂(g)",
         "from_lithium_salts": "Lithium is produced by electrolysis of lithium salts such as lithium chloride (LiCl).",
         "production_of_lithium": "LiCl + KCl → Li + ½ Cl₂ (Electrolysis)",
         "reaction_with_oxygen": "4Li + O₂ → 2 Li₂O₄ (Reaction with oxygen)"
-    ],
-    "Be": [
-        "BeF₂ + Mg → Be + MgF₂ (Reduction)"
-    ],
-    "B": [
-        "2 B₂O₃ + 7 C → 4 B + 3 CO₂ (Reduction with carbon)"
-    ],
-    "C": [
+    },
+    "Be": {
+        "reduction": "BeF₂ + Mg → Be + MgF₂"
+    },
+    "B": {
+        "reduction_with_carbon": "2 B₂O₃ + 7 C → 4 B + 3 CO₂"
+    },
+    "C": {
         "from_carbonates": "Carbon can be produced from the thermal decomposition of carbonates or through reduction reactions",
         "carbon_monoxide_formation": "HCOOH → H₂O + CO (with H₂SO₄)",
         "boudouard_equilibrium": "CO₂ + C(s) ⇌ 2 CO",
         "reaction_of_carbonates_with_acid": "CaCO₃ + 2 HCl → CaCl₂ + H₂O + CO₂"
-    ],
-    "N": [
+    },
+    "N": {
         "from_air": "Nitrogen is separated from air using fractional distillation or pressure swing adsorption",
         "Haber_bosch_process": "N₂ + 3 H₂ → 2 NH₃ (Haber-Bosch process)",
         "ammonium_dichromate_decomposition": "(NH₄)₂Cr₂O₇ → N₂ + Cr₂O₃ + 4 H₂O",
@@ -381,8 +325,8 @@ production_methods = {
         "ostwald_process": "4 NH₃ + 5 O₂ → 4 NO + 6 H₂O",
         "ostwald_reaction_2": "2 NO + O₂ → 2 NO₂",
         "ostwald_reaction_3": "3 NO₂ + H₂O → 2 HNO₃ + NO"
-    ],
-    "O": [
+    },
+    "O": {
         "from_air": "Oxygen can be separated from air by fractional distillation, or by using zeolite adsorption or pressure swing adsorption",
         "electrolysis_of_water": "2 H₂O → 2 H₂ + O₂ (electrolysis)",
         "decomposition_of_hydrogen_peroxide": "2 H₂O₂ → 2 H₂O + O₂ (decomposition)",
@@ -391,152 +335,70 @@ production_methods = {
         "contact_process": "2 SO₂ + O₂ → 2 SO₃",
         "contact_reaction_2": "SO₃ + H₂O → H₂SO₄",
         "formation_of_caros_acid": "H₂SO₄ + H₂O₂ → H₂SO₅ + H₂O"
-    ],
-    "F": [
+    },
+    "F": {
         "synthesis_of_fluorine": "KF + HF → F₂ + H₂ (electrolysis)"
-    ],
-    "Ne": [],
-    "Na": [
+    },
+    "Ne": {},
+    "Na": {
         "from_sodium_salts": "Sodium is produced by the electrolysis of molten sodium chloride (NaCl).",
         "reaction_with_liquid_ammonia": "Na(s) + NH₃(l) → Na⁺ + e⁻ (Reaction with liquid ammonia)",
         "reaction_with_oxygen": "Na + O₂ → Na₂O₂ (Reaction with oxygen)"
-    ],
-    "Mg": [
+    },
+    "Mg": {
         "from_magnesium_carbonate": "Magnesium is produced from magnesium salts by electrolysis or by heating magnesium compounds like magnesium carbonate.",
         "thermal_decomposition_of_MgCO3": "MgCO₃ → MgO + CO₂ (Thermal decomposition of magnesium carbonate)",
         "reaction_of_magnesium_with_CO2": "CO₂ + 2Mg → 2 MgO + C (Reaction of magnesium with carbon dioxide)"
-    ],
-    "Al": [
-        "2 Al₂O₃ + 3 C → 4 Al + 3 CO₂ (Hall-Héroult process)"
-    ],
-    "Si": [
+    },
+    "Al": {
+        "hall_heroult_process": "2 Al₂O₃ + 3 C → 4 Al + 3 CO₂"
+    },
+    "Si": {
         "from_silicon_dioxide": "Silicon is produced from silicon dioxide (SiO₂) using a reduction reaction with aluminum",
         "synthesis_of_silicon": "3 SiO₂ + 4 Al → 3 Si + 2 Al₂O₃",
         "formation_of_silanes": "Si + 2 H₂ → SiH₄ (formation of silicon tetrahydride)",
         "hydrolysis_of_silanes": "SiH₄ + 2 O₂ → SiO₂ + 2 H₂O (hydrolysis of silanes)"
-    ],
-    "P": [
+    },
+    "P": {
         "reaction_with_chlorate": "KClO₃ + 6 P → KCl + 1.5 P₄O₁₀"
-    ],
-    "S": [],
-    "Cl": [
+    },
+    "S": {},
+    "Cl": {
         "reaction_with_water": "Cl₂ + H₂O → HCl + HOCl",
         "disproportionation_of_chlorine": "Cl₂ + 2 OH⁻ → Cl⁻ + ClO⁻ + H₂O"
-    ],
-    "Ar": [],
-    "K": [
+    },
+    "Ar": {},
+    "K": {
         "reaction_with_oxygen": "K + O₂ → KO₂ (Reaction with oxygen)"
-    ],
-    "Ca": [
+    },
+    "Ca": {
         "from_calcium_carbonate": "Calcium is produced by the electrolysis of calcium chloride or by the reduction of calcium oxide with aluminum",
         "decomposition_of_limestone": "CaCO₃ → CaO + CO₂ (Decomposition of limestone)",
         "formation_of_calcium_carbide": "CaO + 3 C → CaC₂ + CO (Formation of calcium carbide)",
         "hydrolysis_of_calcium_carbide": "CaC₂ + 2 H₂O → Ca(OH)₂ + C₂H₂ (Hydrolysis of calcium carbide)",
         "reaction_with_water": "Ca + 2 H₂O → Ca(OH)₂ + H₂ (Reaction with water)"
-    ],
-    "Sc": [],
-    "Ti": [],
-    "V": [],
-    "Cr": [],
-    "Mn": [],
-    "Fe": [],
-    "Co": [],
-    "Ni": [],
-    "Cu": [],
-    "Zn": [],
-    "Ga": [],
-    "Ge": [],
-    "As": [],
-    "Se": [],
-    "Br": [
+    },
+    "Sc": {}, "Ti": {}, "V": {}, "Cr": {}, "Mn": {}, "Fe": {}, "Co": {}, "Ni": {},
+    "Cu": {}, "Zn": {}, "Ga": {}, "Ge": {}, "As": {}, "Se": {},
+    "Br": {
         "synthesis_of_bromine": "Cl₂ + 2 Br⁻ → 2 Cl⁻ + Br₂"
-    ],
-    "Kr": [],
-    "Rb": [],
-    "Sr": [],
-    "Y": [],
-    "Zr": [],
-    "Nb": [],
-    "Mo": [],
-    "Tc": [],
-    "Ru": [],
-    "Rh": [],
-    "Pd": [],
-    "Ag": [],
-    "Cd": [],
-    "In": [],
-    "Sn": [],
-    "Sb": [],
-    "Te": [],
-    "I": [
+    },
+    "Kr": {}, "Rb": {}, "Sr": {}, "Y": {}, "Zr": {}, "Nb": {}, "Mo": {}, "Tc": {},
+    "Ru": {}, "Rh": {}, "Pd": {}, "Ag": {}, "Cd": {}, "In": {}, "Sn": {},
+    "Sb": {}, "Te": {},
+    "I": {
         "from_brine": "Oxidation of iodide (I⁻) extracted from brine using chlorine: 2 I⁻ + Cl₂ → I₂ + 2 Cl⁻",
         "from_nitrate_ores": "Recovered during processing of Chilean saltpeter (NaNO₃) containing sodium iodate (NaIO₃)",
         "synthesis_of_iodine": "Cl₂ + 2 I⁻ → 2 Cl⁻ + I₂",
         "disproportionation_of_hydrogen_iodide": "2 HI → H₂ + I₂"
-    ],
-    "Xe": [],
-    "Cs": [],
-    "Ba": [],
-    "La": [],
-    "Ce": [],
-    "Pr": [],
-    "Nd": [],
-    "Pm": [],
-    "Sm": [],
-    "Eu": [],
-    "Gd": [],
-    "Tb": [],
-    "Dy": [],
-    "Ho": [],
-    "Er": [],
-    "Tm": [],
-    "Yb": [],
-    "Lu": [],
-    "Hf": [],
-    "Ta": [],
-    "W": [],
-    "Re": [],
-    "Os": [],
-    "Ir": [],
-    "Pt": [],
-    "Au": [],
-    "Hg": [],
-    "Tl": [],
-    "Pb": [],
-    "Bi": [],
-    "Po": [],
-    "At": [],
-    "Rn": [],
-    "Fr": [],
-    "Ra": [],
-    "Ac": [],
-    "Th": [],
-    "Pa": [],
-    "U": [],
-    "Np": [],
-    "Pu": [],
-    "Am": [],
-    "Cm": [],
-    "Bk": [],
-    "Cf": [],
-    "Es": [],
-    "Fm": [],
-    "Md": [],
-    "No": [],
-    "Lr": [],
-    "Rf": [],
-    "Db": [],
-    "Sg": [],
-    "Bh": [],
-    "Hs": [],
-    "Mt": [],
-    "Ds": [],
-    "Rg": [],
-    "Cn": [],
-    "Nh": [],
-    "Fl": [],
-    "Mc": [],
-    "Lv": [],
-    "Ts": [],
-    "Og": []
+    },
+    "Xe": {}, "Cs": {}, "Ba": {}, "La": {}, "Ce": {}, "Pr": {}, "Nd": {}, "Pm": {},
+    "Sm": {}, "Eu": {}, "Gd": {}, "Tb": {}, "Dy": {}, "Ho": {}, "Er": {}, "Tm": {},
+    "Yb": {}, "Lu": {}, "Hf": {}, "Ta": {}, "W": {}, "Re": {}, "Os": {}, "Ir": {},
+    "Pt": {}, "Au": {}, "Hg": {}, "Tl": {}, "Pb": {}, "Bi": {}, "Po": {}, "At": {},
+    "Rn": {}, "Fr": {}, "Ra": {}, "Ac": {}, "Th": {}, "Pa": {}, "U": {}, "Np": {},
+    "Pu": {}, "Am": {}, "Cm": {}, "Bk": {}, "Cf": {}, "Es": {}, "Fm": {}, "Md": {},
+    "No": {}, "Lr": {}, "Rf": {}, "Db": {}, "Sg": {}, "Bh": {}, "Hs": {}, "Mt": {},
+    "Ds": {}, "Rg": {}, "Cn": {}, "Nh": {}, "Fl": {}, "Mc": {}, "Lv": {}, "Ts": {},
+    "Og": {}
 }
