@@ -2,13 +2,17 @@ import sys
 import os
 import unittest
 from unittest.mock import MagicMock, patch
-from PyQt5.QtWidgets import QApplication, QMessageBox, QDialog, QDialogButtonBox, QLineEdit
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtTest import QTest
 
-# Import the application to test
-# In test_periodictable.py
-# In test_periodictable.py
+# Force PyQt5 to work in headless environments (like CI or no display)
+os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import Qt
+
+# Set up path so we can import the main app
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# Now we can import your modules
 from periodictable.utils import PeriodicTableApp
 from periodictable.elements_data import elements, positions, colors, production_methods
 
