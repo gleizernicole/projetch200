@@ -1,44 +1,44 @@
 elements = {
-    "H":  {"nom": "Hydrogène", "num": 1, "masse": 1.008, "famille": "non-métal",
-           "state": "Gaz", "electron_config": "1s¹", "isotopes": ["¹H", "²H", "³H"]},
+    "H": {"nom": "Hydrogen", "num": 1, "masse": 1.008, "famille": "non-métal",
+          "state": "Gas", "electron_config": "1s¹", "isotopes": ["¹H (protium)", "²H (deuterium)", "³H (tritium)"]},
     "He": {"nom": "Hélium", "num": 2, "masse": 4.0026, "famille": "gaz noble",
            "state": "Gaz", "electron_config": "1s²", "isotopes": ["³He", "⁴He"]},
-    "Li": {"nom": "Lithium", "num": 3, "masse": 6.94, "famille": "métal alcalin",
-           "state": "Solide", "electron_config": "[He] 2s¹", "isotopes": ["⁶Li", "⁷Li"]},
+    "Li": {"nom": "Lithium","num": 3,"masse": 6.94,"famille": "métal alcalin",
+        "state": "Solid","electron_config": "[He] 2s¹","isotopes": ["⁶Li", "⁷Li"]},
     "Be": {"nom": "Béryllium", "num": 4, "masse": 9.0122, "famille": "métal alcalino-terreux",
            "state": "Solide", "electron_config": "[He] 2s²", "isotopes": ["⁹Be"]},
     "B":  {"nom": "Bore", "num": 5, "masse": 10.81, "famille": "métalloïde",
            "state": "Solide", "electron_config": "[He] 2s² 2p¹", "isotopes": ["¹⁰B", "¹¹B"]},
-    "C":  {"nom": "Carbone", "num": 6, "masse": 12.011, "famille": "non-métal",
-           "state": "Solide", "electron_config": "[He] 2s² 2p²", "isotopes": ["¹²C", "¹³C", "¹⁴C"]},
-    "N":  {"nom": "Azote", "num": 7, "masse": 14.007, "famille": "non-métal",
-           "state": "Gaz", "electron_config": "[He] 2s² 2p³", "isotopes": ["¹⁴N", "¹⁵N"]},
-    "O":  {"nom": "Oxygène", "num": 8, "masse": 15.999, "famille": "chalcogène",
-           "state": "Gaz", "electron_config": "[He] 2s² 2p⁴", "isotopes": ["¹⁶O", "¹⁷O", "¹⁸O"]},
-    "F":  {"nom": "Fluor", "num": 9, "masse": 18.998, "famille": "halogène",
-           "state": "Gaz", "electron_config": "[He] 2s² 2p⁵", "isotopes": ["¹⁹F"]},
+    "C": {"nom": "Carbon", "num": 6, "masse": 12.011, "famille": "non-métal",
+          "state": "Solid", "electron_config": "[He] 2s² 2p²", "isotopes": ["¹²C", "¹³C", "¹⁴C"]},
+    "N": {"nom": "Nitrogen",  "num": 7, "masse": 14.007, "famille": "non-métal",
+        "state": "Gas", "electron_config": "[He] 2s² 2p³", "isotopes": ["¹⁴N", "¹⁵N"]},
+    "O": {"nom": "Oxygen",  "num": 8, "masse": 15.999, "famille": "chalcogène",
+        "state": "Gas", "electron_config": "[He] 2s² 2p⁴", "isotopes": ["¹⁶O", "¹⁷O", "¹⁸O"]},
+    "F": {"nom": "Fluorine",  "num": 9, "masse": 18.998, "famille": "halogène",
+        "state": "Gas", "electron_config": "[He] 2s² 2p⁵", "isotopes": ["¹⁹F"]},
     "Ne": {"nom": "Néon", "num": 10, "masse": 20.180, "famille": "gaz noble",
            "state": "Gaz", "electron_config": "[He] 2s² 2p⁶", "isotopes": ["²⁰Ne", "²¹Ne", "²²Ne"]},
-    "Na": {"nom": "Sodium", "num": 11, "masse": 22.990, "famille": "métal alcalin",
-           "state": "Solide", "electron_config": "[Ne] 3s¹", "isotopes": ["²³Na"]},
-    "Mg": {"nom": "Magnésium", "num": 12, "masse": 24.305, "famille": "métal alcalino-terreux",
-           "state": "Solide", "electron_config": "[Ne] 3s²", "isotopes": ["²⁴Mg", "²⁵Mg", "²⁶Mg"]},
+    "Na": {"nom": "Sodium","num": 11,"masse": 22.990,"famille": "métal alcalin",
+           "state": "Solid","electron_config": "[Ne] 3s¹","isotopes": ["²³Na", "²⁴Na"]},
+    "Mg": {"nom": "Magnesium",  "num": 12, "masse": 24.305, "famille": "métal alcalino-terreux",
+        "state": "Solid","electron_config": "[Ne] 3s²", "isotopes": ["²⁴Mg", "²⁶Mg"]},
     "Al": {"nom": "Aluminium", "num": 13, "masse": 26.982, "famille": "métal pauvre",
            "state": "Solide", "electron_config": "[Ne] 3s² 3p¹", "isotopes": ["²⁷Al"]},
-    "Si": {"nom": "Silicium", "num": 14, "masse": 28.085, "famille": "métalloïde",
-           "state": "Solide", "electron_config": "[Ne] 3s² 3p²", "isotopes": ["²⁸Si", "²⁹Si", "³⁰Si"]},
-    "P":  {"nom": "Phosphore", "num": 15, "masse": 30.974, "famille": "non-métal",
-           "state": "Solide", "electron_config": "[Ne] 3s² 3p³", "isotopes": ["³¹P"]},
+    "Si": {"nom": "Silicon",  "num": 14, "masse": 28.085, "famille": "métalloïde",
+        "state": "Solid", "electron_config": "[Ne] 3s² 3p²", "isotopes": ["²⁸Si", "²⁹Si", "³⁰Si"]},
+    "P": {"nom": "Phosphorus",  "num": 15,"masse": 30.974, "famille": "non-métal",
+          "state": "Solid", "electron_config": "[Ne] 3s² 3p³", "isotopes": ["³¹P"]},
     "S":  {"nom": "Soufre", "num": 16, "masse": 32.06, "famille": "chalcogène",
            "state": "Solide", "electron_config": "[Ne] 3s² 3p⁴", "isotopes": ["³²S", "³³S", "³⁴S"]},
-    "Cl": {"nom": "Chlore", "num": 17, "masse": 35.45, "famille": "halogène",
-           "state": "Gaz", "electron_config": "[Ne] 3s² 3p⁵", "isotopes": ["³⁵Cl", "³⁷Cl"]},
+    "Cl": {"nom": "Chlorine",  "num": 17, "masse": 35.45, "famille": "halogène",
+        "state": "Gas", "electron_config": "[Ne] 3s² 3p⁵","isotopes": ["³⁵Cl", "³⁷Cl"]},
     "Ar": {"nom": "Argon", "num": 18, "masse": 39.948, "famille": "gaz noble",
            "state": "Gaz", "electron_config": "[Ne] 3s² 3p⁶", "isotopes": ["³⁶Ar", "³⁸Ar", "⁴⁰Ar"]},
-    "K":  {"nom": "Potassium", "num": 19, "masse": 39.098, "famille": "métal alcalin",
-           "state": "Solide", "electron_config": "[Ar] 4s¹", "isotopes": ["³⁹K", "⁴⁰K", "⁴¹K"]},
+    "K": {"nom": "Potassium","num": 19,"masse": 39.098,"famille": "métal alcalin",
+        "state": "Solid","electron_config": "[Ar] 4s¹","isotopes": ["³⁹K", "⁴⁰K", "⁴¹K"]},
     "Ca": {"nom": "Calcium", "num": 20, "masse": 40.078, "famille": "métal alcalino-terreux",
-           "state": "Solide", "electron_config": "[Ar] 4s²", "isotopes": ["⁴⁰Ca", "⁴²Ca", "⁴³Ca"]},
+           "state": "Solid", "electron_config": "[Ar] 4s²", "isotopes": ["⁴⁰Ca", "⁴¹Ca", "⁴²Ca", "⁴³Ca", "⁴⁴Ca"]},
     "Sc": {"nom": "Scandium", "num": 21, "masse": 44.956, "famille": "métal de transition",
            "state": "Solide", "electron_config": "[Ar] 3d¹ 4s²", "isotopes": ["⁴⁵Sc"]},
     "Ti": {"nom": "Titane", "num": 22, "masse": 47.867, "famille": "métal de transition",
@@ -67,8 +67,8 @@ elements = {
            "state": "Solide", "electron_config": "[Ar] 3d¹⁰ 4s² 4p³", "isotopes": ["⁷⁵As"]},
     "Se": {"nom": "Sélénium", "num": 34, "masse": 78.971, "famille": "chalcogène",
            "state": "Solide", "electron_config": "[Ar] 3d¹⁰ 4s² 4p⁴", "isotopes": ["⁷⁴Se", "⁷⁶Se"]},
-    "Br": {"nom": "Brome", "num": 35, "masse": 79.904, "famille": "halogène",
-           "state": "Liquide", "electron_config": "[Ar] 3d¹⁰ 4s² 4p⁵", "isotopes": ["⁷⁹Br", "⁸¹Br"]},
+    "Br": {"nom": "Bromine",  "num": 35, "masse": 79.904, "famille": "halogène",
+           "state": "Liquid", "electron_config": "[Ar] 4s² 3d¹⁰ 4p⁵", "isotopes": ["79Br", "81Br"]},
     "Kr": {"nom": "Krypton", "num": 36, "masse": 83.798, "famille": "gaz noble",
            "state": "Gaz", "electron_config": "[Ar] 3d¹⁰ 4s² 4p⁶", "isotopes": ["⁷⁸Kr", "⁸⁰Kr"]},
     "Rb": {"nom": "Rubidium", "num": 37, "masse": 85.468, "famille": "métal alcalin",
@@ -103,8 +103,8 @@ elements = {
            "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s² 5p³", "isotopes": ["¹²¹Sb", "¹²³Sb"]},
     "Te": {"nom": "Tellure", "num": 52, "masse": 127.60, "famille": "chalcogène",
            "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s² 5p⁴", "isotopes": ["¹²⁰Te", "¹²²Te"]},
-    "I":  {"nom": "Iode", "num": 53, "masse": 126.90, "famille": "halogène",
-           "state": "Solide", "electron_config": "[Kr] 4d¹⁰ 5s² 5p⁵", "isotopes": ["¹²⁷I"]},
+    "I": {"nom": "Iodine", "num": 53, "masse": 126.90, "famille": "halogène",
+        "state": "Solid", "electron_config": "[Kr] 4d¹⁰ 5s² 5p⁵", "isotopes": ["¹²⁷I"]},
     "Xe": {"nom": "Xénon", "num": 54, "masse": 131.29, "famille": "gaz noble",
            "state": "Gaz", "electron_config": "[Kr] 4d¹⁰ 5s² 5p⁶", "isotopes": ["¹²⁴Xe", "¹²⁶Xe"]},
     "Cs": {"nom": "Césium", "num": 55, "masse": 132.91, "famille": "métal alcalin",
@@ -237,30 +237,28 @@ elements = {
            "state": "Gaz", "electron_config": "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶", "isotopes": ["²⁹⁴Og"]}
 }
 
-# Positions dans le tableau périodique (unchanged)
 positions = {
     "H": (0, 0), "He": (0, 17),
     "Li": (1, 0), "Be": (1, 1), "B": (1, 12), "C": (1, 13), "N": (1, 14), "O": (1, 15), "F": (1, 16), "Ne": (1, 17),
     "Na": (2, 0), "Mg": (2, 1), "Al": (2, 12), "Si": (2, 13), "P": (2, 14), "S": (2, 15), "Cl": (2, 16), "Ar": (2, 17),
-    "K": (3, 0), "Ca": (3, 1), "Sc": (3, 2), "Ti": (3, 3), "V": (3, 4), "Cr": (3, 5), "Mn": (3, 6), "Fe": (3, 7), 
-    "Co": (3, 8), "Ni": (3, 9), "Cu": (3, 10), "Zn": (3, 11), "Ga": (3, 12), "Ge": (3, 13), "As": (3, 14), "Se": (3, 15), 
+    "K": (3, 0), "Ca": (3, 1), "Sc": (3, 2), "Ti": (3, 3), "V": (3, 4), "Cr": (3, 5), "Mn": (3, 6), "Fe": (3, 7),
+    "Co": (3, 8), "Ni": (3, 9), "Cu": (3, 10), "Zn": (3, 11), "Ga": (3, 12), "Ge": (3, 13), "As": (3, 14), "Se": (3, 15),
     "Br": (3, 16), "Kr": (3, 17),
-    "Rb": (4, 0), "Sr": (4, 1), "Y": (4, 2), "Zr": (4, 3), "Nb": (4, 4), "Mo": (4, 5), "Tc": (4, 6), "Ru": (4, 7), 
-    "Rh": (4, 8), "Pd": (4, 9), "Ag": (4, 10), "Cd": (4, 11), "In": (4, 12), "Sn": (4, 13), "Sb": (4, 14), "Te":(4,15), "I": (4, 16), 
+    "Rb": (4, 0), "Sr": (4, 1), "Y": (4, 2), "Zr": (4, 3), "Nb": (4, 4), "Mo": (4, 5), "Tc": (4, 6), "Ru": (4, 7),
+    "Rh": (4, 8), "Pd": (4, 9), "Ag": (4, 10), "Cd": (4, 11), "In": (4, 12), "Sn": (4, 13), "Sb": (4, 14), "Te":(4,15), "I": (4, 16),
     "Xe": (4, 17),
-    "Cs": (5, 0), "Ba": (5, 1), "La": (10, 2), "Ce": (10, 3), "Pr": (10, 4), "Nd": (10, 5), "Pm": (10, 6), "Sm": (10, 7), 
-    "Eu": (10, 8), "Gd": (10, 9), "Tb": (10, 10), "Dy": (10, 11), "Ho": (10, 12), "Er": (10, 13), "Tm": (10, 14), "Yb": (10, 15), 
+    "Cs": (5, 0), "Ba": (5, 1), "La": (10, 2), "Ce": (10, 3), "Pr": (10, 4), "Nd": (10, 5), "Pm": (10, 6), "Sm": (10, 7),
+    "Eu": (10, 8), "Gd": (10, 9), "Tb": (10, 10), "Dy": (10, 11), "Ho": (10, 12), "Er": (10, 13), "Tm": (10, 14), "Yb": (10, 15),
     "Lu": (5, 2),
-    "Hf": (5, 3), "Ta": (5, 4), "W": (5, 5), "Re": (5, 6), "Os": (5, 7), "Ir": (5, 8), "Pt": (5, 9), "Au": (5, 10), 
+    "Hf": (5, 3), "Ta": (5, 4), "W": (5, 5), "Re": (5, 6), "Os": (5, 7), "Ir": (5, 8), "Pt": (5, 9), "Au": (5, 10),
     "Hg": (5, 11), "Tl": (5, 12), "Pb": (5, 13), "Bi": (5, 14), "Po": (5, 15), "At": (5, 16), "Rn": (5, 17),
-    "Fr": (6, 0), "Ra": (6, 1), "Ac": (11, 2), "Th": (11, 3), "Pa": (11, 4), "U": (11, 5), "Np": (11, 6), "Pu": (11, 7), 
-    "Am": (11, 8), "Cm": (11, 9), "Bk": (11, 10), "Cf": (11, 11), "Es": (11, 12), "Fm": (11, 13), "Md": (11, 14), "No": (11, 15), 
+    "Fr": (6, 0), "Ra": (6, 1), "Ac": (11, 2), "Th": (11, 3), "Pa": (11, 4), "U": (11, 5), "Np": (11, 6), "Pu": (11, 7),
+    "Am": (11, 8), "Cm": (11, 9), "Bk": (11, 10), "Cf": (11, 11), "Es": (11, 12), "Fm": (11, 13), "Md": (11, 14), "No": (11, 15),
     "Lr": (6, 2),
-    "Rf": (6, 3), "Db": (6, 4), "Sg": (6, 5), "Bh": (6, 6), "Hs": (6, 7), "Mt": (6, 8), "Ds": (6, 9), "Rg": (6, 10), 
+    "Rf": (6, 3), "Db": (6, 4), "Sg": (6, 5), "Bh": (6, 6), "Hs": (6, 7), "Mt": (6, 8), "Ds": (6, 9), "Rg": (6, 10),
     "Cn": (6, 11), "Nh": (6, 12), "Fl": (6, 13), "Mc": (6, 14), "Lv": (6, 15), "Ts": (6, 16), "Og": (6, 17)
 }
 
-# Couleurs par famille (unchanged)
 colors = {
             "non-métal": "#93C572",
             "métal alcalin": "#FFAAAA",
@@ -287,7 +285,7 @@ production_methods = {
         "2 KCl(l) → 2 K(l) + Cl₂(g) (Electrolysis)",
         "Na(l) + KCl(l) → K(g) + NaCl(l) (Thermal process)"
     ],
-    
+
     # Group 2 (Alkaline Earth)
     "Be": [
         "BeF₂ + Mg → Be + MgF₂ (Reduction)"
@@ -298,7 +296,7 @@ production_methods = {
     "Ca": [
         "CaO + Al → Ca + Al₂O₃ (Reduction)"
     ],
-    
+
     # Group 13-18 (p-block)
     "B": [
         "2 B₂O₃ + 7 C → 4 B + 3 CO₂ (Reduction with carbon)"
@@ -331,5 +329,214 @@ production_methods = {
     ],
     "Cl": [
         "2 NaCl + 2 H₂O → Cl₂ + H₂ + 2 NaOH (Chlor-alkali process)"
-    ]
+    ],
+    "H": {
+        "electropositive_metals": [
+            "2 Na + 2 H2O → H2 + 2 Na⁺ + 2 OH⁻",
+            "Ca + 2 H2O → H2 + Ca²⁺ + 2 OH⁻"
+        ],
+        "reaction_with_acids": [
+            "Zn + 2 H3O⁺ → H2 + Zn²⁺ + 2 H2O"
+        ],
+        "steam_reforming": {
+            "reaction": "CH4 + H2O → 3 H2 + CO",
+            "conditions": "800 °C, catalyst"
+        },
+        "coal_gasification": {
+            "reaction": "C + H2O → H2 + CO",
+            "conditions": "1000 °C"
+        },
+        "water_gas_shift": "CO + H2O → H2 + CO2",
+        "ionic_hydrides": [
+            "NaH(l) → Na(l) + ½ H2(g) (electrolysis in molten salt)",
+            "CaH2(s) + 2 H2O(l) → Ca(OH)2 + 2 H2(g)"
+        ]
+    },
+    "He": [],
+    "Li": [
+        "2 LiCl(l) → 2 Li(l) + Cl₂(g) (Electrolysis of molten LiCl)",
+        "from_lithium_salts": "Lithium is produced by electrolysis of lithium salts such as lithium chloride (LiCl).",
+        "production_of_lithium": "LiCl + KCl → Li + ½ Cl₂ (Electrolysis)",
+        "reaction_with_oxygen": "4Li + O₂ → 2 Li₂O₄ (Reaction with oxygen)"
+    ],
+    "Be": [
+        "BeF₂ + Mg → Be + MgF₂ (Reduction)"
+    ],
+    "B": [
+        "2 B₂O₃ + 7 C → 4 B + 3 CO₂ (Reduction with carbon)"
+    ],
+    "C": [
+        "from_carbonates": "Carbon can be produced from the thermal decomposition of carbonates or through reduction reactions",
+        "carbon_monoxide_formation": "HCOOH → H₂O + CO (with H₂SO₄)",
+        "boudouard_equilibrium": "CO₂ + C(s) ⇌ 2 CO",
+        "reaction_of_carbonates_with_acid": "CaCO₃ + 2 HCl → CaCl₂ + H₂O + CO₂"
+    ],
+    "N": [
+        "from_air": "Nitrogen is separated from air using fractional distillation or pressure swing adsorption",
+        "Haber_bosch_process": "N₂ + 3 H₂ → 2 NH₃ (Haber-Bosch process)",
+        "ammonium_dichromate_decomposition": "(NH₄)₂Cr₂O₇ → N₂ + Cr₂O₃ + 4 H₂O",
+        "hydrazine_decomposition": "2 N₂H₄ → 2 NH₃ + N₂",
+        "hydrogen_azide_decomposition": "2 HN₃ → H₂ + 3 N₂",
+        "nitrogen_triiodide_explosion": "2 NI₃⋅NH₃ → 3 I₂ + N₂ + 2 NH₃",
+        "ostwald_process": "4 NH₃ + 5 O₂ → 4 NO + 6 H₂O",
+        "ostwald_reaction_2": "2 NO + O₂ → 2 NO₂",
+        "ostwald_reaction_3": "3 NO₂ + H₂O → 2 HNO₃ + NO"
+    ],
+    "O": [
+        "from_air": "Oxygen can be separated from air by fractional distillation, or by using zeolite adsorption or pressure swing adsorption",
+        "electrolysis_of_water": "2 H₂O → 2 H₂ + O₂ (electrolysis)",
+        "decomposition_of_hydrogen_peroxide": "2 H₂O₂ → 2 H₂O + O₂ (decomposition)",
+        "Claus_process": "2 H₂S + 3 O₂ → 2 SO₂ + 2 H₂O",
+        "claus_reaction_2": "SO₂ + 2 H₂S → 3 S + 2 H₂O",
+        "contact_process": "2 SO₂ + O₂ → 2 SO₃",
+        "contact_reaction_2": "SO₃ + H₂O → H₂SO₄",
+        "formation_of_caros_acid": "H₂SO₄ + H₂O₂ → H₂SO₅ + H₂O"
+    ],
+    "F": [
+        "synthesis_of_fluorine": "KF + HF → F₂ + H₂ (electrolysis)"
+    ],
+    "Ne": [],
+    "Na": [
+        "from_sodium_salts": "Sodium is produced by the electrolysis of molten sodium chloride (NaCl).",
+        "reaction_with_liquid_ammonia": "Na(s) + NH₃(l) → Na⁺ + e⁻ (Reaction with liquid ammonia)",
+        "reaction_with_oxygen": "Na + O₂ → Na₂O₂ (Reaction with oxygen)"
+    ],
+    "Mg": [
+        "from_magnesium_carbonate": "Magnesium is produced from magnesium salts by electrolysis or by heating magnesium compounds like magnesium carbonate.",
+        "thermal_decomposition_of_MgCO3": "MgCO₃ → MgO + CO₂ (Thermal decomposition of magnesium carbonate)",
+        "reaction_of_magnesium_with_CO2": "CO₂ + 2Mg → 2 MgO + C (Reaction of magnesium with carbon dioxide)"
+    ],
+    "Al": [
+        "2 Al₂O₃ + 3 C → 4 Al + 3 CO₂ (Hall-Héroult process)"
+    ],
+    "Si": [
+        "from_silicon_dioxide": "Silicon is produced from silicon dioxide (SiO₂) using a reduction reaction with aluminum",
+        "synthesis_of_silicon": "3 SiO₂ + 4 Al → 3 Si + 2 Al₂O₃",
+        "formation_of_silanes": "Si + 2 H₂ → SiH₄ (formation of silicon tetrahydride)",
+        "hydrolysis_of_silanes": "SiH₄ + 2 O₂ → SiO₂ + 2 H₂O (hydrolysis of silanes)"
+    ],
+    "P": [
+        "reaction_with_chlorate": "KClO₃ + 6 P → KCl + 1.5 P₄O₁₀"
+    ],
+    "S": [],
+    "Cl": [
+        "reaction_with_water": "Cl₂ + H₂O → HCl + HOCl",
+        "disproportionation_of_chlorine": "Cl₂ + 2 OH⁻ → Cl⁻ + ClO⁻ + H₂O"
+    ],
+    "Ar": [],
+    "K": [
+        "reaction_with_oxygen": "K + O₂ → KO₂ (Reaction with oxygen)"
+    ],
+    "Ca": [
+        "from_calcium_carbonate": "Calcium is produced by the electrolysis of calcium chloride or by the reduction of calcium oxide with aluminum",
+        "decomposition_of_limestone": "CaCO₃ → CaO + CO₂ (Decomposition of limestone)",
+        "formation_of_calcium_carbide": "CaO + 3 C → CaC₂ + CO (Formation of calcium carbide)",
+        "hydrolysis_of_calcium_carbide": "CaC₂ + 2 H₂O → Ca(OH)₂ + C₂H₂ (Hydrolysis of calcium carbide)",
+        "reaction_with_water": "Ca + 2 H₂O → Ca(OH)₂ + H₂ (Reaction with water)"
+    ],
+    "Sc": [],
+    "Ti": [],
+    "V": [],
+    "Cr": [],
+    "Mn": [],
+    "Fe": [],
+    "Co": [],
+    "Ni": [],
+    "Cu": [],
+    "Zn": [],
+    "Ga": [],
+    "Ge": [],
+    "As": [],
+    "Se": [],
+    "Br": [
+        "synthesis_of_bromine": "Cl₂ + 2 Br⁻ → 2 Cl⁻ + Br₂"
+    ],
+    "Kr": [],
+    "Rb": [],
+    "Sr": [],
+    "Y": [],
+    "Zr": [],
+    "Nb": [],
+    "Mo": [],
+    "Tc": [],
+    "Ru": [],
+    "Rh": [],
+    "Pd": [],
+    "Ag": [],
+    "Cd": [],
+    "In": [],
+    "Sn": [],
+    "Sb": [],
+    "Te": [],
+    "I": [
+        "from_brine": "Oxidation of iodide (I⁻) extracted from brine using chlorine: 2 I⁻ + Cl₂ → I₂ + 2 Cl⁻",
+        "from_nitrate_ores": "Recovered during processing of Chilean saltpeter (NaNO₃) containing sodium iodate (NaIO₃)",
+        "synthesis_of_iodine": "Cl₂ + 2 I⁻ → 2 Cl⁻ + I₂",
+        "disproportionation_of_hydrogen_iodide": "2 HI → H₂ + I₂"
+    ],
+    "Xe": [],
+    "Cs": [],
+    "Ba": [],
+    "La": [],
+    "Ce": [],
+    "Pr": [],
+    "Nd": [],
+    "Pm": [],
+    "Sm": [],
+    "Eu": [],
+    "Gd": [],
+    "Tb": [],
+    "Dy": [],
+    "Ho": [],
+    "Er": [],
+    "Tm": [],
+    "Yb": [],
+    "Lu": [],
+    "Hf": [],
+    "Ta": [],
+    "W": [],
+    "Re": [],
+    "Os": [],
+    "Ir": [],
+    "Pt": [],
+    "Au": [],
+    "Hg": [],
+    "Tl": [],
+    "Pb": [],
+    "Bi": [],
+    "Po": [],
+    "At": [],
+    "Rn": [],
+    "Fr": [],
+    "Ra": [],
+    "Ac": [],
+    "Th": [],
+    "Pa": [],
+    "U": [],
+    "Np": [],
+    "Pu": [],
+    "Am": [],
+    "Cm": [],
+    "Bk": [],
+    "Cf": [],
+    "Es": [],
+    "Fm": [],
+    "Md": [],
+    "No": [],
+    "Lr": [],
+    "Rf": [],
+    "Db": [],
+    "Sg": [],
+    "Bh": [],
+    "Hs": [],
+    "Mt": [],
+    "Ds": [],
+    "Rg": [],
+    "Cn": [],
+    "Nh": [],
+    "Fl": [],
+    "Mc": [],
+    "Lv": [],
+    "Ts": [],
+    "Og": []
 }
