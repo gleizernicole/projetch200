@@ -7,7 +7,7 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtTest import QTest
 
 # Import the application to test
-from periodictable.cli import PeriodicTableApp
+from periodictable.utils import PeriodicTableApp
 from periodictable.elements_data import elements, positions, colors, production_methods
 
 class TestPeriodicTableApp(unittest.TestCase):
