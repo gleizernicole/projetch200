@@ -1,3 +1,4 @@
+# name, atomic number, mass, family, state at room temperature, electron configuration and isotopes of each element
 elements = {
     "H": {"nom": "Hydrogen", "num": 1, "masse": 1.008, "famille": "non-métal",
           "state": "Gas", "electron_config": "1s¹", "isotopes": ["¹H (protium)", "²H (deuterium)", "³H (tritium)"]},
