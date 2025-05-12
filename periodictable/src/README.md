@@ -35,3 +35,10 @@ python -m periodictable.generate_structure
 # Run utility functions
 python -m periodictable.utils
 ```
+
+## ✅ Running tests
+
+```bash
+cd src
+python -m unittest periodictable/tests/test_periodictable.py
+```
