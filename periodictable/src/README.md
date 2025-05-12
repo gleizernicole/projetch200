@@ -16,6 +16,10 @@ The package generates a structured periodic table and includes utilities for wor
 
 - Python 3.10+
 - Conda or virtual environment (optional but recommended)
+- PyQt5
+- pandas
+- numpy
+- scipy
 
 Activate your environment:
 
