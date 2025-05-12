@@ -14,7 +14,7 @@ import unicodedata
 from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QLabel, QPushButton, QGridLayout, QMessageBox,
     QHBoxLayout, QFrame, QInputDialog, QApplication, QScrollArea, QDialog, QLineEdit,
-    QDialogButtonBox
+    QDialogButtonBox, QTextEdit
 )
 from PyQt5.QtCore import Qt, QTimer, QEventLoop
 from PyQt5.QtGui import QFont, QPixmap
@@ -50,6 +50,9 @@ class PeriodicTableApp(QMainWindow):
         self.quiz_type = None
         self.user_answer = None
         self.current_dialog = None
+
+        # Show initial information dialog
+        self.show_initial_info()
 
     def show_initial_info(self):
         """Display an initial information dialog about the application"""
@@ -126,7 +129,7 @@ class PeriodicTableApp(QMainWindow):
         layout.addWidget(ok_btn)
 
         info_dialog.exec_()
-    
+
     def init_ui(self):
         """Set up all user interface components"""
         central_widget = QWidget()
@@ -285,7 +288,6 @@ class PeriodicTableApp(QMainWindow):
         element = elements[symbol]
 
         question_type = random.choice(["symbol", "atomic_number","electron_config", "electron_config_reverse","production", "production_reverse"])
-
 
         if question_type == "symbol":
             question = f"What is the name of the element with symbol <b>{symbol}</b>?"
