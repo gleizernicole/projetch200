@@ -19,6 +19,10 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QTimer, QEventLoop
 from PyQt5.QtGui import QFont, QPixmap
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_dir, ".."))
+sys.path.insert(0, project_root)
+
 from periodictable.elements_data import elements, positions, colors, production_methods
 
 # ======================================================================================
