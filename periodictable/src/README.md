@@ -6,4 +6,7 @@ Description:
 
 Instructions for use:
 
-Tests: PYTHONPATH=src python3 -m periodictable.tests.test_periodictable
+Tests: 
+# From the src directory
+cd src
+python -m unittest periodictable/tests/test_periodictable.py
