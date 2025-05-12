@@ -14,7 +14,7 @@ import unicodedata
 from PyQt5.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QLabel, QPushButton, QGridLayout, QMessageBox,
     QHBoxLayout, QFrame, QInputDialog, QApplication, QScrollArea, QDialog, QLineEdit,
-    QDialogButtonBox
+    QDialogButtonBox, QTextEdit
 )
 from PyQt5.QtCore import Qt, QTimer, QEventLoop
 from PyQt5.QtGui import QFont, QPixmap
@@ -50,6 +50,88 @@ class PeriodicTableApp(QMainWindow):
         self.quiz_type = None
         self.user_answer = None
         self.current_dialog = None
+
+        # Show initial information dialog
+        self.show_initial_info()
+
+    def show_initial_info(self):
+        """Display an initial information dialog about the application"""
+        info_dialog = QDialog(self)
+        info_dialog.setWindowTitle("Welcome to the Interactive Periodic Table!")
+        info_dialog.setMinimumSize(600, 500)
+
+        layout = QVBoxLayout(info_dialog)
+
+        # Title
+        title = QLabel("🧪 Interactive Periodic Table + Quiz 🎲")
+        title.setFont(QFont("Arial", 18, QFont.Bold))
+        title.setAlignment(Qt.AlignCenter)
+        layout.addWidget(title)
+
+        # Scrollable info text
+        info_text = QTextEdit()
+        info_text.setReadOnly(True)
+        info_text.setHtml("""
+        <h2>Application Features</h2>
+        <h3>Periodic Table</h3>
+        <p>• Click on any element button to view detailed information</p>
+        <p>• The periodic table is color-coded by element families</p>
+        
+        <h3>Element Information Includes:</h3>
+        <ul>
+            <li>Atomic structure image</li>
+            <li>Element name and symbol</li>
+            <li>Atomic number</li>
+            <li>Atomic weight</li>
+            <li>Element family</li>
+            <li>Physical state</li>
+            <li>Electron configuration</li>
+            <li>Isotopes</li>
+            <li>Production methods</li>
+        </ul>
+
+        <h3>Quiz Game Features</h3>
+        <p>• Press "Start Quiz" to begin</p>
+        <p>• Choose between Multiple Choice or Free Response formats</p>
+        <p>• 10 questions per quiz session</p>
+        <p>• 30 seconds per question</p>
+
+        <h3>Quiz Question Types:</h3>
+        <ul>
+            <li>Identify element by symbol</li>
+            <li>Identify element by atomic number</li>
+            <li>Match electron configuration</li>
+            <li>Identify element by production method</li>
+        </ul>
+
+        <p><b>Tip:</b> Explore the periodic table and test your knowledge!</p>
+        """)
+        info_text.setStyleSheet("""
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 14px;
+        """)
+        layout.addWidget(info_text)
+
+        # OK Button
+        ok_btn = QPushButton("Got it! Let's Explore 🚀")
+        ok_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #4CAF50;
+                color: white;
+                font-size: 16px;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            QPushButton:hover {
+                background-color: #45a049;
+            }
+        """)
+        ok_btn.clicked.connect(info_dialog.accept)
+        layout.addWidget(ok_btn)
+
+        info_dialog.exec_()
 
     def init_ui(self):
         """Set up all user interface components"""
@@ -209,7 +291,6 @@ class PeriodicTableApp(QMainWindow):
         element = elements[symbol]
 
         question_type = random.choice(["symbol", "atomic_number","electron_config", "electron_config_reverse","production", "production_reverse"])
-
 
         if question_type == "symbol":
             question = f"What is the name of the element with symbol <b>{symbol}</b>?"
