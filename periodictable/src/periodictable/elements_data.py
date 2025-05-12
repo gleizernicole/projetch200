@@ -274,7 +274,7 @@ colors = {
             "actinide": "#CCCCCC"
         }
 
-production_methods = {
+production = {
     "H": {
         "electropositive_metals": [
             "2 Na + 2 H2O → H2 + 2 Na⁺ + 2 OH⁻",
