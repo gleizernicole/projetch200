@@ -1,6 +1,10 @@
 # 🧪 Interactive Periodic Table for S&P Package
 
-This project is part of a programming assignment focused on the s and p blocks of the periodic table. It provides Python tools to generate the table structure and perform element-related utilities.
+## 🎓 Project background
+
+### The problem
+
+In the third semester of the Chemistry bachelor at EPFL students are required to take a course on the chemistry of s and p block elements of the periodic table.
 
 ---
 
