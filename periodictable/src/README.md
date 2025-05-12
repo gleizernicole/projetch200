@@ -8,9 +8,23 @@ This project is part of a programming assignment focused on the s and p blocks o
 
 The package generates a structured periodic table and includes utilities for working with element data. It emphasizes interactive learning and modular design for future extensions.
 
+## 📂 Project structure 
+
+periodictable/
+├── README.md                     # Project documentation
+├── src/
+│   └── periodictable/
+│       ├── __init__.py
+│       ├── generate_structure.py # Generates the periodic table structure
+│       ├── utils.py              # Utility functions for periodic table operations
+│       ├── elements_data.py      # Contains element configurations and metadata
+│       └── tests/
+│           ├── __init__.py
+│           └── test_periodictable.py # Unit tests for the package
+
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting started
 
 ### Prerequisites
 
