@@ -104,7 +104,7 @@ class PeriodicTableApp(QMainWindow):
             <li>Identify element by production method</li>
         </ul>""")
         info_text.setStyleSheet("""
-            background-color: #616161;
+            background-color: #CFD8DC;
             border: 1px solid #ccc;
             padding: 10px;
             font-size: 14px;
@@ -115,7 +115,7 @@ class PeriodicTableApp(QMainWindow):
         ok_btn = QPushButton("Got it! Let's Explore 🚀")
         ok_btn.setStyleSheet("""
             QPushButton {
-                background-color: #009900;
+                background-color: #6C63FF;
                 color: white;
                 font-size: 16px;
                 padding: 10px;
