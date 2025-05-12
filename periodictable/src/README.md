@@ -2,7 +2,7 @@
 Projet programmation tableau periodique s &amp; p
 
 
-Description: 
+# Description: 
 
 # Instructions for use:
 cd src 
