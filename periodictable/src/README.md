@@ -8,7 +8,6 @@ This project is part of a programming assignment focused on the s and p blocks o
 
 The package generates a structured periodic table and includes utilities for working with element data. It emphasizes interactive learning and modular design for future extensions.
 
----
 
 ## 📂 Project structure 
 
