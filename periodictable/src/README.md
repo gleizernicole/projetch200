@@ -1,16 +1,23 @@
-# Interactive Periodic Table for S&P Package
-Projet programmation tableau periodique s &amp; p
+# 🧪 Interactive Periodic Table for S&P Package
 
+This project is part of a programming assignment focused on the s and p blocks of the periodic table. It provides Python tools to generate the table structure and perform element-related utilities.
 
-# Description: 
+---
 
-# Instructions for use:
-cd src 
-python -m periodictable.generate_structure
-python -m periodictable.utils
+## 📄 Description
 
+The package generates a structured periodic table and includes utilities for working with element data. It emphasizes interactive learning and modular design for future extensions.
 
-# Tests: 
-From the src directory:
-cd src
-python -m unittest periodictable/tests/test_periodictable.py
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.10+
+- Conda or virtual environment (optional but recommended)
+
+Activate your environment:
+
+```bash
+conda activate projetch200
