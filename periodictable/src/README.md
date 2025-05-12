@@ -11,6 +11,7 @@ The package generates a structured periodic table and includes utilities for wor
 
 ## 📂 Project structure 
 
+```text
 periodictable/
 ├── README.md                     # Project documentation
 ├── src/
@@ -22,6 +23,7 @@ periodictable/
 │       └── tests/
 │           ├── __init__.py
 │           └── test_periodictable.py # Unit tests for the package
+```
 
 ---
 
