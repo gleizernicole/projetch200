@@ -115,7 +115,7 @@ class PeriodicTableApp(QMainWindow):
         ok_btn = QPushButton("Got it! Let's Explore 🚀")
         ok_btn.setStyleSheet("""
             QPushButton {
-                background-color: #0b5345 ;
+                background-color: #32CD32 ;
                 color: white;
                 font-size: 16px;
                 padding: 10px;
