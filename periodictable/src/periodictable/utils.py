@@ -104,7 +104,7 @@ class PeriodicTableApp(QMainWindow):
             <li>Identify element by production method</li>
         </ul>""")
         info_text.setStyleSheet("""
-            background-color: #CFD8DC;
+            background-color: #BDB5D5;
             border: 1px solid #ccc;
             padding: 10px;
             font-size: 14px;
