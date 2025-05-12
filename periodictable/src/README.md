@@ -80,7 +80,7 @@ periodictable/
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/periodic-table-project.git
+git clone https://github.com/gleizernicole/projetch200.git
 
 # Navigate to project directory
 cd periodic-table-project
