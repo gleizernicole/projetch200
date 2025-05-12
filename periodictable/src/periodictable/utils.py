@@ -525,22 +525,31 @@ class PeriodicTableApp(QMainWindow):
 
     def get_production_content(self, symbol):
         """Generate formatted production methods content"""
-        element = elements.get(symbol)
-        if element and "production" in element:
-            production = element["production"]
-            content = []
-            for key, value in production.items():
-                if isinstance(value, list):
-                    content.append(f"<b>{key.replace('_', ' ').capitalize()}:</b>")
-                    content.extend(f"• {item}" for item in value)
-                elif isinstance(value, dict):
-                    content.append(f"<b>{key.replace('_', ' ').capitalize()}:</b>")
-                    content.append(f"  Reaction: {value.get('reaction', 'N/A')}")
-                    content.append(f"  Conditions: {value.get('conditions', 'N/A')}")
-                else:
-                    content.append(f"<b>{key.replace('_', ' ').capitalize()}:</b> {value}")
-            return "<br>".join(content)
-        return "<i>No production methods recorded</i>"
+        production_info = production_methods.get(symbol, {})
+    
+        if not production_info:
+            return "<i>No production methods recorded</i>"
+    
+        content = []
+        for method, details in production_info.items():
+            # Convert method name to a more readable format
+            formatted_method = method.replace('_', ' ').capitalize()
+        
+            # Handle different types of details
+            if isinstance(details, list):
+                # For list of reactions
+                content.append(f"<b>{formatted_method}:</b>")
+                content.extend(f"• {item}" for item in details)
+            elif isinstance(details, dict):
+                # For dictionary with reaction and conditions
+                content.append(f"<b>{formatted_method}:</b>")
+                content.append(f"  Reaction: {details.get('reaction', 'N/A')}")
+                content.append(f"  Conditions: {details.get('conditions', 'N/A')}")
+            else:
+                # For simple string reactions or methods
+                content.append(f"<b>{formatted_method}:</b> {details}")
+    
+        return "<br>".join(content)
 
     def show_element_info(self, symbol):
         """Display detailed information about a selected element"""
