@@ -1,6 +1,5 @@
 # 🧪 Interactive Periodic Table for S&P Package
 
----
 
 ## 🎓 Project background
 
