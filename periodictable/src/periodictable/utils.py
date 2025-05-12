@@ -511,18 +511,6 @@ class PeriodicTableApp(QMainWindow):
     # ELEMENT INFORMATION DISPLAY
     # ==================================================================================
 
-    def add_production_info(self, layout, symbol):
-        """Add production equations section to element info dialog"""
-        section_header = QLabel("<b>Production Methods:</b>")
-        section_header.setStyleSheet("font-size: 14px; padding-top: 15px;")
-        layout.addWidget(section_header)
-
-        content = self.get_production_content(symbol)
-        content_label = QLabel(content)
-        content_label.setStyleSheet("font-size: 12px; color: #444; margin-left: 10px;")
-        content_label.setWordWrap(True)
-        layout.addWidget(content_label)
-
     def get_production_content(self, symbol):
         """Generate formatted production methods content"""
         production_info = production_methods.get(symbol, {})
@@ -534,7 +522,7 @@ class PeriodicTableApp(QMainWindow):
         for method, details in production_info.items():
             # Convert method name to a more readable format
             formatted_method = method.replace('_', ' ').capitalize()
-        
+            
             # Handle different types of details
             if isinstance(details, list):
                 # For list of reactions
@@ -548,9 +536,26 @@ class PeriodicTableApp(QMainWindow):
             else:
                 # For simple string reactions or methods
                 content.append(f"<b>{formatted_method}:</b> {details}")
-    
+        
         return "<br>".join(content)
-
+    
+    def add_production_info(self, layout, symbol):
+        """Add production equations section to element info dialog"""
+        print(f"Adding production info for {symbol}")  # Debug print
+        print(f"Production methods: {production_methods.get(symbol)}")  # Debug print
+    
+        section_header = QLabel("<b>Production Methods:</b>")
+        section_header.setStyleSheet("font-size: 14px; padding-top: 15px;")
+        layout.addWidget(section_header)
+    
+        content = self.get_production_content(symbol)
+        print(f"Production content: {content}")  # Debug print
+    
+        content_label = QLabel(content)
+        content_label.setStyleSheet("font-size: 12px; color: #444; margin-left: 10px;")
+        content_label.setWordWrap(True)
+        layout.addWidget(content_label)
+    
     def show_element_info(self, symbol):
         """Display detailed information about a selected element"""
         element = elements[symbol]
@@ -558,14 +563,14 @@ class PeriodicTableApp(QMainWindow):
         info_dialog.setWindowTitle(f"Atomic Structure - {element['nom']}")
         info_dialog.setFixedSize(600, 700)
         layout = QVBoxLayout(info_dialog)
-
+    
         # Atomic structure image
         img_label = QLabel()
         try:
             current_dir = os.path.dirname(os.path.abspath(__file__))
             img_path = os.path.join(current_dir, "..", "..", "scientific_structures",
                                   f"{symbol}_scientific.png")
-
+    
             if os.path.exists(img_path):
                 pixmap = QPixmap(img_path)
                 img_label.setPixmap(pixmap.scaled(400, 400,
@@ -576,10 +581,10 @@ class PeriodicTableApp(QMainWindow):
         except Exception as e:
             img_label.setText(f"<i>Atomic structure for {symbol} not available</i>")
             img_label.setStyleSheet("color: #666; font-size: 14px;")
-
+    
         img_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(img_label)
-
+    
         # Element properties
         info_text = QLabel(
             f"<b>{element['nom']} ({symbol})</b><br>"
@@ -592,11 +597,11 @@ class PeriodicTableApp(QMainWindow):
         )
         info_text.setStyleSheet("font-size: 14px; padding: 15px;")
         layout.addWidget(info_text)
-
-        # Add production info if available
-        if "production" in element:
+    
+        # Modify this section to use production_methods
+        if production_methods.get(symbol):  # Check if production methods exist
             self.add_production_info(layout, symbol)
-
+    
         info_dialog.exec_()
 
     def update_score_display(self):
