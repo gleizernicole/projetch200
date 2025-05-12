@@ -25,3 +25,13 @@ Activate your environment:
 
 ```bash
 conda activate projetch200
+```
+## ⚙️ Usage 
+
+```bash
+cd src
+# Generate the periodic table structure
+python -m periodictable.generate_structure
+# Run utility functions
+python -m periodictable.utils
+```
