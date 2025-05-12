@@ -34,6 +34,35 @@ periodictable/
 │           └── test_periodictable.py # Unit tests for the package
 ```
 
+## ✨ Features
+
+### 🔍 Interactive Periodic Table
+- **Visual Element Navigation**: Colour-coded periodic table organised by element families
+- **Detailed Element Information**: Access data for each element by clicking on its tile
+- **Compact Design**: Optimised layout that fits on standard screens while maintaining readability
+
+### 📊 Element data visualisation
+- **Atomic Structure Images**: Visual representation of electron configuration for each element
+- **Comprehensive Element Properties**:
+  - Element name and symbol
+  - Atomic number and weight
+  - Element family classification
+  - Physical state at standard conditions
+  - Electron configuration
+  - Isotope information
+  - Production methods with detailed reactions
+
+### 🎮 Interactive Quiz System
+- **Multiple Quiz Formats**: Choose between multiple-choice or free-response questions
+- **Diverse Question Types**:
+  - Identify elements by symbol
+  - Identify elements by atomic number
+  - Match electron configurations to elements
+  - Connect production methods to elements
+- **Timed Challenges**: 30-second countdown per question to test rapid recall
+- **Progress Tracking**: Score monitoring throughout the quiz session
+- **Session Management**: 10-question sessions with final score summary
+
 ---
 
 ## 🚀 Getting started
