@@ -552,7 +552,7 @@ class PeriodicTableApp(QMainWindow):
         print(f"Production content: {content}")  # Debug print
     
         content_label = QLabel(content)
-        content_label.setStyleSheet("font-size: 12px; color: #444; margin-left: 10px;")
+        content_label.setStyleSheet("font-size: 12px; color: white; margin-left: 10px;")
         content_label.setWordWrap(True)
         layout.addWidget(content_label)
     
