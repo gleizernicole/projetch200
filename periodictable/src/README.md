@@ -4,7 +4,11 @@
 
 ### The problem
 
-In the third semester of the Chemistry bachelor at EPFL students are required to take a course on the chemistry of s and p block elements of the periodic table.
+In the third semester of the Chemistry bachelor at EPFL students are required to take a course on the chemistry of s and p block elements of the periodic table. Existing resources are limited and fragmented. 
+
+### Our solution
+
+We created an interactive periodic table to help learn details more effectively, group useful information, and practice with either free response or multiple choice quizzes. 
 
 ---
 
