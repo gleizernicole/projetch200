@@ -102,12 +102,9 @@ class PeriodicTableApp(QMainWindow):
             <li>Identify element by atomic number</li>
             <li>Match electron configuration</li>
             <li>Identify element by production method</li>
-        </ul>
-
-        <p><b>Tip:</b> Explore the periodic table and test your knowledge!</p>
-        """)
+        </ul>""")
         info_text.setStyleSheet("""
-            background-color: #f0f0f0;
+            background-color: #a3e4d7;
             border: 1px solid #ccc;
             padding: 10px;
             font-size: 14px;
