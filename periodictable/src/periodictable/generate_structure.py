@@ -10,7 +10,8 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.special import sph_harm
 from matplotlib import cm
-from elements_data import elements  # Import element data containing electron configurations
+from .elements_data import elements
+
 
 def parse_electron_config(config):
     """
