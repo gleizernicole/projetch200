@@ -38,26 +38,40 @@ periodictable/
 - numpy
 - scipy
 
-Activate your environment:
+### Installation
 
 ```bash
-conda activate projetch200
+# Clone the repository
+git clone https://github.com/yourusername/periodic-table-project.git
+
+# Navigate to project directory
+cd periodic-table-project
+
+# Create and activate virtual environment
+conda create -n periodictable python=3.10
+conda activate periodictable
+
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-
-## ⚙️ Usage 
+### Running the application 
 
 ```bash
+# Navigate to source directory
 cd src
-# Generate the periodic table structure
-python -m periodictable.generate_structure
-# Run utility functions
+
+# Launch interactive periodic table
 python -m periodictable.utils
+
+# Generate periodic table structure
+python -m periodictable.generate_structure
 ```
 
-## ✅ Running tests
+## ✅ Testing
 
 ```bash
+# Run unit tests
 cd src
 python -m unittest periodictable/tests/test_periodictable.py
 ```
