@@ -523,42 +523,23 @@ class PeriodicTableApp(QMainWindow):
         content_label.setWordWrap(True)
         layout.addWidget(content_label)
 
-    def get_production_content(self, symbol):
+   def get_production_content(self, symbol):
         """Generate formatted production methods content"""
         element = elements.get(symbol)
         if element and "production" in element:
             production = element["production"]
             content = []
-            
-            # Handle different possible production method structures
-            if isinstance(production, dict):
-                for key, value in production.items():
-                    # Handle nested dictionaries
-                    if isinstance(value, dict):
-                        content.append(f"<b>{key.replace('_', ' ').capitalize()}:</b>")
-                        for subkey, subvalue in value.items():
-                            if isinstance(subvalue, list):
-                                content.extend(f"• {item}" for item in subvalue)
-                            else:
-                                content.append(f"  {subkey.replace('_', ' ').capitalize()}: {subvalue}")
-                    # Handle lists
-                    elif isinstance(value, list):
-                        content.append(f"<b>{key.replace('_', ' ').capitalize()}:</b>")
-                        content.extend(f"• {item}" for item in value)
-                    # Handle simple string or other values
-                    else:
-                        content.append(f"<b>{key.replace('_', ' ').capitalize()}:</b> {value}")
-            # Handle list of production methods
-            elif isinstance(production, list):
-                content.append("<b>Production Methods:</b>")
-                content.extend(f"• {method}" for method in production)
-            # Handle simple string
-            elif isinstance(production, str):
-                content.append(f"<b>Production Method:</b> {production}")
-            
-            # Join content or return default message
-            return "<br>".join(content) if content else "<i>No production methods recorded</i>"
-        
+            for key, value in production.items():
+                if isinstance(value, list):
+                    content.append(f"<b>{key.replace('_', ' ').capitalize()}:</b>")
+                    content.extend(f"• {item}" for item in value)
+                elif isinstance(value, dict):
+                    content.append(f"<b>{key.replace('_', ' ').capitalize()}:</b>")
+                    content.append(f"  Reaction: {value.get('reaction', 'N/A')}")
+                    content.append(f"  Conditions: {value.get('conditions', 'N/A')}")
+                else:
+                    content.append(f"<b>{key.replace('_', ' ').capitalize()}:</b> {value}")
+            return "<br>".join(content)
         return "<i>No production methods recorded</i>"
 
     def show_element_info(self, symbol):
