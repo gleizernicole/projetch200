@@ -523,7 +523,7 @@ class PeriodicTableApp(QMainWindow):
         content_label.setWordWrap(True)
         layout.addWidget(content_label)
 
-   def get_production_content(self, symbol):
+    def get_production_content(self, symbol):
         """Generate formatted production methods content"""
         element = elements.get(symbol)
         if element and "production" in element:
