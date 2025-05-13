@@ -124,6 +124,7 @@ python -m periodictable.generate_structure
 python -m periodictable.utils
 
 ```
+Check all dependencies. 
 
 ## ✅ Testing
 
