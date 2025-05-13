@@ -66,22 +66,23 @@ periodictable/
 ## 📸 Visual Preview
 
 ### Periodic table introduction
-![Introduction to app](images/informationbox.png)
-*The complete interactive periodic table with color-coded element families.*
+<img src="images/informationbox.png" width="600" alt="Introduction to app">
+<p><em>The complete interactive periodic table with color-coded element families.</em></p>
 
 ### Main periodic table view
-![Main interface](images/tableview.png)
-*The complete interactive periodic table with color-coded element families.*
+<img src="images/tableview.png" width="600" alt="Main interface">
+<p><em>The complete interactive periodic table with color-coded element families.</em></p>
 
 ### Element detail view
-![Element details](images/carbonview.png)
-*Detailed view of carbon showing electron configuration, properties, and production methods.*
+<img src="images/carbonview.png" width="600" alt="Element details">
+<p><em>Detailed view of carbon showing electron configuration, properties, and production methods.</em></p>
 
 ### Quiz mode
-![Quiz choice](images/quizchoice.png)
-![Quiz interface](images/quizexample.png)
-*Challenge your knowledge with multiple choice or free response questions about elements.*
-
+<div>
+  <img src="images/quizchoice.png" width="400" alt="Quiz choice" style="display:inline-block; margin-right:20px;">
+  <img src="images/quizexample.png" width="400" alt="Quiz interface" style="display:inline-block;">
+</div>
+<p><em>Challenge your knowledge with multiple choice or free response questions about elements.</em></p>
 
 ---
 
