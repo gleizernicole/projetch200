@@ -109,9 +109,6 @@ cd periodictable
 # Create and activate virtual environment
 conda create -n periodictable python=3.10
 conda activate periodictable
-
-# Install dependencies
-pip install -r requirements.txt
 ```
 
 ### Running the application 
