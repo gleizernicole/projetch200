@@ -5,7 +5,7 @@
 
 ### The problem
 
-In the third semester of the Chemistry bachelor at EPFL students are required to take a course on the chemistry of s and p block elements of the periodic table. Existing resources are limited and fragmented. 
+In the third semester of the Chemistry bachelor at EPFL students are required to take a course on the chemistry of s and p block elements of the periodic table. Existing resources are limited and fragmented. Test
 
 ### Our solution
 
