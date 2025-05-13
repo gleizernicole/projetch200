@@ -21,17 +21,18 @@ The package generates a structured periodic table and includes utilities for wor
 ## 📂 Project structure 
 
 ```text
+images/                           # Images for README
 periodictable/
-├── README.md                     # Project documentation
+├── README.md                     # Project introduction, installation instructions
 ├── src/
 │   └── periodictable/
 │       ├── __init__.py
-│       ├── generate_structure.py # Generates the periodic table structure
-│       ├── utils.py              # Utility functions for periodic table operations
-│       ├── elements_data.py      # Contains element configurations and metadata
+│       ├── generate_structure.py # Generates atomic orbital structures for elements
+│       ├── utils.py              # Functions for generating the periodic table interface
+│       ├── elements_data.py      # Contains element information: basics, positions in the table, production methods
 │       └── tests/
 │           ├── __init__.py
-│           └── test_periodictable.py # Unit tests for the package
+│           └── test_periodictable.py # Tests for the package
 ```
 
 ## ✨ Features
