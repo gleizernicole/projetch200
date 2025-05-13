@@ -83,7 +83,7 @@ periodictable/
 git clone https://github.com/gleizernicole/projetch200.git
 
 # Navigate to project directory
-cd periodic-table-project
+cd periodictable
 
 # Create and activate virtual environment
 conda create -n periodictable python=3.10
