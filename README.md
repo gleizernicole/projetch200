@@ -63,7 +63,26 @@ periodictable/
 - **Progress Tracking**: Score monitoring throughout the quiz session
 - **Session Management**: 10-question sessions with final score summary
 
-## 👁️ Visual walkthrough
+## 📸 Visual Preview
+
+### Periodic table introduction
+![Main Interface](/path/to/main-interface.png)
+*The complete interactive periodic table with color-coded element families.*
+
+### Main periodic table view
+![Main Interface](/path/to/main-interface.png)
+*The complete interactive periodic table with color-coded element families.*
+
+### Element detail view
+![Element Details](/path/to/element-details.png)
+*Detailed view of carbon showing electron configuration, properties, and production methods.*
+
+### Quiz mode
+![Quiz Interface](/path/to/quiz-mode.png)
+![Quiz Interface](/path/to/quiz-mode.png)
+*Challenge your knowledge with multiple choice or free response questions about elements.*
+
+
 ---
 
 ## 🚀 Getting started
