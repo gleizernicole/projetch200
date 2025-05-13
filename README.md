@@ -66,7 +66,7 @@ periodictable/
 ## 📸 Visual Preview
 
 ### Periodic table introduction
-![Main Interface](/path/to/main-interface.png)
+![Main Interface](.images/informationbox.png)
 *The complete interactive periodic table with color-coded element families.*
 
 ### Main periodic table view
