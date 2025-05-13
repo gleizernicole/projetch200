@@ -69,7 +69,8 @@ class TestPeriodicTableApp(unittest.TestCase):
     @patch('PyQt5.QtWidgets.QMessageBox.warning')
     def test_timer_update(self, mock_warning):
         """Test that the timer updates correctly"""
-        # Prepare timer
+        # Prepare timer and quiz state
+        self.periodic_table.quiz_active = True
         self.periodic_table.time_remaining = 2
         self.periodic_table.timer_display.setText("Time remaining: 2s")
         
@@ -151,9 +152,9 @@ class TestPeriodicTableApp(unittest.TestCase):
     # Element Information Tests
     def test_get_production_content(self):
         """Test generating production methods content"""
-        # Test with mock element data
-        mock_element = {
-            "production": {
+        # Create a temporary mock for production_methods
+        mock_production = {
+            "Test": {
                 "industrial": ["Method 1", "Method 2"],
                 "laboratory": {
                     "reaction": "Test Reaction",
@@ -162,8 +163,8 @@ class TestPeriodicTableApp(unittest.TestCase):
             }
         }
         
-        # Temporarily patch elements dictionary
-        with patch.dict(elements, {"Test": mock_element}):
+        # Patch the production_methods with our test data
+        with patch.dict('periodictable.utils.production_methods', mock_production):
             content = self.periodic_table.get_production_content("Test")
             
             # Check that content includes expected information
@@ -191,7 +192,8 @@ class TestPeriodicTableApp(unittest.TestCase):
     @patch('PyQt5.QtWidgets.QMessageBox.warning')
     def test_handle_timeout(self, mock_warning):
         """Test handling quiz timeout"""
-        # Set up test scenario
+        # Set up test scenario with proper quiz state
+        self.periodic_table.quiz_active = True
         self.periodic_table.current_answer = "Carbon"
         self.periodic_table.question_count = 3
         
@@ -211,6 +213,27 @@ class TestPeriodicTableApp(unittest.TestCase):
             
             # Verify dialog was closed
             self.periodic_table.current_dialog.close.assert_called_once()
+    
+    # Additional test for handling quiz timeout with timer at zero
+    @patch('PyQt5.QtWidgets.QMessageBox.warning')
+    def test_update_timer_timeout(self, mock_warning):
+        """Test timer update with timeout"""
+        # Setup quiz state
+        self.periodic_table.quiz_active = True
+        self.periodic_table.time_remaining = 1
+        self.periodic_table.current_answer = "Oxygen"
+        self.periodic_table.current_dialog = MagicMock()
+        
+        # Mock the handle_timeout method to prevent it from executing
+        with patch.object(self.periodic_table, 'handle_timeout') as mock_handle_timeout:
+            # Call update_timer which should trigger timeout
+            self.periodic_table.update_timer()
+            
+            # Verify time has reached 0
+            self.assertEqual(self.periodic_table.time_remaining, 0)
+            
+            # Verify handle_timeout was called
+            mock_handle_timeout.assert_called_once()
 
 if __name__ == '__main__':
     unittest.main()
