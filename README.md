@@ -99,11 +99,12 @@ pip install -r requirements.txt
 # Navigate to source directory
 cd src
 
+# Generate atom structure
+python -m periodictable.generate_structure
+
 # Launch interactive periodic table
 python -m periodictable.utils
 
-# Generate periodic table structure
-python -m periodictable.generate_structure
 ```
 
 ## ✅ Testing
