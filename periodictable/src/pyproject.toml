@@ -9,7 +9,8 @@ dependencies = [ # specify the required package dependencies
     "PyQt5 >= 5.11",
     "pandas",
     "numpy",
-    "scipy"
+    "scipy",
+    "pytest"
 ]
 
 [tool.hatch.build.targets.wheel]
