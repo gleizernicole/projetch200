@@ -106,11 +106,11 @@ periodictable/
 git clone https://github.com/gleizernicole/projetch200.git
 
 # Navigate to project directory
-cd periodictable
+cd projetch200
 
 # Create and activate virtual environment
-conda create -n periodictable python=3.10
-conda activate periodictable
+conda create -n projetch200 python=3.10
+conda activate projetch200
 ```
 
 ### Running the application 
