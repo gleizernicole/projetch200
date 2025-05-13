@@ -112,6 +112,6 @@ python -m periodictable.utils
 
 ```bash
 # Run unit tests
-cd src
-python -m unittest periodictable/tests/test_periodictable.py
+cd projetch200
+pytest periodictable/src/periodictable/tests/test_periodictable.py -v
 ```
