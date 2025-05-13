@@ -63,6 +63,7 @@ periodictable/
 - **Progress Tracking**: Score monitoring throughout the quiz session
 - **Session Management**: 10-question sessions with final score summary
 
+## 👁️ Visual walkthrough
 ---
 
 ## 🚀 Getting started
