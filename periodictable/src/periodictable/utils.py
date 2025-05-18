@@ -403,6 +403,7 @@ class PeriodicTableApp(QMainWindow):
                 """)
                 btn.clicked.connect(lambda _, opt=option: self.mc_answer_selected(opt, quiz_dialog))
                 dialog_layout.addWidget(btn)
+        # if the question type is "Free response"
         else:
             self.answer_input = QLineEdit()
             self.answer_input.setStyleSheet("font-size: 14px; margin: 10px;")
