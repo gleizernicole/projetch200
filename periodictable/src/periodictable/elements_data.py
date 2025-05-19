@@ -238,6 +238,7 @@ elements = {
            "state": "Gaz", "electron_config": "[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶", "isotopes": ["²⁹⁴Og"]}
 }
 
+#position of each element in the periodic table
 positions = {
     "H": (0, 0), "He": (0, 17),
     "Li": (1, 0), "Be": (1, 1), "B": (1, 12), "C": (1, 13), "N": (1, 14), "O": (1, 15), "F": (1, 16), "Ne": (1, 17),
@@ -260,6 +261,7 @@ positions = {
     "Cn": (6, 11), "Nh": (6, 12), "Fl": (6, 13), "Mc": (6, 14), "Lv": (6, 15), "Ts": (6, 16), "Og": (6, 17)
 }
 
+#every family of elements are associated with a proper color
 colors = {
             "non-métal": "#93C572",
             "métal alcalin": "#FFAAAA",
@@ -274,6 +276,7 @@ colors = {
             "actinide": "#CCCCCC"
         }
 
+#production methods and common reaction involving each element
 production_methods = {
     "H": {
         "electropositive_metals": [
