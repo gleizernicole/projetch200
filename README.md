@@ -138,3 +138,6 @@ python -m periodictable.utils
 cd projetch200
 pytest periodictable/src/periodictable/tests/test_periodictable.py -v
 ```
+## ✉️ Contact
+
+For questions or contributions please contact any of the following addresses: nikol.gleizer@epfl.ch, melodie.serreau@epfl.ch, siolene.croome@epfl.ch, quentin.wininger@epfl.ch. 
