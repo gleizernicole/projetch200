@@ -1,5 +1,9 @@
 # 🧪 Interactive Periodic Table for S&P Package
 
+> 📢 **Note to users:** This tool was specifically designed to support students in the *third-semester Chemistry course at EPFL*, focusing on s- and p-block elements. While tailored to that curriculum, it can be a valuable learning resource for anyone studying general inorganic chemistry.
+
+---
+
 
 ## 🎓 Project background
 
