@@ -117,6 +117,9 @@ cd projetch200
 # Create and activate virtual environment
 conda create -n projetch200 python=3.10
 conda activate projetch200
+
+# Run this in a terminal or command prompt (with the same environment your Jupyter notebook uses):
+pip install periodictable
 ```
 
 ### Running the application 
