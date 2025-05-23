@@ -19,6 +19,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QTimer, QEventLoop
 from PyQt5.QtGui import QFont, QPixmap
 
+# Set up project paths for importing custom modules
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.abspath(os.path.join(current_dir, ".."))
 sys.path.insert(0, project_root)
@@ -30,8 +31,37 @@ from periodictable.src.periodictable.elements_data import elements, positions, c
 # ======================================================================================
 
 class PeriodicTableApp(QMainWindow):
+    """
+    Main application class for the Interactive Periodic Table with Quiz functionality.
+    
+    This class creates a PyQt5 application that displays an interactive periodic table
+    where users can click on elements to view detailed information, and participate
+    in timed quiz games with various question types.
+    
+    Attributes:
+        score (int): Current quiz score
+        question_count (int): Number of questions answered in current quiz
+        quiz_active (bool): Whether a quiz is currently running
+        current_answer (str): Correct answer for current quiz question
+        time_remaining (int): Seconds remaining for current question
+        quiz_type (str): Type of quiz ("Multiple Choice" or "Free Response")
+        user_answer (str): User's selected answer in multiple choice
+        current_dialog (QDialog): Reference to currently open dialog
+    """
+    
     def __init__(self):
-        """Initialize the main application window and UI components"""
+        """
+        Initialize the main application window and UI components.
+        
+        Sets up the main window properties, initializes quiz state variables,
+        creates the user interface, timer, and displays the welcome dialog.
+        
+        Args:
+            None
+            
+        Returns:
+            None
+        """
         super().__init__()
         self.setWindowTitle("Interactive Periodic Table + Quiz 🎲")
         self.setGeometry(100, 100, 600, 500)
@@ -55,7 +85,19 @@ class PeriodicTableApp(QMainWindow):
         self.show_initial_info()
 
     def show_initial_info(self):
-        """Display an initial information dialog about the application"""
+        """
+        Display an initial information dialog about the application features.
+        
+        Creates and shows a modal dialog with comprehensive information about
+        the periodic table features, element information display, and quiz
+        game functionality. Uses HTML formatting for better presentation.
+        
+        Args:
+            None
+            
+        Returns:
+            None
+        """
         info_dialog = QDialog(self)
         info_dialog.setWindowTitle("Welcome to the Interactive Periodic Table!")
         info_dialog.setMinimumSize(600, 500)
@@ -131,7 +173,19 @@ class PeriodicTableApp(QMainWindow):
         info_dialog.exec_()
 
     def init_ui(self):
-        """Set up all user interface components"""
+        """
+        Set up all user interface components for the main window.
+        
+        Creates the central widget and main layout, adds the application title,
+        score display, timer display, quiz control button, periodic table grid,
+        and element family legend. Configures fonts and alignments.
+        
+        Args:
+            None
+            
+        Returns:
+            None
+        """
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         main_layout = QVBoxLayout()
@@ -168,13 +222,36 @@ class PeriodicTableApp(QMainWindow):
         self.create_legend(main_layout)
 
     def init_timer(self):
-        """Initialize and configure the quiz timer"""
+        """
+        Initialize and configure the quiz timer.
+        
+        Creates a QTimer object with 1-second intervals and connects it to
+        the update_timer method for countdown functionality during quiz questions.
+        
+        Args:
+            None
+            
+        Returns:
+            None
+        """
         self.quiz_timer = QTimer()
-        self.quiz_timer.setInterval(1000)
+        self.quiz_timer.setInterval(1000)  # 1 second intervals
         self.quiz_timer.timeout.connect(self.update_timer)
 
     def init_periodic_table_grid(self, parent_layout):
-        """Create the scrollable periodic table grid"""
+        """
+        Create the scrollable periodic table grid with element buttons.
+        
+        Sets up a scroll area containing a grid layout with element buttons
+        positioned according to their standard periodic table locations.
+        Configures scrolling behavior and minimal spacing for compact display.
+        
+        Args:
+            parent_layout (QVBoxLayout): The parent layout to add the grid to
+            
+        Returns:
+            None
+        """
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
 
@@ -184,11 +261,11 @@ class PeriodicTableApp(QMainWindow):
         grid_container = QWidget()
         self.element_grid = QGridLayout(grid_container)
 
-        # Reduce spacing and margins to minimum
+        # Reduce spacing and margins to minimum for compact display
         self.element_grid.setSpacing(0)
         self.element_grid.setContentsMargins(0, 0, 0, 0)
 
-        # Create element buttons
+        # Create element buttons using position data
         for symbol, (row, col) in positions.items():
             self.create_element_button(symbol, row, col)
 
@@ -196,16 +273,30 @@ class PeriodicTableApp(QMainWindow):
         parent_layout.addWidget(scroll_area)
 
     def create_element_button(self, symbol, row, col):
-        """Create an individual element button for the periodic table"""
+        """
+        Create an individual element button for the periodic table.
+        
+        Creates a QPushButton for a specific element with appropriate styling
+        based on the element's family color. Connects the button to show
+        element information when clicked.
+        
+        Args:
+            symbol (str): The chemical symbol of the element (e.g., "H", "He")
+            row (int): Grid row position for the element
+            col (int): Grid column position for the element
+            
+        Returns:
+            None
+        """
         element = elements[symbol]
         btn = QPushButton(symbol)
         # Reduce button size to make table more compact
-        btn.setFixedSize(40, 40)  # Reduced from 50,50 to 40,40
+        btn.setFixedSize(40, 40)  # Compact size for better table display
         btn.setStyleSheet(f"""
             background-color: {colors[element["famille"]]};
             border: 1px solid #333;
             font-weight: bold;
-            font-size: 10px;  /* Reduced from 12px to 10px */
+            font-size: 10px;
             margin: 0;
             padding: 0;
         """)
@@ -213,24 +304,36 @@ class PeriodicTableApp(QMainWindow):
         self.element_grid.addWidget(btn, row, col)
 
     def create_legend(self, parent_layout):
-        """Create the element family color legend"""
+        """
+        Create the element family color legend below the periodic table.
+        
+        Generates a horizontal layout with color-coded indicators and labels
+        for each element family, helping users understand the color coding
+        used in the periodic table display.
+        
+        Args:
+            parent_layout (QVBoxLayout): The parent layout to add the legend to
+            
+        Returns:
+            None
+        """
         legend = QHBoxLayout()
-        legend.setSpacing(2)  # Reduce spacing between legend items
+        legend.setSpacing(2)  # Minimal spacing between legend items
 
         for family, color in colors.items():
             legend_item = QWidget()
             item_layout = QHBoxLayout()
             item_layout.setContentsMargins(1, 1, 1, 1)  # Minimal margins
 
-            # Color indicator
+            # Color indicator square
             color_box = QFrame()
-            color_box.setFixedSize(12, 12)  # Smaller color box
+            color_box.setFixedSize(12, 12)
             color_box.setStyleSheet(f"background-color: {color}; border: 1px solid black;")
 
-            # Family name label with smaller font
+            # Family name label
             label = QLabel(family)
-            label.setContentsMargins(2, 0, 2, 0)  # Minimal margins
-            label.setFont(QFont("Arial", 8))  # Smaller font
+            label.setContentsMargins(2, 0, 2, 0)
+            label.setFont(QFont("Arial", 8))  # Small font for compact display
 
             item_layout.addWidget(color_box)
             item_layout.addWidget(label)
@@ -244,7 +347,19 @@ class PeriodicTableApp(QMainWindow):
     # ==================================================================================
 
     def update_timer(self):
-        """Update the quiz timer and handle timeout"""
+        """
+        Update the quiz timer display and handle timeout conditions.
+        
+        Decrements the time remaining by 1 second, updates the timer display,
+        and triggers timeout handling when time reaches zero. Called every
+        second by the QTimer during quiz questions.
+        
+        Args:
+            None
+            
+        Returns:
+            None
+        """
         self.time_remaining -= 1
         self.timer_display.setText(f"Time remaining: {self.time_remaining}s")
         if self.time_remaining <= 0:
@@ -252,7 +367,19 @@ class PeriodicTableApp(QMainWindow):
             self.handle_timeout()
 
     def start_quiz(self):
-        """Initialize and start a new quiz session"""
+        """
+        Initialize and start a new quiz session.
+        
+        Prompts the user to choose between Multiple Choice or Free Response
+        quiz format, then resets quiz state variables and begins the first
+        question. Handles user cancellation gracefully.
+        
+        Args:
+            None
+            
+        Returns:
+            None (returns early if user cancels format selection)
+        """
         quiz_type, ok = QInputDialog.getItem(
             self, "Quiz Format", "Choose quiz format:",
             ["Multiple Choice", "Free Response"], 0, False
@@ -269,7 +396,20 @@ class PeriodicTableApp(QMainWindow):
         self.ask_question()
 
     def ask_question(self):
-        """Present a new quiz question to the user"""
+        """
+        Present a new quiz question to the user.
+        
+        Generates a random question from available question types, creates
+        the appropriate dialog interface (multiple choice or free response),
+        starts the timer, and handles user interactions. Manages quiz
+        completion and question progression.
+        
+        Args:
+            None
+            
+        Returns:
+            None (returns early if quiz is complete or inactive)
+        """
         if not self.quiz_active or self.question_count >= 10:
             if self.quiz_active:
                 QMessageBox.information(self, "Quiz Complete! 🎉",
@@ -279,7 +419,7 @@ class PeriodicTableApp(QMainWindow):
 
         self.user_answer = None
 
-        # Filter elements using English family names
+        # Filter elements excluding complex transition metals and rare earths
         allowed_symbols = [
             sym for sym in elements
             if elements[sym]["famille"] not in ['Transition Metal', 'Lanthanide', 'Actinide']
@@ -287,8 +427,10 @@ class PeriodicTableApp(QMainWindow):
         symbol = random.choice(allowed_symbols)
         element = elements[symbol]
 
+        # Random question type selection
         question_type = random.choice(["symbol", "atomic_number","electron_config", "electron_config_reverse","production", "production_reverse"])
 
+        # Generate question based on type
         if question_type == "symbol":
             question = f"What is the name of the element with symbol <b>{symbol}</b>?"
             self.current_answer = element["nom"]
@@ -302,7 +444,7 @@ class PeriodicTableApp(QMainWindow):
                 question = f"Which element has the electron configuration <b>{element['electron_config']}</b>?"
                 self.current_answer = element["nom"]
             else:
-                return self.ask_question()  # Skip if not defined
+                return self.ask_question()  # Skip if electron config not defined
 
         elif question_type == "production":
             methods = production_methods.get(symbol, [])
@@ -311,10 +453,9 @@ class PeriodicTableApp(QMainWindow):
                 question = f"Which element is produced by the following method?<br><b>{method}</b>"
                 self.current_answer = element["nom"]
             else:
-                return self.ask_question()  # Skip if no method
+                return self.ask_question()  # Skip if no production method available
             
         elif question_type == "electron_config_reverse":
-        
             if "electron_config" in element:
                 question = f"What is the electron configuration of <b>{element['nom']}</b>?"
                 self.current_answer = element["electron_config"]
@@ -330,34 +471,41 @@ class PeriodicTableApp(QMainWindow):
             else:
                 return self.ask_question()
 
+        # Set correct answer for name-based questions
         if question_type in ["symbol", "atomic_number", "electron_config", "production"]:
             self.current_answer = element["nom"]
+            
+        # Reset timer and start countdown
         self.time_remaining = 30
         self.quiz_timer.start()
 
+        # Create question dialog
         quiz_dialog = QDialog(self)
         quiz_dialog.setWindowTitle("Element Quiz 🎲 (30s)")
         quiz_dialog.setMinimumSize(400, 200)
         dialog_layout = QVBoxLayout(quiz_dialog)
 
+        # Question display
         question_label = QLabel(question)
         question_label.setStyleSheet("font-size: 16px; color: black; padding: 10px;")
         question_label.setAlignment(Qt.AlignCenter)
         dialog_layout.addWidget(question_label)
 
-        # Answer Section
+        # Answer section - Multiple Choice or Free Response
         if self.quiz_type == "Multiple Choice":
+            # Generate multiple choice options
             options = [self.current_answer]
             seen = set(options)
             attempts = 0
             max_attempts = 100
 
+            # Generate 3 additional incorrect options
             while len(options) < 4 and attempts < max_attempts:
                 attempts += 1
                 other_symbol = random.choice(allowed_symbols)
                 other_element = elements[other_symbol]
 
-            # Choix selon le type de question
+                # Generate candidate answer based on question type
                 if question_type in ["symbol", "atomic_number", "electron_config", "production"]:
                     candidate = other_element["nom"]
 
@@ -375,19 +523,18 @@ class PeriodicTableApp(QMainWindow):
                 else:
                     candidate = None
 
-                # Ajout uniquement si valide et pas déjà présent
+                # Add unique valid candidates
                 if candidate and candidate not in seen:
                     options.append(candidate)
                     seen.add(candidate)
 
-            # Complément de sécurité
+            # Fill remaining slots if needed
             while len(options) < 4:
-                options.append("N/A")  # ou un dummy pour éviter crash
-
+                options.append("N/A")
 
             random.shuffle(options)
 
-
+            # Create option buttons
             for option in options:
                 btn = QPushButton(option)
                 btn.setStyleSheet("""
@@ -403,15 +550,16 @@ class PeriodicTableApp(QMainWindow):
                 """)
                 btn.clicked.connect(lambda _, opt=option: self.mc_answer_selected(opt, quiz_dialog))
                 dialog_layout.addWidget(btn)
-        # if the question type is "Free response"
         else:
+            # Free response input field
             self.answer_input = QLineEdit()
             self.answer_input.setStyleSheet("font-size: 14px; margin: 10px;")
             dialog_layout.addWidget(self.answer_input)
 
-        # Control Buttons
+        # Control buttons layout
         control_layout = QHBoxLayout()
 
+        # Exit quiz button
         exit_btn = QPushButton("Exit Quiz")
         exit_btn.setStyleSheet(
             "QPushButton { padding: 8px 16px; margin: 5px; "
@@ -420,6 +568,7 @@ class PeriodicTableApp(QMainWindow):
         )
         exit_btn.clicked.connect(lambda: quiz_dialog.done(2))
 
+        # New question button
         new_btn = QPushButton("New Question")
         new_btn.setStyleSheet(
             "QPushButton { padding: 8px 16px; margin: 5px; "
@@ -428,6 +577,7 @@ class PeriodicTableApp(QMainWindow):
         )
         new_btn.clicked.connect(quiz_dialog.reject)
 
+        # Submit button for free response
         if self.quiz_type != "Multiple Choice":
             submit_btn = QPushButton("Submit")
             submit_btn.setStyleSheet(
@@ -443,18 +593,19 @@ class PeriodicTableApp(QMainWindow):
         control_layout.addStretch()
         dialog_layout.addLayout(control_layout)
 
-        # Show dialog
+        # Display dialog and handle events
         self.current_dialog = quiz_dialog
         event_loop = QEventLoop()
         quiz_dialog.finished.connect(event_loop.quit)
         quiz_dialog.show()
         event_loop.exec_()
 
-        # Process results
+        # Process dialog results
         self.quiz_timer.stop()
         result = quiz_dialog.result()
 
         if result == QDialog.Accepted:
+            # User submitted an answer
             answer = (self.user_answer if self.quiz_type == "Multiple Choice"
                      else self.answer_input.text())
             if answer:
@@ -462,19 +613,46 @@ class PeriodicTableApp(QMainWindow):
                 self.question_count += 1
             self.ask_question()
         elif result == 2:
+            # User exited quiz
             self.quiz_active = False
             QMessageBox.information(self, "Quiz Abandoned", f"Current Score: {self.score}/10")
         else:
+            # User requested new question (skip current)
             self.question_count += 1
             self.ask_question()
 
     def mc_answer_selected(self, answer, dialog):
-        """Handle multiple choice selection"""
+        """
+        Handle multiple choice answer selection.
+        
+        Called when user clicks on a multiple choice option button.
+        Stores the selected answer and closes the dialog to proceed
+        with answer checking.
+        
+        Args:
+            answer (str): The selected answer text
+            dialog (QDialog): The quiz dialog to close
+            
+        Returns:
+            None
+        """
         self.user_answer = answer
         dialog.accept()
 
     def check_answer(self, answer):
-        """Validate user's answer and update score"""
+        """
+        Validate user's answer against the correct answer and update score.
+        
+        Normalizes both the user's answer and correct answer for comparison,
+        updates the score if correct, and displays appropriate feedback
+        messages with the correct answer information.
+        
+        Args:
+            answer (str): The user's submitted answer
+            
+        Returns:
+            None (returns early if no answer provided)
+        """
         if not answer:
             QMessageBox.warning(self, "No Answer", "Please provide an answer!")
             return
@@ -492,11 +670,36 @@ class PeriodicTableApp(QMainWindow):
                               f"Wrong answer! ❌\nCorrect answer: {self.current_answer}")
 
     def normalize_text(self, text):
-        """Normalize text for answer comparison"""
+        """
+        Normalize text for accurate answer comparison.
+        
+        Removes accents, converts to lowercase, and removes spaces to
+        enable flexible answer matching that ignores formatting differences
+        and minor spelling variations.
+        
+        Args:
+            text (str): The text to normalize
+            
+        Returns:
+            str: Normalized text with accents removed, lowercase, no spaces
+        """
         return ''.join(c for c in unicodedata.normalize('NFD', text)
                      if unicodedata.category(c) != 'Mn').lower().replace(" ", "")
 
     def handle_timeout(self):
+        """
+        Handle quiz question timeout when timer reaches zero.
+        
+        Stops the timer, displays timeout message with correct answer,
+        increments question count, closes current dialog, and proceeds
+        to the next question automatically.
+        
+        Args:
+            None
+            
+        Returns:
+            None
+        """
         self.quiz_timer.stop()
         QMessageBox.warning(self, "⏰ Time's Up!",
                         f"Time expired! Correct answer was: {self.current_answer}")
@@ -513,7 +716,20 @@ class PeriodicTableApp(QMainWindow):
     # ==================================================================================
 
     def get_production_content(self, symbol):
-        """Generate formatted production methods content"""
+        """
+        Generate formatted HTML content for element production methods.
+        
+        Retrieves production method data for the specified element and
+        formats it into readable HTML with proper styling for display
+        in the element information dialog.
+        
+        Args:
+            symbol (str): Chemical symbol of the element (e.g., "H", "He")
+            
+        Returns:
+            str: HTML-formatted string containing production method information
+                 or message indicating no methods are available
+        """
         production_info = production_methods.get(symbol, {})
     
         if not production_info:
@@ -521,10 +737,10 @@ class PeriodicTableApp(QMainWindow):
     
         content = []
         for method, details in production_info.items():
-            # Convert method name to a more readable format
+            # Convert method name to readable format
             formatted_method = method.replace('_', ' ').capitalize()
             
-            # Handle different types of details
+            # Handle different data structure types
             if isinstance(details, list):
                 # For list of reactions
                 content.append(f"<b>{formatted_method}:</b>")
@@ -541,14 +757,29 @@ class PeriodicTableApp(QMainWindow):
         return "<br>".join(content)
     
     def add_production_info(self, layout, symbol):
-        """Add production equations section to element info dialog"""
+        """
+        Add production methods section to element information dialog.
+        
+        Creates and adds widgets displaying production method information
+        to the provided layout, including a section header and formatted
+        content with proper styling.
+        
+        Args:
+            layout (QVBoxLayout): The layout to add production info widgets to
+            symbol (str): Chemical symbol of the element
+            
+        Returns:
+            None
+        """
         print(f"Adding production info for {symbol}")  # Debug print
         print(f"Production methods: {production_methods.get(symbol)}")  # Debug print
     
+        # Section header
         section_header = QLabel("<b>Production Methods:</b>")
         section_header.setStyleSheet("font-size: 14px; padding-top: 15px;")
         layout.addWidget(section_header)
     
+        # Content with formatting
         content = self.get_production_content(symbol)
         print(f"Production content: {content}")  # Debug print
     
@@ -558,14 +789,27 @@ class PeriodicTableApp(QMainWindow):
         layout.addWidget(content_label)
     
     def show_element_info(self, symbol):
-        """Display detailed information about a selected element"""
+        """
+        Display detailed information dialog for a selected element.
+        
+        Creates a modal dialog showing comprehensive element information
+        including atomic structure image, basic properties, electron
+        configuration, isotopes, and production methods. Handles missing
+        images gracefully with fallback text.
+        
+        Args:
+            symbol (str): Chemical symbol of the element to display
+            
+        Returns:
+            None
+        """
         element = elements[symbol]
         info_dialog = QDialog(self)
         info_dialog.setWindowTitle(f"Atomic Structure - {element['nom']}")
         info_dialog.setFixedSize(600, 700)
         layout = QVBoxLayout(info_dialog)
     
-        # Atomic structure image
+        # Atomic structure image display
         img_label = QLabel()
         try:
             current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -580,13 +824,14 @@ class PeriodicTableApp(QMainWindow):
             else:
                 raise FileNotFoundError
         except Exception as e:
+            # Fallback for missing images
             img_label.setText(f"<i>Atomic structure for {symbol} not available</i>")
             img_label.setStyleSheet("color: #666; font-size: 14px;")
     
         img_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(img_label)
     
-        # Element properties
+        # Element properties information
         info_text = QLabel(
             f"<b>{element['nom']} ({symbol})</b><br>"
             f"Atomic Number: {element['num']}<br>"
@@ -599,22 +844,49 @@ class PeriodicTableApp(QMainWindow):
         info_text.setStyleSheet("font-size: 14px; padding: 15px;")
         layout.addWidget(info_text)
     
-        # Modify this section to use production_methods
-        if production_methods.get(symbol):  # Check if production methods exist
+        # Add production methods if available
+        if production_methods.get(symbol):
             self.add_production_info(layout, symbol)
     
         info_dialog.exec_()
 
     def update_score_display(self):
-        """Update the score display label"""
+        """
+        Update the score display label with current quiz score.
+        
+        Refreshes the score display widget to show the current score
+        value. Called whenever the score changes during quiz gameplay.
+        
+        Args:
+            None
+            
+        Returns:
+            None
+        """
         self.score_display.setText(f"Score: {self.score}")
 
 # ======================================================================================
 # APPLICATION ENTRY POINT
 # ======================================================================================
 
-if __name__ == "__main__":
+def main():
+    """
+    Main function to initialize and run the PyQt5 application.
+    
+    Creates the QApplication instance, initializes the main window,
+    displays it, and starts the event loop. Handles application
+    shutdown gracefully when the window is closed.
+    
+    Args:
+        None
+        
+    Returns:
+        None
+    """
     app = QApplication(sys.argv)
     window = PeriodicTableApp()
     window.show()
     sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    main()
