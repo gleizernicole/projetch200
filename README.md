@@ -128,6 +128,9 @@ pip install periodictable
 # Navigate to source directory
 cd src
 
+# Generate atom structures 
+python -m periodictable.generate_structure
+
 # Launch interactive periodic table
 python -m periodictable.utils
 
