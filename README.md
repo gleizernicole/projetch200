@@ -87,9 +87,9 @@ periodictable/
 ### Quiz mode
 <div>
   <img src="images/quizchoice.png" width="400" alt="Quiz choice" style="display:inline-block; margin-right:20px;">
-  <img src="images/quizexample.png" width="400" alt="Quiz interface" style="display:inline-block;">
 </div>
 <p><em>Challenge your knowledge with multiple choice or free response questions about elements.</em></p>
+  <img src="images/quizexample.png" width="400" alt="Quiz interface" style="display:inline-block;">
 
 ---
 
