@@ -19,7 +19,9 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QTimer, QEventLoop
 from PyQt5.QtGui import QFont, QPixmap
 
-from .elements_data import elements, positions, colors, production_methods
+try:
+    # First try relative import (when run as module)
+    from .elements_data import elements, positions, colors, production_methods
 except ImportError:
     # Fallback for direct execution - add current directory to path
     current_dir = os.path.dirname(os.path.abspath(__file__))
