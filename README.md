@@ -29,7 +29,6 @@ images/                          # Images for README
 notebooks/                       # Project report in Jupyter notebook format
 periodictable/
 ├── README.md                     # Project introduction, installation instructions
-├── scientific_structures/        # Outer atomic orbital structures
 ├── src/
 │   └── periodictable/
 │       ├── __init__.py
